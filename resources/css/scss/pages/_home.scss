@@ -1,0 +1,44 @@
+@use "../globals" as *;
+
+#vanta-hotspots { 
+	position: absolute; inset: 0; 
+}
+
+.vanta-hotspot {
+	position: absolute;
+	width: 10px; height: 10px;
+	border-radius: 9999px;
+	background: #1a5521;
+	box-shadow: 0 0 0 2px rgba(255,255,255,.6);
+	transform: translate(-50%, -50%); 
+	transition: transform .15s ease, box-shadow .15s ease;
+	pointer-events: auto; 
+	cursor: pointer;
+	.label{
+		border: solid 1px $primary;
+		position: absolute; 
+		top: -8px; 
+		left: 14px;
+		border-radius: 6px;
+		background: #fff;
+		padding: .5rem 1rem 1rem; 
+		color: $text-dark; 
+		font-size: 12px; 
+		line-height: 1;
+		white-space: nowrap; 
+		transform: translateY(-100%); 
+		opacity: 0; 
+		pointer-events: none;
+		transition: opacity .15s ease, transform .15s ease;
+		pointer-events: auto;
+		h2{
+			padding-top: 1rem;
+		}
+	}
+	&.active, &.hover{
+		.label{
+			opacity: 1;
+  			transform: translateY(-110%);
+		}
+	}
+}

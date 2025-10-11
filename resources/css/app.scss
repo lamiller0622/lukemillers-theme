@@ -1,0 +1,8 @@
+@use './scss/globals/variables' as *;
+@use "./scss/pages";
+@use "./scss/components/portfolio-slider";
+@use "./scss/components/robot-cursor";
+@source "../views/";
+@source "../../app/";
+@import "@glidejs/glide/dist/css/glide.core.min.css";
+@import "@glidejs/glide/dist/css/glide.theme.min.css";

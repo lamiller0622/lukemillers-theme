@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="icon" href="https://pub-eb118f23ac7b48a3985b8985ef92286c.r2.dev/cover.png">
+<meta property="og:image" content="https://pub-eb118f23ac7b48a3985b8985ef92286c.r2.dev/cover.png">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta property="og:title" content="Mixes 2024 (Reprise)">
+<meta property="og:description" content="Last year's mixes condensed.">
+<meta property="og:type" content="music.song">
+<meta property="og:url" content="https://lamiller0622.github.io/lamiller0622.githublio/mixes.html">
+<meta name="twitter:card" content="summary_large_image">
+<title>Mixes 2024 (Reprise) — Luke Miller</title>
+<style>
+  :root { --fg:#0b0b0b; --bg:#fafafa; --muted:#666; --accent:#0a84ff; }
+  @media (prefers-color-scheme: dark) {
+    :root { --fg:#f6f6f6; --bg:#111; --muted:#aaa; --accent:#0a84ff; }
+  }
+  body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color:var(--fg); background:var(--bg); }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 20px; }
+  h1 { font-size: 1.25rem; margin: 0 0 8px; }
+  p.desc { margin: 0 0 16px; color: var(--muted); }
+  .player { position: sticky; top: 0; background: var(--bg); padding: 12px 0; z-index: 2; border-bottom: 1px solid #0002; backdrop-filter: blur(6px); }
+  audio { width: 100%; margin: 8px 0; }
+  .controls { display:flex; gap:10px; align-items:center; margin:6px 0 10px; }
+  .controls button { padding:10px 12px; border-radius:10px; border:1px solid #0002; background:#fff0; color:var(--fg); }
+  .controls button:active { transform: translateY(1px); }
+  .time { font-variant-numeric: tabular-nums; color: var(--muted); margin-left:auto; }
+  .chapters { list-style:none; padding:0; margin:16px 0 60px; }
+  .chapters li { display:flex; gap:12px; padding:10px 8px; border-radius:12px; align-items:baseline; }
+  .chapters li button.jump { all:unset; cursor:pointer; color:var(--accent); font-variant-numeric: tabular-nums; }
+  .chapters li .title { flex:1; }
+  .chapters li.active { background: #0a84ff12; }
+  .sticky-footer { position: fixed; bottom:0; left:0; right:0; padding:10px 16px; background:linear-gradient(180deg,#0000,#0002); color:var(--muted); font-size:.9rem; }
+  .small { font-size:.9rem; color:var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="player">
+    <h1>Mixes 2024 (Reprise)</h1>
+    <!-- <p class="desc">One-track mix with chapters. Tap a chapter to jump.</p> -->
+    <audio id="audio" preload="metadata" controls playsinline></audio>
+    <div class="controls">
+      <button id="prev">⟵ Prev chapter</button>
+      <button id="next">Next chapter ⟶</button>
+      <div class="time"><span id="cur">00:00</span> / <span id="dur">—:—</span></div>
+    </div>
+    <a href="https://pub-eb118f23ac7b48a3985b8985ef92286c.r2.dev/mixes_2024_faststart.m4a" download
+         style="display: inline-block;margin-top: 1rem; margin-bottom: 1rem;margin-left:auto;text-decoration:none;border:1px solid #0002;padding:10px 12px;border-radius:10px">
+        ⤓ Download
+      </a>
+  </div>
+
+  <ul id="chapters" class="chapters"></ul>
+
+  <p class="small">Tip: Add this page to your Home Screen for quick access.</p>
+</div>
+
+<script>
+  // === CONFIG ===
+  const AUDIO_URL = "https://pub-eb118f23ac7b48a3985b8985ef92286c.r2.dev/mixes_2024_faststart.m4a";
+
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: "Mixes 2024 (Reprise)",
+    artist: "Luke Miller",
+    album: "Mixes",
+    artwork: [{ src: "https://pub-eb118f23ac7b48a3985b8985ef92286c.r2.dev/cover.png", sizes: "1024x1024", type: "image/jpeg" }],
+  });
+
+  // Chapters (seconds + title)
+  const chapters = [
+    [    0.000, "What Hurts the Most - Cascada" ],
+    [  146.402, "Eusexua - FKA Twigs" ],
+    [  185.017, "Bow Down Flawless Remix - Beyonce" ],
+    [  393.037, "Ice Attack - Future" ],
+    [  462.962, "Everything is Romantic - Charli XCX" ],
+    [  537.143, "Sao Paolo - The Weeknd" ],
+    [  742.713, "Eat Your Man - Dom Dolla & Nelly Furtado" ],
+    [  866.638, "Take it Off - Kesha" ],
+    [  941.552, "Cannibal - Kesha" ],
+    [ 1060.727, "Pretty Mess - Erika Jayne" ],
+    [ 1215.720, "Schiebe - Lady Gaga" ],
+    [ 1405.125, "Sorry - Madonna" ],
+    [ 1579.449, "Acapella - Kelis" ],
+    [ 1715.350, "Body Language (David Aude Remix) - Heidi Montag" ],
+    [ 1826.321, "Massive - Drake" ],
+    [ 1949.294, "All Your Children - Jamie XX" ],
+    [ 2034.674, "RIIVERDANCE - Beyonce" ],
+    [ 2138.954, "The Big Big Beat - Azealia Banks" ],
+    [ 2260.813, "BIZCOCHITO - Rosalia" ],
+    [ 2363.468, "El Apagon - Bad Bunny" ],
+    [ 2429.854, "EL CLuB - Bad Bunny" ],
+    [ 2488.252, "Paparazzi - Lady Gaga" ],
+    [ 2637.115, "VIRGO'S GROOVE - Beyonce" ],
+    [ 2789.557, "ENERGY - Beyonce" ],
+    [ 2889.286, "Angels in the Snow - Cher & Cyndi Lauper" ],
+    [ 2989.734, "Life (feat. Robyn) - Jamie XX" ],
+    [ 3159.704, "Rhythm is a Dancer - Snap!" ],
+    [ 3282.352, "Take My Breath - The Weeknd" ],
+    [ 3551.541, "Forbidden Love - Madonna" ],
+    [ 3798.512, "Jump - Madonna" ],
+    [ 3967.487, "Erotica (Live) - Madonna" ],
+    [ 4090.395, "Like a Virgin (Live) - Madonna" ]
+  ];
+
+  // === APP ===
+  const audio = document.getElementById('audio');
+  const ul = document.getElementById('chapters');
+  const cur = document.getElementById('cur');
+  const dur = document.getElementById('dur');
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+
+  // Persist progress per-URL
+  const KEY = "mix_progress_" + AUDIO_URL;
+  audio.src = AUDIO_URL;
+
+  function fmt(t) {
+    t = Math.max(0, Math.floor(t));
+    const h = Math.floor(t/3600), m = Math.floor((t%3600)/60), s = t%60;
+    return h ? `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`
+             : `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  }
+
+  // Build chapter list
+  chapters.forEach(([start, title], i) => {
+    const li = document.createElement('li');
+    const b = document.createElement('button');
+    b.className = 'jump';
+    b.textContent = fmt(start);
+    b.addEventListener('click', () => { audio.currentTime = start + 0.01; audio.play(); highlight(); });
+    const span = document.createElement('span');
+    span.className = 'title';
+    span.textContent = title;
+    li.appendChild(b);
+    li.appendChild(span);
+    ul.appendChild(li);
+  });
+
+  function chapterIndexAt(t) {
+    let idx = 0;
+    for (let i = 0; i < chapters.length; i++) {
+      if (t + 0.001 >= chapters[i][0]) idx = i; else break;
+    }
+    return idx;
+  }
+
+  function highlight() {
+    const idx = chapterIndexAt(audio.currentTime);
+    [...ul.children].forEach((li, i) => li.classList.toggle('active', i === idx));
+  }
+
+  // Prev/Next controls
+  prevBtn.onclick = () => {
+    const idx = chapterIndexAt(audio.currentTime);
+    const target = Math.max(0, idx - 1);
+    audio.currentTime = chapters[target][0] + 0.01;
+    audio.play();
+    highlight();
+  };
+  nextBtn.onclick = () => {
+    const idx = chapterIndexAt(audio.currentTime);
+    const target = Math.min(chapters.length - 1, idx + 1);
+    audio.currentTime = chapters[target][0] + 0.01;
+    audio.play();
+    highlight();
+  };
+
+  // Time + progress restore
+  audio.addEventListener('loadedmetadata', () => {
+    dur.textContent = fmt(audio.duration || 0);
+    const saved = Number(localStorage.getItem(KEY) || 0);
+    if (saved > 0 && saved < (audio.duration || 1e9)) {
+      audio.currentTime = saved;
+    }
+  });
+  audio.addEventListener('timeupdate', () => {
+    cur.textContent = fmt(audio.currentTime || 0);
+    highlight();
+    // save every ~2s
+    if (Math.floor(audio.currentTime) % 2 === 0) {
+      localStorage.setItem(KEY, String(Math.floor(audio.currentTime)));
+    }
+  });
+
+  // Media Session (lock screen display on Android; partial on iOS)
+  if ('mediaSession' in navigator) {
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: "Mixes 2024 (Reprise)",
+      artist: "Luke Miller",
+      album: "Mixes",
+    });
+    navigator.mediaSession.setActionHandler('previoustrack', () => prevBtn.onclick());
+    navigator.mediaSession.setActionHandler('nexttrack', () => nextBtn.onclick());
+    navigator.mediaSession.setActionHandler('seekto', (d) => { audio.currentTime = d.seekTime || audio.currentTime; });
+  }
+
+    let lastChapterIdx = -1;
+
+  function updateMediaSessionForChapter(idx) {
+    if (!('mediaSession' in navigator)) return;
+    const [start, title] = chapters[idx] || [0, ""];
+
+    // (Optional) show chapter time in the title
+    const t = fmt(start);
+    const mixTitle = "Mixes 2024 (Reprise)";
+    const artist = "Luke Miller";
+    const album  = "Mixes 2024";
+
+    // Reuse existing artwork if you set it earlier; otherwise omit 'artwork'
+    const currentArtwork = (navigator.mediaSession.metadata && navigator.mediaSession.metadata.artwork) || undefined;
+
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: `${title} — ${mixTitle}`,   // shows chapter name on lock screen
+      artist,
+      album,
+      artwork: currentArtwork
+    });
+
+    // Keep OS in sync with position & duration for smoother lock-screen scrubbing
+    try {
+      navigator.mediaSession.setPositionState({
+        duration: isFinite(audio.duration) ? audio.duration : 0,
+        playbackRate: audio.playbackRate || 1,
+        position: audio.currentTime || 0
+      });
+    } catch (_) {}
+  }
+
+  // Call this whenever time moves enough to cross a chapter boundary
+  function maybeUpdateChapterMetadata() {
+    const idx = chapterIndexAt(audio.currentTime);
+    if (idx !== lastChapterIdx) {
+      lastChapterIdx = idx;
+      updateMediaSessionForChapter(idx);
+    }
+  }
+
+  // Hook into your existing events
+  audio.addEventListener('loadedmetadata', () => {
+    // Initialize at the right chapter when the file loads
+    maybeUpdateChapterMetadata();
+  });
+  audio.addEventListener('timeupdate', () => {
+    // Update when crossing chapter boundaries
+    maybeUpdateChapterMetadata();
+  });
+  audio.addEventListener('ratechange', () => {
+    // Keep OS position state accurate at new playbackRate
+    if ('mediaSession' in navigator) {
+      try {
+        navigator.mediaSession.setPositionState({
+          duration: isFinite(audio.duration) ? audio.duration : 0,
+          playbackRate: audio.playbackRate || 1,
+          position: audio.currentTime || 0
+        });
+      } catch (_) {}
+    }
+  });
+
+  // If you use per-chapter artwork, set it here too:
+  // const chapterArtMap = { 0: "cover1.jpg", 146.402: "cover2.jpg", ... };
+  // and swap 'artwork' inside updateMediaSessionForChapter when idx changes.
+</script>
+<div class="sticky-footer">You can keep your phone locked and skip chapters outside of webpage.</div>
+</body>
+</html>

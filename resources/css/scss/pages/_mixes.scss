@@ -1,0 +1,117 @@
+@use "../globals" as *;
+:root { 
+  --fg: #{$text-dark}; 
+  --bg: #{$white}; 
+  --muted:#666; 
+  --accent: #{$secondary}; 
+}
+body { 
+  margin:0; 
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, 
+  sans-serif; 
+  color:var(--fg); 
+  background:var(--bg); 
+}
+.wrap { 
+  max-width: 767px; 
+  margin: 0 auto; 
+  padding: 20px; 
+}
+
+p.desc { 
+  margin: 0 0 16px; color: var(--muted); 
+}
+.player { 
+  position: sticky; 
+  top: 0; 
+  background: rgba(255,255,255,.8);
+  padding: 12px 1rem; 
+  z-index: 2; 
+  border-bottom: 1px solid #0002; 
+  backdrop-filter: blur(6px); 
+}
+audio { 
+  width: 100%; 
+  margin: 1rem 0; 
+}
+.controls { 
+  display:flex; gap:10px; 
+  align-items:center; 
+  margin:6px 0 10px; 
+  button{
+    margin-top: 0;
+    &:active{
+      transform: translateY(1px);
+    }
+  }
+}
+
+.time { 
+  font-variant-numeric: tabular-nums; 
+  color: var(--muted); 
+  margin-left:auto; 
+}
+.chapters { 
+  list-style:none; 
+  padding:0; 
+  padding:2rem 1rem 60px; 
+  background: rgba(255,255,255,.8);
+  li{
+    display:flex; 
+    gap:12px; 
+    padding:10px 8px; 
+    border-radius:12px; 
+    align-items:baseline;
+    button.jump{
+      all:unset; 
+      cursor:pointer; 
+      color:var(--accent); 
+      font-variant-numeric: tabular-nums;
+    }
+    .title{
+      flex: 1;
+    }
+    &.active{
+      background: $light;
+    }
+  }
+}
+.sticky-footer { 
+  position: fixed; 
+  bottom:0; 
+  left:0; 
+  right:0; 
+  padding:10px 16px; 
+  background:linear-gradient(180deg,#0000,#0002); 
+  color:var(--muted); 
+  font-size:.9rem; 
+}
+.small { 
+  font-size:.9rem; 
+  color:var(--muted); 
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  svg{
+    flex: 0 0 auto;
+    transition: transform .15s ease;
+  }
+  &:active{
+    svg{
+      transform: translateY(1px);
+    }
+  }
+}
+@media (max-width: 767px) {
+  .icon-btn span { display: none; }
+}
+
+#vanta-bg-disc{
+  position: fixed;
+  inset: 0;
+  z-index: -1;          /* behind everything */
+}
+

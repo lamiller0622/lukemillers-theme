@@ -1,0 +1,39 @@
+// Colors
+$primary: #1a5521;
+$secondary: #0ea5a6;
+$light: #daffcb;
+$text-dark: #07132F;
+$white: #fafafa;
+
+h1,h2,h3,h4,h5,h6, p{
+	color: $text-dark;
+}
+
+h1{
+	font-size: 28px;
+}
+h2{
+	font-size: 24px;
+}
+
+.btn-primary{
+	background: $light;
+    padding: 8px;
+    border-radius: 8px;
+    color: $text-dark;
+    display: inline-block;
+    margin-top: 1rem;
+    transition: .5s;
+    border: solid 1px $primary;
+    cursor: pointer;
+    &:hover{
+    	background: $primary;
+    	color: #fff;
+    }
+}
+
+ul{
+	li{
+		margin: .5rem 0;
+	}
+}
