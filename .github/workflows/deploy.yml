@@ -50,21 +50,20 @@ jobs:
         run: npm run build
 
       - name: Deploy via SFTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
-          server: ${{ secrets.FTP_HOST }}
+          host: ${{ secrets.FTP_HOST }}
+          port: 22
           username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: sftp
-          port: ${{ secrets.FTP_PORT || 22 }}
-          local-dir: ./                         # theme is at repo root
-          server-dir: ${{ secrets.REMOTE_PATH }}/
-          dangerous-clean-slate: false
+          password: ${{ secrets.FTP_PASSWORD }}     
+          local_path: ./
+          remote_path: ${{ secrets.REMOTE_PATH }}/
+          args: "-o StrictHostKeyChecking=no"
           exclude: |
-            **/.git*
-            **/.github/**
-            **/node_modules/**
-            **/.env
-            **/vendor/bin/**
-            **/tests/**
-            **/*.map
+            .git*
+            .github/**
+            node_modules/**
+            .env
+            vendor/bin/**
+            tests/**
+            *.map
