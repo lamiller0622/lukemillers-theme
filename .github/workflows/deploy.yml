@@ -49,21 +49,14 @@ jobs:
       - name: Build production assets
         run: npm run build
 
-      - name: Deploy via SFTP
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
-        with:
-          host: ${{ secrets.FTP_HOST }}
-          port: 22
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}     
-          local_path: ./
-          remote_path: ${{ secrets.REMOTE_PATH }}/
-          args: "-o StrictHostKeyChecking=no"
-          exclude: |
-            .git*
-            .github/**
-            node_modules/**
-            .env
-            vendor/bin/**
-            tests/**
-            *.map
+      - - name: Deploy via SFTP
+          uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+          with:
+            server: ${{ secrets.FTP_HOST }}      
+            port: 22
+            username: ${{ secrets.FTP_USERNAME }}
+            password: ${{ secrets.FTP_PASSWORD }}  
+            local_path: ./
+            remote_path: ${{ secrets.REMOTE_PATH }}/
+            sftp_only: true
+            sftpArgs: "-o StrictHostKeyChecking=no"
