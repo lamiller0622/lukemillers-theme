@@ -1,0 +1,73 @@
+name: Deploy Sage Theme to IONOS
+
+on:
+  push:
+    branches: [ "main" ]  # change if you deploy from another branch
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer
+          coverage: none
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # speed up installs
+      - name: Cache Composer
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: composer-
+
+      - name: Cache Node
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: node-
+
+      # install & build (repo root == theme root)
+      - name: Install PHP deps (no-dev)
+        run: composer install --no-dev --prefer-dist --no-progress --no-interaction
+
+      - name: Install Node deps
+        run: npm ci
+
+      - name: Build production assets
+        run: npm run build
+
+      # deploy to IONOS via SFTP
+      - name: Deploy via SFTP
+        uses: SamKirkland/FTP-Deploy-Action@v4
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: sftp
+          port: ${{ secrets.FTP_PORT || 22 }}
+          local-dir: ./                         # theme is at repo root
+          server-dir: ${{ secrets.REMOTE_PATH }}/
+          dangerous-clean-slate: false
+          exclude: |
+            **/.git*
+            **/.github/**
+            **/node_modules/**
+            **/.env
+            **/vendor/bin/**
+            **/tests/**
+            **/*.map
