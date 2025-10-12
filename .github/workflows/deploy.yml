@@ -4,14 +4,14 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - '**.php'
-      - 'app/**'
-      - 'resources/**'
-      - 'composer.json'
-      - 'composer.lock'
-      - 'package.json'
-      - 'package-lock.json'
-      - '.github/workflows/deploy.yml'
+      - "**/*.php"
+      - "app/**"
+      - "resources/**"
+      - "composer.json"
+      - "composer.lock"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/deploy.yml"
   workflow_dispatch:
 
 concurrency:
@@ -31,15 +31,15 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: "8.2"
           tools: composer
           coverage: none
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
           cache-dependency-path: package-lock.json
 
       - name: Cache vendor/
@@ -50,7 +50,7 @@ jobs:
           restore-keys: |
             vendor-
 
-      - name: Cache Composer cache dir
+      - name: Cache Composer download cache
         uses: actions/cache@v4
         with:
           path: ~/.composer/cache
@@ -89,7 +89,7 @@ jobs:
             --exclude "*.map" \
             ./ deploy/
 
-      - name: Deploy via SFTP
+      - name: Deploy via SFTP (password)
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
           server: ${{ secrets.FTP_HOST }}
