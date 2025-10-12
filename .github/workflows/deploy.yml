@@ -1,8 +1,8 @@
-name: Deploy Sage Theme to IONOS
+name: Deploy Sage Theme to IONOS (SFTP, no keys)
 
 on:
   push:
-    branches: [ "main" ]  
+    branches: [ "main" ]
 
 jobs:
   build-and-deploy:
@@ -49,14 +49,29 @@ jobs:
       - name: Build production assets
         run: npm run build
 
-      - - name: Deploy via SFTP
-          uses: wlixcc/SFTP-Deploy-Action@v1.2.4
-          with:
-            server: ${{ secrets.FTP_HOST }}      
-            port: 22
-            username: ${{ secrets.FTP_USERNAME }}
-            password: ${{ secrets.FTP_PASSWORD }}  
-            local_path: ./
-            remote_path: ${{ secrets.REMOTE_PATH }}/
-            sftp_only: true
-            sftpArgs: "-o StrictHostKeyChecking=no"
+      - name: Prepare deploy folder
+        run: |
+          mkdir -p deploy
+          rsync -a \
+            --delete \
+            --exclude ".git*" \
+            --exclude ".github" \
+            --exclude "node_modules" \
+            --exclude ".env" \
+            --exclude "tests" \
+            --exclude "vendor/bin" \
+            --exclude "*.map" \
+            ./ deploy/
+
+      # Upload via SFTP + password (no SSH key)
+      - name: Deploy via SFTP
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          port: ${{ secrets.FTP_PORT }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local_path: ./deploy/
+          remote_path: ${{ secrets.REMOTE_PATH }}/
+          sftp_only: true
+          sftpArgs: "-o StrictHostKeyChecking=no"
