@@ -2,7 +2,7 @@ name: Deploy Sage Theme to IONOS
 
 on:
   push:
-    branches: [ "main" ]  # change if you deploy from another branch
+    branches: [ "main" ]  
 
 jobs:
   build-and-deploy:
@@ -26,7 +26,6 @@ jobs:
         with:
           node-version: '20'
 
-      # speed up installs
       - name: Cache Composer
         uses: actions/cache@v4
         with:
@@ -41,7 +40,6 @@ jobs:
           key: node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: node-
 
-      # install & build (repo root == theme root)
       - name: Install PHP deps (no-dev)
         run: composer install --no-dev --prefer-dist --no-progress --no-interaction
 
@@ -51,9 +49,8 @@ jobs:
       - name: Build production assets
         run: npm run build
 
-      # deploy to IONOS via SFTP
       - name: Deploy via SFTP
-        uses: SamKirkland/FTP-Deploy-Action@v4
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
