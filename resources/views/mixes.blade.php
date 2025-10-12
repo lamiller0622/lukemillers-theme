@@ -4,7 +4,6 @@
 @extends('layouts.app')
 
 @push('head')
-  <link rel="icon" href="https://pub-eb118f23ac7b48a3985b8985ef92286c.r2.dev/cover.png">
   <meta property="og:image" content="https://pub-eb118f23ac7b48a3985b8985ef92286c.r2.dev/cover.png">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta property="og:title" content="Mixes 2024 (Reprise)">
