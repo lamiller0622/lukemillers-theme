@@ -1,8 +1,22 @@
-name: Deploy Sage Theme to IONOS (SFTP, no keys)
+name: Deploy Sage Theme to IONOS
 
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - '**.php'
+      - 'app/**'
+      - 'resources/**'
+      - 'composer.json'
+      - 'composer.lock'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build-and-deploy:
@@ -25,23 +39,35 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
 
-      - name: Cache Composer
+      - name: Cache vendor/
         uses: actions/cache@v4
         with:
           path: vendor
-          key: composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: composer-
+          key: vendor-${{ hashFiles('composer.lock') }}
+          restore-keys: |
+            vendor-
 
-      - name: Cache Node
+      - name: Cache Composer cache dir
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache
+          key: composer-cache-${{ hashFiles('composer.lock') }}
+          restore-keys: |
+            composer-cache-
+
+      - name: Cache node_modules
         uses: actions/cache@v4
         with:
           path: node_modules
-          key: node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: node-
+          key: node_modules-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            node_modules-
 
-      - name: Install PHP deps (no-dev)
-        run: composer install --no-dev --prefer-dist --no-progress --no-interaction
+      - name: Install PHP deps (no-dev, optimized)
+        run: composer install --no-dev --prefer-dist -o --no-progress --no-interaction
 
       - name: Install Node deps
         run: npm ci
@@ -51,9 +77,9 @@ jobs:
 
       - name: Prepare deploy folder
         run: |
+          rm -rf deploy
           mkdir -p deploy
-          rsync -a \
-            --delete \
+          rsync -a --delete \
             --exclude ".git*" \
             --exclude ".github" \
             --exclude "node_modules" \
@@ -63,7 +89,6 @@ jobs:
             --exclude "*.map" \
             ./ deploy/
 
-      # Upload via SFTP + password (no SSH key)
       - name: Deploy via SFTP
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:

@@ -74,6 +74,9 @@ $autoplay = $autoplay ?? 0;
 
 <section class="slider-center">
   <div id="vanta-portfolio" aria-hidden="true"></div>
+  <div class="container">
+    <a class="relative" href="/">Return Home</a>
+  </div>
 
   <div class="glide glide-portfolio" data-portfolio-glide data-autoplay="{{ (int) $autoplay }}" style="padding-bottom: 54px;">
     <div class="glide__track" data-glide-el="track">

@@ -199,12 +199,12 @@ body {
       width: 8px;
       height: 8px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, .35);
+      background: rgba(7, 19, 47, .35);
       transition: width .2s ease, background .2s ease;
 
       &--active {
         width: 22px;
-        background: #fff;
+        background: $text-dark;
       }
     }
   }
