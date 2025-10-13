@@ -75,6 +75,9 @@ jobs:
       - name: Build production assets
         run: npm run build
 
+      - name: Write deploy version
+        run: echo "Deployed $GITHUB_SHA on $(date -u +%FT%TZ)" > version.txt
+
       - name: Prepare deploy folder
         run: |
           rm -rf deploy
