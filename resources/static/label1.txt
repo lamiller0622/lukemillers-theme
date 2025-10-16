@@ -1,0 +1,43 @@
+0.037596	124.640567	Take It - Dom Dolla
+124.640567	203.399819	Luxury - Axealia Banks
+203.399819	350.903855	Baddy on the Floor - Jamie xx
+350.903855	429.018118	One More Time - Daft Punk
+429.018118	568.800884	SLIDE - Doechii
+568.800884	697.626531	Ring, Ring, Ring - Tyler the Creator
+697.626531	820.748163	Drip Drip - KAYTRANADA
+820.748163	937.122789	Please Babe - KAYTRANADA
+937.122789	1034.390975	We Dance to the Beat - Robyn
+1034.390975	1421.059533	Haunted Thique - Beyonce
+1421.059505	1577.674953	Abracadabra - Lady Gaga
+1577.674953	1653.165961	Shadow of a Man - Lady Gaga
+1653.165961	1740.214601	Telephone - Lade Gaga (feat. Beyonce)
+1740.214601	1840.184359	My Humps - The Black Eyed Peas
+1840.184359	1993.501674	Sugar On My Tongue - Tyler the Creater
+1993.501674	2114.561938	Alter Ego - Doechii
+2114.561938	2238.863007	1991 - Azealia Banks
+2238.863007	2382.905861	With Every Heartbeat - Robyn
+2382.905861	2428.055357	Baptized in Fear - The Weeknd
+2428.055357	2521.000976	Open Hearts - The Weeknd
+2521.000976	2732.491037	Walk Of Fame - Miley Cyrus
+2732.491037	2854.529080	Dim All The Lights - Donna Summer
+2854.529080	2918.996665	Don't Fucking Tell Me What To Do - Robyn
+2918.996665	3089.937785	Dance in the Dark - Lady Gaga
+3089.937785	3215.076891	The Dead Dance - Lady Gaga
+3215.197946	3436.493138	Every Girl You've Ever Loved - Miley Cyrus
+3436.499433	3552.520023	Deeper and Deeper - Madonna
+3552.520023	3683.316961	COZY - Beyonce
+3683.316961	3855.968957	Gimme More - Britney Spears
+3855.968957	3952.534376	Blah Blah Blah - Kesha
+3952.534376	4054.569819	NUEVAYoL - Bad Bunny
+4054.569819	4138.010794	Verano Rosa - KAROL G
+4138.010794	4236.818254	Un Gatito Me Llamo - KAROL G
+4236.818254	4388.990862	We R Who We R - Kesha
+4388.990862	4500.980317	Gypsy Woman (She's Homeless) (La Da Dee La Da Da) - Crystal Waters
+4500.980317	4617.714218	AAAHH MEN! - Doja Cat
+4617.714218	4756.307891	Stupid Love - Lady Gaga
+4756.307891	4838.787823	Heavy Metal Lover - Lady Gaga
+4838.787823	4970.199546	Get Back - Britney Spears
+4970.199546	5200.275556	Hot Stuff - Donna Summer
+5200.275556	5288.334603	Bad Girls - Donna Summer
+5288.334603	5413.942857	She Wolf - Shakira
+5413.942857	5439.564875	Can't Get You Out of My Head - Kylie Minogue

@@ -58,3 +58,26 @@ collect(['setup', 'filters'])
             );
         }
     });
+
+if (!function_exists('parse_audacity_labels')) {
+  function parse_audacity_labels(string $filepath): array {
+    if (!file_exists($filepath)) return [];
+    $lines = file($filepath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ?: [];
+    $chapters = [];
+    foreach ($lines as $line) {
+      $ln = trim($line);
+      if ($ln === '') continue;
+      // split on tabs first; if not present, split on whitespace (max 3 parts)
+      $parts = preg_split("/\t+/", $ln);
+      if (count($parts) < 2) $parts = preg_split("/\s+/", $ln, 3);
+      if (!$parts || count($parts) < 1) continue;
+
+      $start = floatval($parts[0] ?? 0);
+      $title = trim($parts[2] ?? ($parts[1] ?? '')) ?: ('Chapter ' . (count($chapters) + 1));
+
+      $chapters[] = [round($start, 3), $title];
+    }
+    usort($chapters, fn($a,$b) => $a[0] <=> $b[0]);
+    return $chapters;
+  }
+}

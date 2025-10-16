@@ -1,8 +1,8 @@
 // Colors
-$primary: #1a5521;
-$secondary: #0ea5a6;
-$light: #daffcb;
-$text-dark: #07132F;
+$primary: #007074;
+$secondary: #e45b31;
+$light: #e3d9cf;
+$text-dark: #0a2f1e;
 $white: #fafafa;
 
 h1,h2,h3,h4,h5,h6, p{
@@ -17,14 +17,13 @@ h2{
 }
 
 .btn-primary{
-	background: $light;
+	background: $text-dark;
     padding: 8px;
-    border-radius: 8px;
-    color: $text-dark;
+    color: $white;
     display: inline-block;
     margin-top: 1rem;
     transition: .5s;
-    border: solid 1px $primary;
+    border: solid 1px $text-dark;
     cursor: pointer;
     &:hover{
     	background: $primary;

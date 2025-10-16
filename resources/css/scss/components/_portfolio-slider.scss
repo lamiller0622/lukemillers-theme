@@ -6,12 +6,36 @@ body {
 }
 
 .slider-center {
-  min-height: 100svh;
-  display: grid;
+    height: 75vh;
+    place-items: center;
+    padding-block: clamp(32px, 8vh, 120px) 0;
+    position: relative;
+    isolation: isolate;
+    border-bottom: solid 1px;
+}
+
+.floor{
+  height: 25vh;
   place-items: center;
-  padding-block: clamp(32px, 8vh, 120px);
-  position: relative;  
-  isolation: isolate;  
+  place-content: center;
+  .wood-floor{
+    height: 75%;
+    width: 100%;
+    background: repeating-linear-gradient(84deg, $text-dark 0, $text-dark 1px, $light 1px, $light 50px);
+    background-size: 50px;
+    position: relative;
+    place-items: center;
+    place-content: center;
+  }
+  .panelling{
+    height: 25%;
+    width: 100%;
+    background: repeating-linear-gradient(90deg, $text-dark 0, $text-dark 1px, $white 1px, $white 15px);
+    background-size: 15px;
+    margin-top: 10px;
+    border-top: solid 1px;
+    border-bottom: solid 1px;
+  }
 }
 
 .glide-portfolio {
@@ -27,12 +51,16 @@ body {
   overscroll-behavior-x: contain;
   z-index: 1;
   box-shadow: none;
-  filter: drop-shadow(var(--shadow));
   padding-left: 0;
   padding-right: 0;
+  padding-bottom: 20px;
+  height: 100%;
+/*  place-items: center;*/
 
   .glide__track {
     overflow: visible;
+    height: 100%;
+    place-content: center;
   }
 
   .glide__slides {
@@ -41,6 +69,8 @@ body {
     list-style: none;
     margin: 0;
     padding: 0; 
+    place-items: center;
+    height: 100%;
   }
 
   .glide__slide {
@@ -50,25 +80,29 @@ body {
 
   .slide {
     width: auto;
-    height: 38vw;
     position: relative;
-    overflow: hidden;
     transform-style: preserve-3d;
-    box-shadow: var(--shadow);
     transition: transform .5s ease, filter .5s ease, box-shadow .5s ease;
-    background: #0b0b10;
+    background: transparent;
     z-index: 1;
     isolation: isolate;
+    /*display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: visible;
+    justify-content: center;*/
+    place-items: center;
+    place-content: center;
+    height: 100%;
 
     &__image {
-      position: absolute;
-      top: 1% !important;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+      height: max-content;
+      overflow: hidden;
+      width: auto;
+      max-height: 80%;
+      border: solid 5px;
       object-fit: fill;
       object-position: top center;
-      transform: scale(1.03);
       filter: saturate(.95) contrast(1.05);
       transition: transform .7s ease, filter .5s ease;
     }
@@ -76,24 +110,27 @@ body {
     &__overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(0, 0, 0, .6), rgba(0, 0, 0, 0) 60%);
+/*      background: linear-gradient(to top, rgba(0, 0, 0, .6), rgba(0, 0, 0, 0) 60%);*/
       pointer-events: none;
     }
 
     &__content {
-      position: absolute;
-      left: 18px;
-      right: 18px;
-      bottom: 18px;
-      color: #fff;
+      background: #e3d9cf;
+      display: inline-table;
+      margin-top: 1rem;
+      padding: .5rem 1rem;
+      overflow: visible;
+      border: solid;
       z-index: 2;
+      float: right;
+
     }
 
     &__title {
       margin: 0 0 6px;
       font-weight: 700;
-      font-size: clamp(18px, 2.2vw, 28px);
-      color: $white;
+      font-size: clamp(18px, 1vw, 28px);
+      color: $text-dark;
     }
 
     &__meta {
@@ -121,8 +158,7 @@ body {
     }
 
     &.is-active {
-      transform: translateZ(90px);
-      box-shadow: var(--active-shadow);
+      transform: translateZ(-90px);
       z-index: 20;
 
       .slide__image {
@@ -222,18 +258,6 @@ body {
     --card-w: 40vw;
     --card-h: 58vw;
   }
-  .slide{
-    width: auto;
-    height: 100vw !important;
-  }
-}
-
-
-#vanta-portfolio {
-  position: absolute;
-  inset: 0;
-  z-index: 0;           
-  pointer-events: none; 
 }
 
 @media (max-width: 900px) {
@@ -241,3 +265,31 @@ body {
   .glide-portfolio .slide.is-prev  { transform: translateX(-6%) rotateY(14deg) scale(.95); }
   .glide-portfolio .slide.is-next  { transform: translateX( 6%) rotateY(-14deg) scale(.95); }
 }
+
+/*.signhome {
+  display:inline-block;
+  text-decoration:none;
+  --sign-stroke: #111;
+  --sign-fill: #fff;
+}
+
+.signhome__svg {
+  display:block;
+  max-width: 12rem; 
+  margin-top: -50%;
+}
+
+.signhome__svg .signhome__board path { fill: var(--sign-fill); stroke: var(--sign-stroke); }
+.signhome__svg rect, 
+.signhome__svg path { stroke: none; }
+
+.signhome:hover .signhome__board { animation: sign-wobble .6s ease; transform-origin: 120px 100px; }
+@keyframes sign-wobble {
+  0%   { transform: rotate(0deg); }
+  20%  { transform: rotate(-3deg); }
+  50%  { transform: rotate(2deg); }
+  100% { transform: rotate(0deg); }
+}
+@media (prefers-reduced-motion: reduce){
+  .signhome:hover .signhome__board { animation: none; }
+}*/

@@ -1,0 +1,32 @@
+0.000000	146.401814	What Hurts the Most - Cascada
+146.401814	185.016599	Eusexua - FKA Twigs
+185.016599	393.037370	Bow Down Flawless Remix - Beyonce
+393.037370	462.961882	Ice Attack - Future
+462.961882	537.143016	Everything is Romantic - Charli XCX
+537.143016	742.712789	Sao Paolo - The Weeknd
+742.712789	866.637687	Eat Your Man - Dom Dolla & Nelly Furtado
+866.637687	941.552313	Take if Off - Kesha
+941.552313	1060.727098	Cannibal - Kesha
+1060.727098	1215.720295	Pretty Mess - Erika Jayne
+1215.720295	1405.125465	Schiebe - Lady Gaga
+1405.125465	1579.449184	Sorry - Madonna
+1579.449184	1715.350159	Acapella - Kelis
+1715.350159	1826.320975	Body Language (David Aude Remix) - Heidi Montag
+1826.320975	1949.293855	Massive - Drake
+1949.293855	2034.673628	All Your Children - Jamie XX
+2034.673628	2138.954444	RIIVERDANCE - Beyonce
+2138.954444	2260.812766	The Big Big Beat - Azealia Banks
+2260.812766	2363.468186	BIZCOCHITO - Rosalia
+2363.468186	2429.854036	El Apagon - Bad Bunny
+2429.854036	2488.252222	EL CLuB - Bad Bunny
+2488.252222	2637.115351	Paparazzi - Lady Gaga
+2637.115351	2789.556553	VIRGO'S GROOVE - Beyonce
+2789.556553	2889.285896	ENERGY - Beyonce
+2889.285896	2989.734127	Angels in the Snow - Cher & Cyndi Lauper
+2989.734127	3159.704195	Life (feat. Robyn) - Jamie XX
+3159.704195	3282.351995	Rhythm is a Dancer - Snap!
+3282.351995	3551.540930	Take My Breath - The Weeknd
+3551.540930	3798.511542	Forbidden Love - Madonna
+3798.511542	3967.487188	Jump - Madonna
+3967.487188	4090.395420	Erotica (Live) - Madonna
+4090.395420	4250.040385	Like a Virgin (Live) - Madonna

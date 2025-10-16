@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Vite;
 
 add_action('wp_enqueue_scripts', function () {
     echo Vite::withEntryPoints([
-        'resources/js/app.js', // this will also include app.scss via the JS import
+        'resources/js/app.js',
     ])->toHtml();
 }, 100);
 

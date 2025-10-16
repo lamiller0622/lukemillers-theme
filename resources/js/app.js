@@ -77,7 +77,7 @@ function setupGroundHotspotsOn(ground, v, overlay) {
         <li>Design: CSS, SCSS, Bootstrap, Typescript</li>
         <li>Marketing: Hubl, SEO</li>
       </ul>
-      <a href="http://localhost:8888/lukemiller.io/index.php/portfolio/" class="btn-primary">See Portfolio</a>`
+      <a href="/portfolio/" class="btn-primary">See Portfolio</a>`
      },
     { u:  0.3, v: -0.10, label: `
       <h2>Education</h2>
@@ -223,9 +223,9 @@ document.addEventListener('DOMContentLoaded', () => {
       minWidth: 400,
       scale: 1,
       scaleMobile: 1,
-      color: 0x1a5521,
-      color2: 0x0ea5a6,
-      backgroundColor: 0xdaffcb,
+      color: 0x007074,
+      color2: 0xe45b31,
+      backgroundColor: 0xe3d9cf,
       backgroundAlpha: 1,
     })
 
