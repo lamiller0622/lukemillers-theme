@@ -75,6 +75,15 @@ jobs:
       - name: Build production assets
         run: npm run build
 
+      - name: Drop debug markers (version + pathcheck)
+        run: |
+          echo "Deployed $GITHUB_SHA on $(date -u +%FT%TZ)" > deploy/version.txt
+          cat > deploy/pathcheck.php <<'PHP'
+          <?php
+          echo 'ABSPATH: ' . ABSPATH . PHP_EOL;
+          echo 'Theme dir: ' . get_stylesheet_directory() . PHP_EOL;
+          PHP
+
       - name: Write deploy version
         run: echo "Deployed $GITHUB_SHA on $(date -u +%FT%TZ)" > version.txt
 
