@@ -102,7 +102,7 @@ jobs:
           port: ${{ secrets.FTP_PORT }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local_path: ./deploy/
-          remote_path: ${{ secrets.REMOTE_PATH }}/
+          local_path: ./deploy/lukemillers-theme/    
+          remote_path: ${{ secrets.REMOTE_THEMES_PATH }}/   
           sftp_only: true
           sftpArgs: "-o StrictHostKeyChecking=no"

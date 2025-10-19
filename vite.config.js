@@ -5,18 +5,7 @@ import { wordpressPlugin, wordpressThemeJson } from '@roots/vite-plugin'
 import path from 'path'
 
 export default defineConfig({
-  base: '/clickandbuilds/LukeMillersWebsite/wp-content/themes/lukemillers-theme/public/', // <- important
-  build: {
-    outDir: 'public',              // emits public/ + manifest.json
-    assetsDir: 'assets',           // optional tidy subfolder
-    manifest: true,
-    rollupOptions: {
-      input: [
-        path.resolve(__dirname, 'resources/js/app.js'),
-        path.resolve(__dirname, 'resources/css/app.scss'),
-      ],
-    },
-  },
+  base: '/wp-content/themes/lukemillers-theme/public/build/',
   plugins: [
     tailwindcss(),
     laravel({
