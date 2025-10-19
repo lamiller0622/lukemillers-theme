@@ -107,4 +107,3 @@ jobs:
           remote_path: ${{ secrets.REMOTE_PATH }}/
           sftp_only: true
           sftpArgs: "-o StrictHostKeyChecking=no"
-          delete_remote_files: true
