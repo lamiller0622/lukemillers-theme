@@ -22,7 +22,7 @@
       'title'    => 'Mixes 2024 (Reprise)',
       'artist'   => 'Luke Miller',
       'album'    => 'Mixes 2024',
-      'audioUrl' => 'https://lukemiller.io/wp-content/mixes_2024_faststart.m4a',
+      'audioUrl' => 'https://lukemiller.io/wp-content/24-compiled-meta.m4a',
       'artwork'  => 'https://pub-eb118f23ac7b48a3985b8985ef92286c.r2.dev/cover.png',
       'chapters' => parse_audacity_labels(
         get_theme_file_path('resources/static/2024-Labels.txt')
