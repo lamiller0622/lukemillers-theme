@@ -5,3 +5,4 @@ resources/static/*.m4a
 !/public/.gitkeep
 .env
 npm-debug.log
+.DS_Store

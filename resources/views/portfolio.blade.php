@@ -86,10 +86,9 @@ $autoplay = $autoplay ?? 0;
         @foreach($slides as $i => $s)
           <li class="glide__slide">
             <article class="slide">
-              <div class="slide__media">
                 @if(!empty($s['lottie']))
                   <lottie-player
-                    class="slide__image"
+                    class="slide__image lottie"
                     src="{{ $s['lottie'] }}"
                     background="transparent"
                     speed="1"
@@ -97,7 +96,6 @@ $autoplay = $autoplay ?? 0;
                     autoplay
                     aria-label="{{ $s['title'] }} animation">
                   </lottie-player>
-
                   @if(!empty($s['poster']))
                     <noscript>
                       <img class="slide__image" src="{{ $s['poster'] }}" alt="{{ $s['title'] }}">
@@ -109,7 +107,6 @@ $autoplay = $autoplay ?? 0;
                        alt="{{ $s['title'] }}"
                        loading="lazy" decoding="async" />
                 @endif
-              </div>
               <div class="slide__overlay"></div>
               <!-- <div class="slide__badge">{{ str_pad($i+1, 2, '0', STR_PAD_LEFT) }}</div> -->
               <div class="slide__content">

@@ -94,12 +94,11 @@ body {
     place-items: center;
     place-content: center;
     height: 100%;
-
-    &__image {
+    .slide__image {
       height: max-content;
+      max-height: 80%;
       overflow: hidden;
       width: auto;
-      max-height: 80%;
       border: solid 5px;
       object-fit: fill;
       object-position: top center;

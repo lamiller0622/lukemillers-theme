@@ -101,16 +101,31 @@ function setupGroundHotspotsOn(ground, v, overlay) {
       <div class="secret"><a href="/mixes" class="btn-primary">fun</a></div>
       ` 
     },
+    { id: 'disco', u: 0.85, v: -0.75, label: `
+      <div class="disco-ball" aria-hidden="true"></div>
+      ` 
+    },
   ]
 
   const nodes = HOTSPOTS.map(h => {
     const d = document.createElement('div')
     d.className = 'vanta-hotspot'
+
+    d.style.pointerEvents = 'auto';
+    if (h.id) d.dataset.id = h.id;
+
     const label = document.createElement('div')
     label.className = 'label'
     label.innerHTML = h.label
     d.appendChild(label)
     overlay.appendChild(d)
+
+    if (h.id === 'disco') {
+      d.classList.add('is-disco');
+      // no label popover for the disco, just hover target
+      label.style.pointerEvents = 'none';
+    }
+
     return { ...h, el: d, local: new THREE.Vector3() }
   })
 
@@ -156,6 +171,18 @@ function setupGroundHotspotsOn(ground, v, overlay) {
         }
       }
     })
+
+    const robotHost = document.getElementById('robot-cursor');
+    if (n.id === 'disco' && robotHost) {
+      const startDance = () => robotHost.classList.add('dance');
+      const stopDance  = () => robotHost.classList.remove('dance');
+
+      n.el.addEventListener('mouseenter', startDance);
+      n.el.addEventListener('mouseleave', stopDance);
+      n.el.addEventListener('focus', startDance);   // keyboard focus
+      n.el.addEventListener('blur', stopDance);
+    }
+
     n.el.addEventListener('mouseenter', () => n.el.classList.add('hover'))
     n.el.addEventListener('mouseleave', () => n.el.classList.remove('hover'))
   })
@@ -203,17 +230,20 @@ function setupGroundHotspotsOn(ground, v, overlay) {
   tick()
 }
 
-/* ---------- boot ---------- */
 document.addEventListener('DOMContentLoaded', () => {
   const el = document.querySelector('#vanta-bg')
   if (!el) return
 
   window.THREE = THREE
 
+  // 1) HOISTED reference so other functions can see it
+  let vanta = null
+
   requestAnimationFrame(init)
 
   async function init() {
-    const vanta = GLOBE({
+    // 2) ASSIGN to the hoisted variable (no "const" here)
+    vanta = GLOBE({
       el,
       THREE,
       mouseControls: true,
@@ -229,14 +259,75 @@ document.addEventListener('DOMContentLoaded', () => {
       backgroundAlpha: 1,
     })
 
-    // wait a few frames so Vanta finishes building the scene
     await waitForFrames(6)
 
     const ground = findGroundObject(vanta) || makeVirtualGround(vanta)
     const overlay = document.querySelector('#vanta-hotspots')
     setupGroundHotspotsOn(ground, vanta, overlay)
   }
+
+  const robotHost = document.getElementById('robot-cursor')
+
+  const VANTA_BASE = { color: 0x007074, color2: 0xe45b31, backgroundColor: 0xe3d9cf }
+
+  const DISCO_PALETTES = [
+    { color: 0xff3b3b, color2: 0x00e7ff, backgroundColor: 0x0d0221 },
+    { color: 0x9dff00, color2: 0xff00e6, backgroundColor: 0x011627 },
+    { color: 0xffd166, color2: 0x06d6a0, backgroundColor: 0x1a1a1a },
+    { color: 0x845ec2, color2: 0xff6f91, backgroundColor: 0x101018 },
+    { color: 0x00f5d4, color2: 0xf15bb5, backgroundColor: 0x0b132b },
+  ]
+
+  let discoTimer = null
+  let discoIndex = 0
+  let inDisco = false
+
+  // tiny helper: run a callback once vanta is ready
+  function whenVantaReady(cb) {
+    if (vanta) cb()
+    else requestAnimationFrame(() => whenVantaReady(cb))
+  }
+
+  function applyVantaOptions(opts) {
+    if (vanta && typeof vanta.setOptions === 'function') {
+      vanta.setOptions(opts)
+    } else if (vanta && typeof vanta.destroy === 'function') {
+      // fallback if your build has no setOptions
+      vanta.destroy()
+      vanta = GLOBE({ el, THREE, ...opts, mouseControls: true, touchControls: true, gyroControls: false, minHeight: 400, minWidth: 400, scale: 1, scaleMobile: 1 })
+    }
+  }
+
+  function startDisco() {
+    if (inDisco) return
+    inDisco = true
+    discoIndex = 0
+    whenVantaReady(() => {
+      // if your build lacks setOptions, consider 2000ms instead of 1000ms
+      discoTimer = setInterval(() => {
+        const p = DISCO_PALETTES[discoIndex % DISCO_PALETTES.length]
+        applyVantaOptions(p)
+        discoIndex++
+      }, 1000)
+    })
+  }
+
+  function stopDisco() {
+    if (!inDisco) return
+    inDisco = false
+    if (discoTimer) clearInterval(discoTimer)
+    discoTimer = null
+    whenVantaReady(() => applyVantaOptions(VANTA_BASE))
+  }
+
+  if (robotHost) {
+    const check = () => (robotHost.classList.contains('dance') ? startDisco() : stopDisco())
+    const mo = new MutationObserver(check)
+    mo.observe(robotHost, { attributes: true, attributeFilter: ['class'] })
+    check() // initialize state
+  }
 })
+
 
 
 document.addEventListener('DOMContentLoaded', () => {

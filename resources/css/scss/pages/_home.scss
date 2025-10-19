@@ -13,7 +13,6 @@
 	transform: translate(-50%, -50%); 
 	transition: transform .15s ease, box-shadow .15s ease;
 	pointer-events: auto; 
-	cursor: pointer;
 	.label{
 		border: solid 1px $primary;
 		position: absolute; 
@@ -42,3 +41,14 @@
 		}
 	}
 }
+
+
+.vanta-hotspot.is-disco {
+  width: 35%;
+  height: 55%;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  transform: translate(-50%, -50%);
+}
+.vanta-hotspot.is-disco .label { display: none; } 

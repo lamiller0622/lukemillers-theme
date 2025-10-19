@@ -45,20 +45,27 @@ html.robot-wave #robot-cursor {
 #antenna { animation: antenna-pulse 1.2s ease-in-out infinite; }
 
 /* --------------------- Idle motion (head/body/arms/antenna only) */
+@property --ty { syntax: '<length>'; inherits: false; initial-value: 0px; }
+@property --tx { syntax: '<length>'; inherits: false; initial-value: 0px; }
+@property --rot { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+
+/* Base: your non-dance hover bounce stays as-is, but we’ll route through vars */
 #bot-bounce {
   transform-box: fill-box;
-  transform-origin: 8px 10px;     
+  transform-origin: 8px 10px;
+  /* Compose from variables so multiple animations can contribute safely */
+  transform: translateX(var(--tx)) translateY(var(--ty)) rotate(var(--rot));
+  /* keep your existing hover animation name/time if you like */
   animation: robot-bounce-tilt 2.0s cubic-bezier(.22,.61,.36,1) infinite;
-  will-change: transform;
 }
 
-/* Your smooth alternating tilt while bouncing */
+/* Re-implement your base hover animation to write vars instead of transform */
 @keyframes robot-bounce-tilt {
-  0%   { transform: translateY(0)    rotate(0deg);  }
-  25%  { transform: translateY(-5px) rotate(-2deg); }
-  50%  { transform: translateY(0)    rotate(0deg);  }
-  75%  { transform: translateY(-5px) rotate( 2deg); }
-  100% { transform: translateY(0)    rotate(0deg);  }
+  0%   { --ty: 0px;   --rot: 0deg;  }
+  25%  { --ty: -5px;  --rot: -2deg; }
+  50%  { --ty: 0px;   --rot: 0deg;  }
+  75%  { --ty: -5px;  --rot: 2deg;  }
+  100% { --ty: 0px;   --rot: 0deg;  }
 }
 
 /* Slightly quicker while waving */
@@ -100,6 +107,124 @@ html.robot-wave #robot-shadow { animation-duration: 1.7s; }
   #robot-shadow,
   html.robot-wave #arm-right { animation: none !important; }
 }
+
+/* --------------------- Disco Dancing --------------------------- */
+
+#robot-cursor.dance #arm-right{
+  transform-box: fill-box;
+  transform-origin: 0% 50%; /* pivot at shoulder (left edge of the group) */
+  animation: arm-disco-upright-then-cross 1.2s cubic-bezier(.25,.8,.25,1) infinite;
+  will-change: transform;
+}
+
+#robot-cursor.dance #arm-left{
+  transform-box: fill-box;
+  transform-origin: 0% 50%;
+  animation: arm-counter 1.1s ease-in-out infinite alternate;
+  opacity:.95;
+}
+
+#robot-cursor.dance #arm-right rect:last-child{
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: finger-pop 1.2s cubic-bezier(.2,.7,.2,1) infinite;
+}
+
+#robot-cursor.dance #antenna{
+  animation: antenna-blink-sync 1.2s steps(1,end) infinite;
+}
+
+#robot-cursor.dance #bot-bounce {
+  animation:
+    dance-bounceY 0.6s cubic-bezier(.25,.9,.25,1) infinite,
+    dance-tiltLR  1.2s ease-in-out                 infinite,
+    dance-swayX   1.2s ease-in-out                 infinite;
+}
+
+/* Stronger bounce on dance */
+@keyframes dance-bounceY {
+  /* quick up, ease down */
+  0%   { --ty: 0px; }
+  30%  { --ty: -7px; }
+  55%  { --ty: -2px; }
+  100% { --ty: 0px; }
+}
+
+/* Tilt lines up with your 1.2s arm-disco-upright-then-cross flick window */
+@keyframes dance-tiltLR {
+  0%    { --rot: 0deg; }
+  28%   { --rot: -3deg; } /* while lifting */
+  58%   { --rot:  3deg; } /* across chest (hold) */
+  72%   { --rot:  4deg; } /* tiny accent on flick */
+  100%  { --rot: 0deg; }
+}
+
+@keyframes dance-swayX {
+  0%   { --tx: 0px; }
+  25%  { --tx: -1px; }
+  50%  { --tx: 0px; }
+  75%  { --tx: 1px; }
+  100% { --tx: 0px; }
+}
+
+
+/* ===== Keyframes ===== */
+
+/* subtle body sway */
+@keyframes bot-shimmy-clear{
+  0%   { transform: translateX(-0.6px) translateY(-0.3px) rotate(-2deg); }
+  33%  { transform: translateX( 0px)    translateY( 0px)    rotate( 0deg); }
+  67% { transform: translateX( 0.6px)  translateY(-0.3px) rotate( 2deg); }
+  100%  { transform: translateX( 0px)    translateY( 0px)    rotate( 0deg); }
+}
+
+/* 0–32%: UP-RIGHT (negative rotation = counterclockwise = points up-right)
+   32–62%: DOWN-LEFT ACROSS CHEST (clockwise + left/down translate)
+   62–78%: FLICK slightly farther down-left
+   78–100%: settle back to the across pose for a readable loop */
+@keyframes arm-disco-upright-then-cross{
+  0%{
+    transform: rotate(0deg) translate(0px,0px);
+  }
+  32%{
+    /* raise up + to the right */
+    transform: rotate(38deg) translate( 1px, -3px);
+  }
+  62%{
+    /* sweep across chest down-left (left = -x, down = +y) — HOLD POSE */
+    transform: rotate(30deg) translate(-6px, 2px);
+  }
+  78%{
+    /* quick flick a touch farther */
+    transform: rotate(24deg) translate(-7px, 3px) scaleY(1.06);
+  }
+  100%{
+    /* return near the across pose so the loop reads */
+    transform: rotate(30deg) translate(-6px, 2px);
+  }
+}
+
+/* left arm tiny counter */
+@keyframes arm-counter{
+  from{ transform: rotate(6deg) translateY(0px); }
+  to  { transform: rotate(-4deg) translateY(0.3px); }
+}
+
+/* finger micro-pop on flick window */
+@keyframes finger-pop{
+  0%,61%  { transform: scale(1) translate(0,0); opacity:1; }
+  66%     { transform: scale(1.22) translate(-0.2px,0.1px); opacity:1; }
+  78%     { transform: scale(1) translate(0,0); opacity:.95; }
+  100%    { transform: scale(1) translate(0,0); opacity:1; }
+}
+
+/* blink exactly on the flick beat */
+@keyframes antenna-blink-sync{
+  0%,61%  { opacity:1; }
+  66%,78% { opacity:.25; }
+  100%    { opacity:1; }
+}
+
 
 /* ---------------- Robot in the art gallery ---------------------- */
 
