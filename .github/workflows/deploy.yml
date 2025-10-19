@@ -75,11 +75,10 @@ jobs:
       - name: Build production assets
         run: npm run build
 
-      # create deploy/ first, then add debug markers *inside* it
       - name: Prepare deploy folder
         run: |
           rm -rf deploy
-          mkdir -p deploy
+          mkdir -p deploy/lukemillers-theme
           rsync -a --delete \
             --exclude ".git*" \
             --exclude ".github" \
@@ -88,9 +87,9 @@ jobs:
             --exclude "tests" \
             --exclude "vendor/bin" \
             --exclude "*.map" \
-            ./ deploy/
-          echo "Deployed $GITHUB_SHA on $(date -u +%FT%TZ)" > deploy/version.txt
-          cat > deploy/pathcheck.php <<'PHP'
+            ./ deploy/lukemillers-theme/
+          echo "Deployed $GITHUB_SHA on $(date -u +%FT%TZ)" > deploy/lukemillers-theme/version.txt
+          cat > deploy/lukemillers-theme/pathcheck.php <<'PHP'
           <?php
           echo 'ABSPATH: ' . ABSPATH . PHP_EOL;
           echo 'Theme dir: ' . get_stylesheet_directory() . PHP_EOL;
