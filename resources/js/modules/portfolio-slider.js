@@ -42,6 +42,73 @@ function getTargetIndex(glide, e) {
   return norm(glide.index);
 }
 
+function mountWheelSwipe(glide, root, setPendingDir) {
+  const track = root.querySelector('.glide__track');
+  if (!track) return;
+
+  let acc = 0;
+  const STEP = 120;
+  const COOLDOWN = 250;
+  let cooling = false;
+
+  const onWheel = (e) => {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) return;
+    e.preventDefault();
+    if (cooling) return;
+
+    acc += e.deltaX;
+
+    if (acc <= -STEP) {
+      acc = 0;
+      setPendingDir('left');  
+      glide.go('<');
+      cooling = true;
+      setTimeout(() => (cooling = false), COOLDOWN);
+    } else if (acc >= STEP) {
+      acc = 0;
+      setPendingDir('right');  
+      glide.go('>');
+      cooling = true;
+      setTimeout(() => (cooling = false), COOLDOWN);
+    }
+  };
+
+  track.addEventListener('wheel', onWheel, { passive: false });
+  glide.on('destroy', () => {
+    track.removeEventListener('wheel', onWheel, { passive: false });
+  });
+}
+
+function mountTouchDir(root, setPendingDir) {
+  const track = root.querySelector('.glide__track');
+  if (!track) return;
+
+  let startX = 0, startY = 0;
+  const THRESH = 18; // px – adjust if needed
+
+  const onStart = (e) => {
+    const t = e.touches && e.touches[0];
+    if (!t) return;
+    startX = t.clientX;
+    startY = t.clientY;
+  };
+
+  const onMove = (e) => {
+    const t = e.touches && e.touches[0];
+    if (!t) return;
+    const dx = t.clientX - startX;
+    const dy = t.clientY - startY;
+
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > THRESH) {
+      setPendingDir(dx < 0 ? 'right' : 'left');
+    }
+  };
+
+  track.addEventListener('touchstart', onStart, { passive: true });
+  track.addEventListener('touchmove',  onMove,  { passive: true });
+}
+
+
 export function mountPortfolioSliders() {
   document.querySelectorAll('[data-portfolio-glide]').forEach(root => {
     const autoplay = parseInt(root.dataset.autoplay || '0', 10) || 0;
@@ -96,9 +163,10 @@ export function mountPortfolioSliders() {
     const nSlides = originals.length || 1;
     const norm = (i) => ((i % nSlides) + nSlides) % nSlides;
     const shortestDir = (curr, target) => {
-      const f = (target - curr + nSlides) % nSlides;
-      const b = (curr - target + nSlides) % nSlides;
-      return (f || b) && f <= b ? 'right' : 'left';
+      const f = (target - curr + nSlides) % nSlides; 
+      const b = (curr - target + nSlides) % nSlides; 
+      if (f === 0 && b === 0) return null;          
+      return f <= b ? 'right' : 'left';
     };
     const getDirection = (glide, e) => {
       if (pendingDir) { const d = pendingDir; pendingDir = null; return d; }
@@ -131,6 +199,10 @@ export function mountPortfolioSliders() {
     });
 
     glide.on('resize', () => setDepthClasses(root, glide.index));
+
+    const setPendingDirFromInput = (dir) => { pendingDir = dir; };
+    mountWheelSwipe(glide, root, setPendingDirFromInput);
+    mountTouchDir(root, setPendingDirFromInput);
 
     glide.mount();
   });
