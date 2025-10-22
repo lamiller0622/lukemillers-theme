@@ -268,7 +268,7 @@ $pivot-y: 3px;
 }
 
 
-/* ---------------- Robot typing ---------------------- */
+/* ---------------- Robot typing on the desk---------------------- */
 
 $bot-type-dur: 1.1s;
 $bot-type-ease: cubic-bezier(.22, .61, .36, 1);
@@ -285,6 +285,10 @@ $bot-type-ease: cubic-bezier(.22, .61, .36, 1);
 
 .robot-typing {
   width: 100vw;
+  overflow: visible;
+  @media(max-width: 767px){
+    bottom: 0;
+  }
   #bot-left-seated {
     #arm-front,
     #arm-mid {

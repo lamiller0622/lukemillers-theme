@@ -15,12 +15,9 @@ $font-ui: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Can
 .monitor-wrap { 
   margin-left: 5%;
   max-width: 100%;
-  width: 43%;
+  width: 58%;
   top: 15vh;
   z-index: 1;
-  @media(max-width: 1024px){
-    width: 58%;
-  }
   @media(max-width: 767px){
     width: auto;
     padding: 0 15px;
@@ -48,12 +45,26 @@ $font-ui: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Can
         gap: 8px;
         padding: 8px 12px 0;
 
-        .dots { display: flex; gap: 6px; }
-        .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
-        .dot-close { background: #ef4444; }
-        .dot-min   { background: #f59e0b; }
-        .dot-max   { background: #10b981; }
-
+        .dots { 
+          display: flex; 
+          gap: 6px; 
+          align-items: center;
+        }
+        .dot { 
+          width: 10px; 
+          height: 10px; 
+          border-radius: 50%; 
+          display: inline-block; 
+        }
+        .dot-close { 
+          background: #ef4444; 
+        }
+        .dot-min   { 
+          background: #f59e0b; 
+        }
+        .dot-max   { 
+          background: #10b981; 
+        }
         .title {
           text-align: center;
           font: 500 12px $font-ui;
@@ -77,13 +88,13 @@ $font-ui: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Can
         background: $white;
         margin: 12px;
         padding: clamp(12px, 2vw, 18px);
-        height: clamp(300px, 42vh, 520px);
+        height: clamp(300px, 50vh, 520px);
         overflow: auto;
 
         @include nice-scrollbar($text-dark);
         .code {
           font-family: $font-code;
-          font-size: clamp(12px, 1.6vw, 15px);
+          font-size: clamp(12px, 14px, 15px);
           line-height: 1.65;
           color: $text-dark;
           white-space: nowrap;
@@ -102,14 +113,12 @@ $font-ui: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Can
               margin-bottom: 8px; 
             }
             .fn-block {
-              border-radius: 8px;
-              margin-bottom: 10px;
               overflow: clip;
 
               > summary {
                 list-style: none;
                 cursor: pointer;
-                padding: 10px 12px;
+                padding: 10px 0;
                 display: flex;
                 align-items: baseline;
                 gap: 6px;
@@ -128,9 +137,12 @@ $font-ui: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Can
 
               &[open] > summary:before { content: '▾'; }
 
-              .summary-meta { opacity: .55; margin-left: 6px; }
+              .summary-meta { 
+                opacity: .55; 
+                margin-left: 6px; 
+              }
               .fn-body { 
-                padding: 8px 0px 12px 28px; 
+                padding: 8px 0px 12px 20px; 
                 text-wrap: auto;
 
               }
