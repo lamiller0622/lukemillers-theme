@@ -282,7 +282,6 @@ document.addEventListener('DOMContentLoaded', () => {
   let discoIndex = 0
   let inDisco = false
 
-  // tiny helper: run a callback once vanta is ready
   function whenVantaReady(cb) {
     if (vanta) cb()
     else requestAnimationFrame(() => whenVantaReady(cb))

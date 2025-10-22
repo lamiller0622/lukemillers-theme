@@ -1,0 +1,199 @@
+@use "../globals" as *;
+
+$bp-md: 1000px;
+
+$font-code: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+$font-ui: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+
+@mixin nice-scrollbar($track: $text-dark) {
+  &::-webkit-scrollbar { width: 10px; }
+  &::-webkit-scrollbar-thumb {
+    background: #1f2937; border-radius: 8px; border: 2px solid $track;
+  }
+}
+
+.monitor-wrap { 
+  margin-left: 5%;
+  max-width: 100%;
+  width: 43%;
+  top: 15vh;
+  z-index: 1;
+  @media(max-width: 1024px){
+    width: 58%;
+  }
+  @media(max-width: 767px){
+    width: auto;
+    padding: 0 15px;
+    margin: 0;
+  }
+  .monitor-frame { 
+    max-width: 960px; 
+    margin-inline: auto; 
+    .monitor-bezel {
+      position: relative;
+      background: #374151;
+      border: 10px solid #111827;
+
+      &::after {
+        content: '';
+        position: absolute; 
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+      }
+      .monitor-toolbar {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px 0;
+
+        .dots { display: flex; gap: 6px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+        .dot-close { background: #ef4444; }
+        .dot-min   { background: #f59e0b; }
+        .dot-max   { background: #10b981; }
+
+        .title {
+          text-align: center;
+          font: 500 12px $font-ui;
+          color: $white; 
+          opacity: .9;
+        }
+
+        .btn.small {
+          font-size: 11px;
+          padding: 4px 8px;
+          border-radius: 6px;
+          background: #111827;
+          color: #e5e7eb;
+          border: 1px solid #1f2937;
+          cursor: pointer;
+
+          &:hover { background:#0b1020; }
+        }
+      }
+      .monitor-screen {
+        background: $white;
+        margin: 12px;
+        padding: clamp(12px, 2vw, 18px);
+        height: clamp(300px, 42vh, 520px);
+        overflow: auto;
+
+        @include nice-scrollbar($text-dark);
+        .code {
+          font-family: $font-code;
+          font-size: clamp(12px, 1.6vw, 15px);
+          line-height: 1.65;
+          color: $text-dark;
+          white-space: nowrap;
+        }
+
+        .ide {
+
+          .gutter {
+            width: 42px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.04), transparent);
+            border-right: 1px solid rgba(255,255,255,0.06);
+          }
+          .pane { 
+            min-width: 0; 
+            .file-preamble { 
+              margin-bottom: 8px; 
+            }
+            .fn-block {
+              border-radius: 8px;
+              margin-bottom: 10px;
+              overflow: clip;
+
+              > summary {
+                list-style: none;
+                cursor: pointer;
+                padding: 10px 12px;
+                display: flex;
+                align-items: baseline;
+                gap: 6px;
+
+                &::-webkit-details-marker { display: none; }
+
+                &:before {
+                  content: '▸';
+                  display: inline-block;
+                  transform: translateY(1px);
+                  margin-right: 6px;
+                  opacity: .8;
+                  color: $dark-brown;
+                }
+              }
+
+              &[open] > summary:before { content: '▾'; }
+
+              .summary-meta { opacity: .55; margin-left: 6px; }
+              .fn-body { 
+                padding: 8px 0px 12px 28px; 
+                text-wrap: auto;
+
+              }
+              .indent-1 { 
+                padding-left: 18px; 
+              }
+              .return { 
+                margin-top: 6px; 
+              }
+            }
+          }
+        }
+
+        .code-python {
+          .kw  { 
+            color: $blue; 
+          }  
+          .fn  { 
+            color: $text-dark; 
+            font-weight: bold;
+            font-size: 18px;
+          }  
+          .op  { 
+            color: $dark-gray; 
+          } 
+          .p   { 
+            color: $dark-gray; 
+          }  
+          .str { 
+            color: $text-dark; 
+          }  
+          .cm  { 
+            color: $text-dark;
+            opacity: .55;
+          }
+        }
+      }
+    }
+  }
+  .monitor-stand {
+    display: grid;
+    place-items: center;
+    .monitor-neck {
+      width: 16px; 
+      height: 50px; 
+      background: #6b7280;
+    }
+    .monitor-foot {
+      width: 220px; 
+      height: 24px; 
+      background: #6b7280; 
+    }
+  }
+}
+
+/* Blinking caret */
+@keyframes blink { 50% { opacity: 0; } }
+.code .cursor {
+  display: inline-block;
+  width: 0.6ch; height: 1.1em; vertical-align: -0.2em;
+  background: $text-dark;
+  animation: blink 1.2s steps(1) infinite;
+  margin-left: 2px;
+}
+
+

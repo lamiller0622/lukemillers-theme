@@ -33,10 +33,10 @@
       'title'    => '2025 Mix (In Progress)',
       'artist'   => 'Luke Miller',
       'album'    => 'Mixes 2025',
-      'audioUrl' => 'https://lukemiller.io/wp-content/Takeitmixcopy.m4a',
+      'audioUrl' => 'https://lukemiller.io/wp-content/25raw-meta.m4a',
       'artwork'  => 'https://pub-eb118f23ac7b48a3985b8985ef92286c.r2.dev/cover.png',
       'chapters' => parse_audacity_labels(
-        get_theme_file_path('resources/static/label1.txt')
+        get_theme_file_path('resources/static/labels-meta.txt')
       ),
     ],
   ];
