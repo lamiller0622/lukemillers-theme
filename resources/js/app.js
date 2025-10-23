@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.__robotCtl = mountPixelRobot({
     hoverSelector: 'a, button, [role="button"], .glide__arrow, .vanta-hotspot .label a'
   });
+
   initVantaHotspots({
     elSelector: '#vanta-bg',
     overlaySelector: '#vanta-hotspots',
@@ -36,3 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
     autoplay: 3600
   }).mount()
 })
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  mountPortfolioSliders();
+});
