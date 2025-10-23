@@ -60,10 +60,10 @@ html.robot-wave #robot-cursor {
   100% { --ty: 0px;   --rot: 0deg;  }
 }
 
-/* Slightly quicker while waving */
+
 html.robot-wave #bot-bounce { animation-duration: 1.2s; }
 
-/* --------------------- Arm wave (right arm) --------------------- */
+/* --------------------- Arm wave  --------------------- */
 @keyframes robot-arm-wave {
   0%   { transform: translate(0, 0) rotate(0deg); }
   50%  { transform: translate(0,-1px) rotate(-6deg); }
@@ -75,7 +75,19 @@ html.robot-wave #arm-right {
   animation: robot-arm-wave .45s ease-in-out infinite;
 }
 
-/* --------------------- Optional shadow (under-bounce) ----------- */
+/* --------------------- Jumps in Hole --------------------- */
+
+.robot-is-jumping #robot-cursor {
+  animation: robot-jump-in .45s cubic-bezier(.22,.61,.36,1) forwards;
+}
+
+@keyframes robot-jump-in {
+  0%   { transform: translate(var(--rx), var(--ry)) scale(1)    rotate(0deg);   }
+  30%  { transform: translate(calc(var(--rx) * 0.98), calc(var(--ry) * 0.98)) scale(0.95, 1.05) rotate(-2deg); }
+  60%  { transform: translate(var(--rx), var(--ry)) scale(1.08, 0.92) rotate(2deg); }
+  100% { transform: translate(var(--rx), var(--ry)) scale(0.1) rotate(0deg); opacity: 0; }
+}
+
 #robot-shadow {
   position: absolute;
   left: 0;

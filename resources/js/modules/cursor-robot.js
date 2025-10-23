@@ -3,6 +3,7 @@
  * - Follows pointer with easing
  * - Blinks occasionally
  * - Adds .cursor-hover + .robot-wave on interactive hovers
+ * - Jumps in the hole of node when link is clicked
  * Returns an unmount() you can call to clean up.
  */
 export function mountPixelRobot({
@@ -33,6 +34,7 @@ export function mountPixelRobot({
   let x  = tx;
   let y  = ty;
   let rafId;
+  let takeover = false;
 
   const updateTarget = (e) => {
     // Use clientX/Y so it’s viewport-relative (works with fixed positioning)
@@ -94,6 +96,45 @@ export function mountPixelRobot({
   };
   scheduleBlink();
 
+  // ---- Jumping in hole -------------------------------------------------------
+
+  const easeOutQuad = (t) => 1 - (1 - t) * (1 - t);
+
+  const goto = (px, py, { duration = 600 } = {}) => new Promise((resolve) => {
+    takeover = true;
+    const sx = x, sy = y;
+    const dx = px - sx, dy = py - sy;
+    const t0 = performance.now();
+    const step = (now) => {
+      const t = Math.min(1, (now - t0) / duration);
+      const e = easeOutQuad(t);
+      tx = sx + dx * e;
+      ty = sy + dy * e;
+      if (t < 1) requestAnimationFrame(step);
+      else resolve();
+    };
+    requestAnimationFrame(step);
+  });
+
+  const jumpInto = (hotspotEl, { duration = 450 } = {}) => new Promise((resolve) => {
+    // center of hotspot
+    const r = hotspotEl.getBoundingClientRect();
+    const cx = r.left + r.width / 2;
+    const cy = r.top  + r.height / 2;
+
+    // set CSS vars so the keyframes know where to jump to
+    document.documentElement.style.setProperty('--rx', `${Math.round(cx)}px`);
+    document.documentElement.style.setProperty('--ry', `${Math.round(cy)}px`);
+    document.documentElement.classList.add('robot-is-jumping');
+
+    window.setTimeout(() => {
+      document.documentElement.classList.remove('robot-is-jumping');
+      resolve();
+    }, duration);
+  });
+
+  const release = () => { takeover = false; };
+
   // ---- Cleanup/unmount --------------------------------------------------
   const unmount = () => {
     cancelAnimationFrame(rafId);
@@ -111,5 +152,5 @@ export function mountPixelRobot({
   // Also auto-clean on pagehide (Safari/iOS friendly)
   window.addEventListener('pagehide', unmount, { once: true });
 
-  return unmount;
+  return { unmount, goto, jumpInto, release };
 }

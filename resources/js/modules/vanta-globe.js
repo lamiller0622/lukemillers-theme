@@ -172,6 +172,49 @@ export function initVantaHotspots({
       const world = new THREE.Vector3();
       const projected = new THREE.Vector3();
 
+      (() => {
+        if (overlay) overlay.style.pointerEvents = 'auto';
+        const robot = window.__robotCtl || null;
+        const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        nodes.forEach(n => {
+          n.el.addEventListener('click', (e) => {
+            const link = e.target.closest('.label a[href]');
+            if (!link) return; // not a link click inside the label
+
+            if (prefersReduce || !robot || typeof robot.goto !== 'function' || typeof robot.jumpInto !== 'function') {
+              e.preventDefault();
+              window.location.assign(link.href);
+              return;
+            }
+
+            e.preventDefault();
+
+            // grow the node during the jump (optional)
+            n.el.classList.add('jump-target');
+
+            // center of hotspot in viewport
+            const rect = n.el.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top  + rect.height / 2;
+
+            // provide coordinates for the CSS keyframes (if you added them)
+            document.documentElement.style.setProperty('--rx', `${Math.round(cx)}px`);
+            document.documentElement.style.setProperty('--ry', `${Math.round(cy)}px`);
+
+            robot
+              .goto(cx, cy, { duration: 600 })      // ease robot to the node
+              .then(() => robot.jumpInto(n.el, { duration: 450 })) // squash-pop in
+              .then(() => window.location.assign(link.href))       // navigate
+              .finally(() => {
+                n.el.classList.remove('jump-target');
+                robot.release?.(); // give control back to the cursor
+              });
+          });
+        });
+      })();
+
+
       const tick = () => {
         v.renderer.getSize(canvasSize);
         overlay.style.width  = canvasSize.x + 'px';
@@ -185,7 +228,10 @@ export function initVantaHotspots({
           const y = (-projected.y + 1) / 2 * canvasSize.y;
           const off = projected.z > 1 || projected.z < -1;
           n.el.style.display = off ? 'none' : 'block';
-          if (!off) n.el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
+          if (!off) {
+             n.el.style.setProperty('--x', `${x}px`);
+             n.el.style.setProperty('--y', `${y}px`);
+           }
         });
 
         requestAnimationFrame(tick);

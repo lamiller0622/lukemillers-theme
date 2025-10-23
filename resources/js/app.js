@@ -8,6 +8,16 @@ import {mountPortfolioSliders} from './modules/portfolio-slider';
 import { mountPixelRobot } from './modules/cursor-robot';
 import { initVantaHotspots } from './modules/vanta-globe';
 
+document.addEventListener('DOMContentLoaded', () => {
+  window.__robotCtl = mountPixelRobot({
+    hoverSelector: 'a, button, [role="button"], .glide__arrow, .vanta-hotspot .label a'
+  });
+  initVantaHotspots({
+    elSelector: '#vanta-bg',
+    overlaySelector: '#vanta-hotspots',
+  });
+});
+
 initVantaHotspots( {THREE, GLOBE} );
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -26,12 +36,3 @@ document.addEventListener('DOMContentLoaded', () => {
     autoplay: 3600
   }).mount()
 })
-
-
-document.addEventListener('DOMContentLoaded', () => {
-  mountPortfolioSliders();
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-  mountPixelRobot({ size: 64 }); 
-});

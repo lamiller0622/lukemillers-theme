@@ -1,54 +1,68 @@
 @use "../globals" as *;
-
 #vanta-hotspots { 
-	position: absolute; inset: 0; 
+  position: absolute; 
+  inset: 0; 
+  pointer-events: auto;
+  z-index: 30;
 }
 
 .vanta-hotspot {
-	position: absolute;
-	width: 10px; height: 10px;
-	border-radius: 9999px;
-	background: #1a5521;
-	box-shadow: 0 0 0 2px rgba(255,255,255,.6);
-	transform: translate(-50%, -50%); 
-	transition: transform .15s ease, box-shadow .15s ease;
-	pointer-events: auto; 
-	.label{
-		border: solid 1px $primary;
-		position: absolute; 
-		top: -8px; 
-		left: 14px;
-	
-		background: #fff;
-		padding: .5rem 1rem 1rem; 
-		color: $text-dark; 
-		font-size: 12px; 
-		line-height: 1;
-		white-space: nowrap; 
-		transform: translateY(-100%); 
-		opacity: 0; 
-		pointer-events: none;
-		transition: opacity .15s ease, transform .15s ease;
-		pointer-events: auto;
-		h2{
-			padding-top: 1rem;
-		}
-	}
-	&.active, &.hover{
-		.label{
-			opacity: 1;
-  			transform: translateY(-110%);
-		}
-	}
+  position: absolute;
+  width: 10px; 
+  height: 10px;
+  border-radius: 9999px;
+  background: $primary;
+  box-shadow: 0 0 0 2px rgba(255,255,255,.6);
+  --x: 0px; --y: 0px; --scale: 1;
+  transform: translate(var(--x), var(--y)) translate(-50%, -50%) scale(var(--scale));
+  transition: transform .18s ease, box-shadow .18s ease, width .5s ,height .5s;
+  pointer-events: auto;
+
+  .label{
+    border: solid 1px $primary;
+    position: absolute; 
+    top: -8px; 
+    left: 14px;
+    background: #fff;
+    padding: .5rem 1rem 1rem; 
+    color: $text-dark; 
+    font-size: 12px; 
+    line-height: 1;
+    white-space: nowrap; 
+    transform: translateY(-100%); 
+    opacity: 0; 
+    pointer-events: auto;
+    transition: opacity .15s ease, transform .15s ease;
+    h2{ padding-top: 1rem; }
+  }
+
+  &.active, &.hover{
+    .label{
+      opacity: 1;
+      transform: translateY(-110%);
+    }
+  }
+  
+  &.hover,
+  &.active,
+  &.jump-target {
+    width: 30px;
+    height: 30px;
+  }
 }
 
 
 .vanta-hotspot.is-disco {
-  width: 35%;
-  height: 55%;
+  width: 40%;
+  height: 65%;
   border: none;
   box-shadow: none;
   background: transparent;
-  transform: translate(-50%, -50%);
+  transform: translate(var(--x), var(--y)) translate(-50%, -50%);
 }
-.vanta-hotspot.is-disco .label { display: none; } 
+.vanta-hotspot.is-disco .label { 
+	display: none; 
+}
+
+#vanta-bg { pointer-events: none; }
+
