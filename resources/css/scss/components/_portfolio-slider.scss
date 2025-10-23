@@ -71,6 +71,7 @@ body {
     padding: 0; 
     place-items: center;
     height: 100%;
+    overflow: visible;
   }
 
   .glide__slide {
@@ -86,17 +87,12 @@ body {
     background: transparent;
     z-index: 1;
     isolation: isolate;
-    /*display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow: visible;
-    justify-content: center;*/
     place-items: center;
     place-content: center;
     height: 100%;
-    .slide__image {
-      height: max-content;
-      max-height: 80%;
+    &__image {
+      height: auto;
+      max-height: 52vh;
       overflow: hidden;
       width: auto;
       border: solid 5px;
@@ -106,34 +102,40 @@ body {
       transition: transform .7s ease, filter .5s ease;
     }
 
+    .lottie{
+      height: max-content !important;
+    }
+
     &__overlay {
       position: absolute;
       inset: 0;
-/*      background: linear-gradient(to top, rgba(0, 0, 0, .6), rgba(0, 0, 0, 0) 60%);*/
       pointer-events: none;
     }
 
     &__content {
       background: #e3d9cf;
-      display: inline-table;
+      display: block;
       margin-top: 1rem;
       padding: .5rem 1rem;
       overflow: visible;
       border: solid;
       z-index: 2;
       float: right;
-
+      position: relative;
     }
 
     &__title {
       margin: 0 0 6px;
       font-weight: 700;
-      font-size: clamp(18px, 1vw, 28px);
+      font-size: clamp(16px, 1vw, 28px);
       color: $text-dark;
+      @media(max-width: 767px){
+        line-height: 1;
+      }
     }
 
     &__meta {
-      font-size: 13px;
+      font-size: clamp(10px, 13px, 15px);;
       opacity: .9;
     }
 
@@ -265,30 +267,4 @@ body {
   .glide-portfolio .slide.is-next  { transform: translateX( 6%) rotateY(-14deg) scale(.95); }
 }
 
-/*.signhome {
-  display:inline-block;
-  text-decoration:none;
-  --sign-stroke: #111;
-  --sign-fill: #fff;
-}
 
-.signhome__svg {
-  display:block;
-  max-width: 12rem; 
-  margin-top: -50%;
-}
-
-.signhome__svg .signhome__board path { fill: var(--sign-fill); stroke: var(--sign-stroke); }
-.signhome__svg rect, 
-.signhome__svg path { stroke: none; }
-
-.signhome:hover .signhome__board { animation: sign-wobble .6s ease; transform-origin: 120px 100px; }
-@keyframes sign-wobble {
-  0%   { transform: rotate(0deg); }
-  20%  { transform: rotate(-3deg); }
-  50%  { transform: rotate(2deg); }
-  100% { transform: rotate(0deg); }
-}
-@media (prefers-reduced-motion: reduce){
-  .signhome:hover .signhome__board { animation: none; }
-}*/

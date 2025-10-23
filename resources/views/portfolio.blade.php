@@ -107,7 +107,7 @@ $autoplay = $autoplay ?? 0;
                        alt="{{ $s['title'] }}"
                        loading="lazy" decoding="async" />
                 @endif
-              <div class="slide__overlay"></div>
+
               <!-- <div class="slide__badge">{{ str_pad($i+1, 2, '0', STR_PAD_LEFT) }}</div> -->
               <div class="slide__content">
                 <h3 class="slide__title">{{ $s['title'] }}</h3>
