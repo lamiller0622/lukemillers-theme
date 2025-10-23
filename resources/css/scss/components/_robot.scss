@@ -286,9 +286,6 @@ $bot-type-ease: cubic-bezier(.22, .61, .36, 1);
 .robot-typing {
   width: 100vw;
   overflow: visible;
-  @media(max-width: 767px){
-    bottom: 0;
-  }
   #bot-left-seated {
     #arm-front,
     #arm-mid {

@@ -43,7 +43,7 @@
   $fn = fn($text) => trim(preg_replace('/[^a-z0-9]+/i','', $text), '_');
 @endphp
 
-<section class="workexp-wrap flex justify-center my-18 flex-col">
+<section class="workexp-wrap flex justify-center md:my-18 my-10 flex-col">
   <div class="monitor-wrap">
     <div class="monitor-frame">
       <div class="monitor-bezel">
@@ -96,19 +96,19 @@
         </div>
       </div>
 
-      <div class="monitor-stand">
+      <div class="monitor-stand md:grid hidden">
         <div class="monitor-neck"></div>
         <div class="monitor-foot"></div>
       </div>
     </div>
   </div>
-  <svg class="robot-typing absolute" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 80" shape-rendering="crispEdges">
+  <svg class="robot-typing absolute -bottom-10 md:bottom-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 80" shape-rendering="crispEdges">
     <!-- ===== Floor ===== -->
     <rect x="0" y="60" width="128" height="200" fill="#d0d1c9"/>
 
     <!-- ===== Desk ===== -->
     <g id="robot-desk" transform="translate(60,32) scale(.5)">
-      <g id="window">
+      <g id="window" class="hidden">
         <rect width="15" height="18" x="75" y="-30" fill="rgb(0, 136, 206,.55)" stroke="#534f34" stroke-width="1"/>
         <rect width="15" height="18" x="75" y="-12" fill="rgb(0, 136, 206,.55)" stroke="#534f34" stroke-width="1"/>
         <rect width="15" height="18" x="90" y="-12" fill="rgb(0, 136, 206,.55)" stroke="#534f34" stroke-width="1"/>
@@ -184,6 +184,24 @@
 
 @push('scripts')
 <script>
+const host = document.querySelector('.robot-typing');
+if (host) {
+  const movers = host.querySelectorAll('#bot-left-seated #arm-front, #bot-left-seated #arm-mid, #desk-side #keyboard');
+  let pausing = false;
+  const pauseMs = 5000;
+  movers.forEach(el => {
+    el.addEventListener('animationiteration', () => {
+      if (pausing) return;
+      pausing = true;
+      host.classList.add('paused');
+      setTimeout(() => {
+        host.classList.remove('paused');
+        pausing = false;
+      }, pauseMs);
+    }, { passive: true });
+  });
+}
+
 (() => {
   const wrap = document.querySelector('.monitor-wrap');
   if (!wrap) return;
