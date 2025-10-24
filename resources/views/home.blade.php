@@ -9,11 +9,26 @@
   <div id="vanta-bg" class="absolute inset-0 z-0 pointer-events-none">
     <div id="vanta-hotspots" class="absolute inset-0 pointer-events-none"></div>
   </div>
+  <!-- <div id="vanta-mobile" class="md:hidden relative z-10 container mx-auto px-4 py-8">
+    <div class="glide glide-mobile" aria-roledescription="carousel">
+      <div class="glide__track" data-glide-el="track">
+        <ul class="glide__slides"></ul>
+      </div>
 
-  <div class="relative z-10 container mx-auto py-24">
+      <div class="glide__arrows" data-glide-el="controls">
+        <button class="glide__arrow glide__arrow--left" data-glide-dir="<" aria-label="Previous">←</button>
+        <button class="glide__arrow glide__arrow--right" data-glide-dir=">" aria-label="Next">→</button>
+      </div>
+
+      <div class="glide__bullets" data-glide-el="controls[nav]"></div>
+    </div>
+  </div>
+
+  <div class="relative z-10 container mx-auto py-24 ">
     <h1 class="text-4xl font-semibold">Luke Miller</h1>
     <p class="mt-4 max-w-xl">Web Developer</p>
   </div>
+ -->
 </section>
 <div id="robot-cursor" aria-hidden="true">
   <!-- Pixel Robot SVG -->

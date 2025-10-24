@@ -7,6 +7,12 @@ import Glide from '@glidejs/glide'
 import {mountPortfolioSliders} from './modules/portfolio-slider';
 import { mountPixelRobot } from './modules/cursor-robot';
 import { initVantaHotspots } from './modules/vanta-globe';
+import { mountGlideNodeSlider } from './modules/mobile-home-slider';
+
+document.addEventListener('DOMContentLoaded', () => {
+  mountGlideNodeSlider({ selector: '.glide-mobile', startAt: 0 });
+});
+
 
 document.addEventListener('DOMContentLoaded', () => {
   window.__robotCtl = mountPixelRobot({
@@ -14,12 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   initVantaHotspots({
-    elSelector: '#vanta-bg',
-    overlaySelector: '#vanta-hotspots',
-  });
+     elSelector: '#vanta-bg',
+     overlaySelector: '#vanta-hotspots',
+    THREE,
+    GLOBE,
+   });
 });
-
-initVantaHotspots( {THREE, GLOBE} );
 
 document.addEventListener('DOMContentLoaded', () => {
   const el = document.querySelector('.glide.hero-reset')

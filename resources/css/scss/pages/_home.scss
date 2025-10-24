@@ -42,6 +42,7 @@
       transform: translateY(-110%);
     }
   }
+
   
   &.hover,
   &.active,
@@ -65,4 +66,14 @@
 }
 
 #vanta-bg { pointer-events: none; }
+
+
+/*@media (max-width: 768px) {
+  #vanta-hotspots .vanta-hotspot .label {
+    opacity: 1;
+    transform: translateY(calc(-100% - .5rem));
+    pointer-events: auto;
+  }
+}*/
+
 
