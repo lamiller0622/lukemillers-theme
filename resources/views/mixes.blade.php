@@ -36,7 +36,7 @@
       'audioUrl' => 'https://lukemiller.io/wp-content/25raw-meta.m4a',
       'artwork'  => 'https://pub-eb118f23ac7b48a3985b8985ef92286c.r2.dev/cover.png',
       'chapters' => parse_audacity_labels(
-        get_theme_file_path('resources/static/labels.txt')
+        get_theme_file_path('resources/static/labels1.txt')
       ),
     ],
   ];

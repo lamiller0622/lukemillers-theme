@@ -1,0 +1,63 @@
+0.000000	12.297732	Cards - Doja Cat
+12.297732	223.227846	Miss You Much - Janet Jackson
+223.227846	331.005896	House Tour - Sabrina Carpenter
+331.005896	446.897234	Fever - Madonna
+446.897234	598.674943	Reborn - Miley Cyrus
+598.674943	692.405420	GOODBYE BITCH - KAYTRANADA
+692.405420	854.484762	Into You - Ariana Grande
+854.475344	963.664263	Whenever, Wherever - Shakira
+963.665346	1089.284263	Sports Car - Tate McCrae
+1089.282991	1248.244694	Buttons - Pussycat Dolls
+1248.244694	1409.556100	Not Like Us - Kendrick Lamar
+1409.556100	1553.462517	Naughty Girl - Beyonce
+1553.318257	1711.444331	Love to Love You Baby - Donna Summer
+1711.444331	1878.892759	I Feel Love - Donna Summer
+1879.036780	2052.982154	Future Lover - Madonna
+2052.982154	2252.849864	Lucky Star (Live) - Madonna
+2252.849864	2502.289485	Hung Up (Live) - Madonna
+2502.351542	2649.750249	Be With You - Enrique Iglesias
+2649.750249	2754.421224	One in a Million - Basson
+2754.421224	2864.460363	Tragedy - Steps
+2864.460363	2989.063333	Take It - Dom Dolla
+2989.063333	3067.822585	Luxury - Axealia Banks
+3067.822585	3215.326621	Baddy on the Floor - Jamie xx
+3215.326621	3293.440884	One More Time - Daft Punk
+3293.440884	3433.223651	SLIDE - Doechii
+3433.223651	3562.049297	Ring, Ring, Ring - Tyler the Creator
+3562.049297	3685.170930	Drip Drip - KAYTRANADA
+3685.170930	3801.545556	Please Babe - KAYTRANADA
+3801.545556	3898.813741	We Dance to the Beat - Robyn
+3898.813741	4285.482300	Haunted Thique - Beyonce
+4285.482271	4442.097719	Abracadabra - Lady Gaga
+4442.097719	4517.588727	Shadow of a Man - Lady Gaga
+4517.588727	4604.637367	Telephone - Lade Gaga (feat. Beyonce)
+4604.637367	4704.607126	My Humps - The Black Eyed Peas
+4704.607126	4857.924440	Sugar On My Tongue - Tyler the Creater
+4857.924440	4978.984705	Alter Ego - Doechii
+4978.984705	5103.285773	1991 - Azealia Banks
+5103.285773	5247.328628	With Every Heartbeat - Robyn
+5247.328628	5292.478123	Baptized in Fear - The Weeknd
+5292.478123	5385.423743	Open Hearts - The Weeknd
+5385.423743	5596.913804	Walk Of Fame - Miley Cyrus
+5596.913804	5718.951847	Dim All The Lights - Donna Summer
+5718.951847	5783.419432	Don't Fucking Tell Me What To Do - Robyn
+5783.419432	5954.360551	Dance in the Dark - Lady Gaga
+5954.360551	6079.499658	The Dead Dance - Lady Gaga
+6079.620713	6300.915905	Every Girl You've Ever Loved - Miley Cyrus
+6300.922200	6416.942789	Deeper and Deeper - Madonna
+6416.942789	6547.739728	COZY - Beyonce
+6547.739728	6720.391723	Gimme More - Britney Spears
+6720.391723	6816.957143	Blah Blah Blah - Kesha
+6816.957143	6918.992585	NUEVAYoL - Bad Bunny
+6918.992585	7002.433560	Verano Rosa - KAROL G
+7002.433560	7101.241020	Un Gatito Me Llamo - KAROL G
+7101.241020	7253.413628	We R Who We R - Kesha
+7253.413628	7365.403084	Gypsy Woman (She's Homeless) (La Da Dee La Da Da) - Crystal Waters
+7365.403084	7482.136984	AAAHH MEN! - Doja Cat
+7482.136984	7620.730658	Stupid Love - Lady Gaga
+7620.730658	7703.210590	Heavy Metal Lover - Lady Gaga
+7703.210590	7834.622313	Get Back - Britney Spears
+7834.622313	8006.604475	Hot Stuff - Donna Summer
+8006.139427	8094.919784	Bad Girls - Donna Summer
+8094.919784	8220.528038	She Wolf - Shakira
+8220.511509	8246.133528	Can't Get You Out of My Head - Kylie Minogue
