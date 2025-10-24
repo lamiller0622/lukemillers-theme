@@ -6,12 +6,7 @@ import * as THREE from 'three'
 import Glide from '@glidejs/glide'
 import {mountPortfolioSliders} from './modules/portfolio-slider';
 import { mountPixelRobot } from './modules/cursor-robot';
-import { initVantaHotspots } from './modules/vanta-globe';
-import { mountGlideNodeSlider } from './modules/mobile-home-slider';
-
-document.addEventListener('DOMContentLoaded', () => {
-  mountGlideNodeSlider({ selector: '.glide-mobile', startAt: 0 });
-});
+import { initVantaHotspots } from './modules/vanta-globe';g
 
 
 document.addEventListener('DOMContentLoaded', () => {
