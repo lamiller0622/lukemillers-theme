@@ -1,12 +1,11 @@
 export function initVantaHotspots({
   elSelector = '#vanta-bg',
   overlaySelector = '#vanta-hotspots',
-  THREE: THREEIn = null,       // allow injected THREE
-  GLOBE: GLOBEIn = null,       // allow injected GLOBE
+  THREE: THREEIn = null,
+  GLOBE: GLOBEIn = null,
   vantaBase = { color: 0x007074, color2: 0xe45b31, backgroundColor: 0xe3d9cf },
-  maxWaitFrames = 600          // ~10s at 60fps
+  maxWaitFrames = 600
 } = {}) {
-
 
   let waitFrames = 0;
   const waitUntilReady = (resolve) => {
@@ -15,12 +14,11 @@ export function initVantaHotspots({
     const GLOBE = GLOBEIn || window.GLOBE;
 
     if (el && THREE && GLOBE) {
-
       window.THREE = THREE;
       resolve({ el, THREE, GLOBE });
       return;
     }
-    if (waitFrames++ > maxWaitFrames) return; // give up quietly
+    if (waitFrames++ > maxWaitFrames) return;
     requestAnimationFrame(() => waitUntilReady(resolve));
   };
 
@@ -60,55 +58,6 @@ export function initVantaHotspots({
       v.scene.add(plane);
       return plane;
     };
-
-    const deg2rad = (d) => d * Math.PI / 180;
-
-    /** Fit perspective camera to a Box3 (front-facing) */
-    function fitCameraToBox(camera, box, { padding = 1.2, minZ = 50 } = {}) {
-      const size = new THREE.Vector3(); box.getSize(size); // world units
-      const center = new THREE.Vector3(); box.getCenter(center);
-
-      const aspect = (camera.aspect || (window.innerWidth / window.innerHeight));
-      const fov = deg2rad(camera.fov || 60);
-
-      // Distance needed to fit box height
-      const distHeight = (size.y / 2) / Math.tan(fov / 2);
-      // Distance needed to fit box width (consider aspect)
-      const distWidth  = ((size.x / aspect) / 2) / Math.tan(fov / 2);
-      const dist = Math.max(distHeight, distWidth) * padding;
-
-      // Position camera on z axis, looking at center
-      camera.position.set(center.x, center.y, center.z + Math.max(dist, minZ));
-      camera.lookAt(center);
-      camera.updateProjectionMatrix();
-    }
-
-    /** Recompute overlay/camera on resize/orientation change */
-    function onResize(v, ground, overlay) {
-      if (!v || !v.camera || !v.renderer) return;
-      const cam = v.camera;
-
-      const { clientWidth: w, clientHeight: h } = v.renderer.domElement;
-      cam.aspect = Math.max(1e-6, w / h);
-      cam.updateProjectionMatrix();
-
-      if (isMobile && ground) {
-        // Slightly wider field of view on mobile to catch more area
-        cam.fov = 72; // default ~60; bump a bit for coverage
-        cam.updateProjectionMatrix();
-        const box = new THREE.Box3().setFromObject(ground);
-        fitCameraToBox(cam, box, { padding: 1.15, minZ: 80 });
-      }
-
-      if (overlay) {
-        // keep overlay in CSS pixels in sync
-        const size = new THREE.Vector2();
-        v.renderer.getSize(size);
-        overlay.style.width  = size.x + 'px';
-        overlay.style.height = size.y + 'px';
-      }
-    }
-
 
     const setupGroundHotspotsOn = (ground, v, overlay) => {
       if (!overlay) return;
@@ -214,13 +163,6 @@ export function initVantaHotspots({
         n.el.addEventListener('mouseleave', () => n.el.classList.remove('hover'));
       });
 
-      // if (isMobile) {
-      //   nodes.forEach(n => {
-      //     n.el.classList.add('active', 'hover');
-      //     n.el.setAttribute('aria-expanded','true');
-      //   });
-      // }
-
       document.addEventListener('click', () => {
         nodes.forEach(n => { n.el.classList.remove('active'); n.el.setAttribute('aria-expanded','false'); });
       });
@@ -240,7 +182,7 @@ export function initVantaHotspots({
         nodes.forEach(n => {
           n.el.addEventListener('click', (e) => {
             const link = e.target.closest('.label a[href]');
-            if (!link) return; // not a link click inside the label
+            if (!link) return;
 
             if (prefersReduce || !robot || typeof robot.goto !== 'function' || typeof robot.jumpInto !== 'function') {
               e.preventDefault();
@@ -250,30 +192,26 @@ export function initVantaHotspots({
 
             e.preventDefault();
 
-            // grow the node during the jump (optional)
             n.el.classList.add('jump-target');
 
-            // center of hotspot in viewport
             const rect = n.el.getBoundingClientRect();
             const cx = rect.left + rect.width / 2;
             const cy = rect.top  + rect.height / 2;
 
-            // provide coordinates for the CSS keyframes (if you added them)
             document.documentElement.style.setProperty('--rx', `${Math.round(cx)}px`);
             document.documentElement.style.setProperty('--ry', `${Math.round(cy)}px`);
 
             robot
-              .goto(cx, cy, { duration: 600 })      // ease robot to the node
-              .then(() => robot.jumpInto(n.el, { duration: 450 })) // squash-pop in
-              .then(() => window.location.assign(link.href))       // navigate
+              .goto(cx, cy, { duration: 600 })
+              .then(() => robot.jumpInto(n.el, { duration: 450 }))
+              .then(() => window.location.assign(link.href))
               .finally(() => {
                 n.el.classList.remove('jump-target');
-                robot.release?.(); // give control back to the cursor
+                robot.release?.();
               });
           });
         });
       })();
-
 
       const tick = () => {
         v.renderer.getSize(canvasSize);
@@ -305,7 +243,7 @@ export function initVantaHotspots({
       el,
       THREE,
       mouseControls: true,
-      touchControls: true,
+      touchControls: false,
       gyroControls: false,
       minHeight: 400,
       minWidth: 400,
@@ -314,30 +252,14 @@ export function initVantaHotspots({
       ...VANTA_BASE,
     });
 
-    const isMobile = window.matchMedia('(max-width: 767.98px)').matches;
-
-    if (isMobile) {
-      // Make Vanta less “grabby” on phones (you can keep mouseControls for desktop)
-      if (typeof v.setOptions === 'function') v.setOptions({ touchControls: false });
-      // Also clamp pixel ratio to save perf (optional)
-      v.renderer?.setPixelRatio?.(Math.min(1.5, window.devicePixelRatio || 1));
-    }
-
-    // hotspots + disco after a few frames so camera/renderer are stable
+    // hotspots after a few frames so camera/renderer are stable
     waitForFrames(6).then(() => {
       const ground  = findGroundObject(v) || makeVirtualGround(v);
       const overlay = document.querySelector(overlaySelector);
-      // Ensure first-fit happens once the ground exists
-      onResize(v, ground, overlay);
-
-      // Keep it fitted on future resizes/orientation changes
-      const _resize = () => onResize(v, ground, overlay);
-      window.addEventListener('resize', _resize);
-      window.addEventListener('orientationchange', _resize);
-
+      
       setupGroundHotspotsOn(ground, v, overlay);
 
-      // disco mode watcher
+      // disco mode watcher 
       const applyVantaOptions = (opts) => {
         if (v && typeof v.setOptions === 'function') v.setOptions(opts);
         else if (v && typeof v.destroy === 'function') {

@@ -236,7 +236,7 @@ $autoplay = $autoplay ?? 0;
       </svg>
     </div>
     <div class="container">
-    <a class="relative" href="/">Return Home</a>
+    <a class="relative px-8" href="/">Return Home</a>
     </div>
   </div>
 </section>

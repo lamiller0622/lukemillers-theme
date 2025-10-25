@@ -23,12 +23,11 @@
       <div class="glide__bullets" data-glide-el="controls[nav]"></div>
     </div>
   </div>
-
+-->
   <div class="relative z-10 container mx-auto py-24 ">
     <h1 class="text-4xl font-semibold">Luke Miller</h1>
     <p class="mt-4 max-w-xl">Web Developer</p>
   </div>
- -->
 </section>
 <div id="robot-cursor" aria-hidden="true">
   <!-- Pixel Robot SVG -->
