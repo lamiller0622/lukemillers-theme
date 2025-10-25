@@ -50,20 +50,24 @@
     width: 30px;
     height: 30px;
   }
+  &.is-disco{
+	width: 40%;
+	height: 65%;
+	border: none;
+	box-shadow: none;
+	background: transparent;
+	transform: translate(var(--x), var(--y)) translate(-50%, -50%);
+	.label{
+		display: none;
+	}
+  }
+  &.secret{
+  	@media(max-width: 767px){
+  		display: none !important;
+  	}
+  }
 }
 
-
-.vanta-hotspot.is-disco {
-  width: 40%;
-  height: 65%;
-  border: none;
-  box-shadow: none;
-  background: transparent;
-  transform: translate(var(--x), var(--y)) translate(-50%, -50%);
-}
-.vanta-hotspot.is-disco .label { 
-	display: none; 
-}
 
 #vanta-bg { pointer-events: none; }
 

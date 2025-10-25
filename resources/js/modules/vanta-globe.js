@@ -157,7 +157,7 @@ export function initVantaHotspots({
             <li><a href="mailto:info@lukemiller.io">info@lukemiller.io</a></li>
             <li><a target="_blank" href="https://www.linkedin.com/in/luke-miller96/">LinkedIn</a></li>
           </ul>` },
-        { u:  0.1, v: .9, label: `
+        { id: 'secret', u:  0.1, v: .9, label: `
           <div class="secret"><a href="/mixes" class="btn-primary">fun</a></div>` },
         { id: 'disco', u: 0.85, v: -0.75, label: `
           <div class="disco-ball" aria-hidden="true"></div>` },
@@ -178,6 +178,10 @@ export function initVantaHotspots({
         if (h.id === 'disco') {
           d.classList.add('is-disco');
           label.style.pointerEvents = 'none';
+        }
+
+        if (h.id === 'secret') {
+          d.classList.add('secret');
         }
 
         return { ...h, el: d, local: new THREE.Vector3() };
@@ -301,7 +305,7 @@ export function initVantaHotspots({
       el,
       THREE,
       mouseControls: true,
-      touchControls: false,
+      touchControls: true,
       gyroControls: false,
       minHeight: 400,
       minWidth: 400,

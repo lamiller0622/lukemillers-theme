@@ -6,7 +6,7 @@ import * as THREE from 'three'
 import Glide from '@glidejs/glide'
 import {mountPortfolioSliders} from './modules/portfolio-slider';
 import { mountPixelRobot } from './modules/cursor-robot';
-import { initVantaHotspots } from './modules/vanta-globe';g
+import { initVantaHotspots } from './modules/vanta-globe';
 
 
 document.addEventListener('DOMContentLoaded', () => {
