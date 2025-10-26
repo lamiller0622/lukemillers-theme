@@ -16,6 +16,9 @@
   pointer-events: none;
   opacity: 0;                     
   transition: opacity .2s ease;
+  @media(max-width: 767px){
+    display: none;
+  }
 }
 
 .cursor-hover #robot-cursor,
