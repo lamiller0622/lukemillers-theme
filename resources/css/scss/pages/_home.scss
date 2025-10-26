@@ -66,6 +66,37 @@
   		display: none !important;
   	}
   }
+  &[data-bg]{
+  	&:before{
+  		content:"";
+  		transform: translate(-40%,-115%) scale(1);
+  		background-size: contain;
+  		width: 75px;
+  		height: 75px;
+  		position: absolute;
+  		background-repeat: no-repeat;
+  	}
+  }
+  &[data-bg="office"]{
+  	&:before{
+  		background-image: url('../images/office.svg');
+  	}
+  }
+  &[data-bg="gallery"]{
+  	&:before{
+  		background-image: url('../images/gallery.svg');
+  	}
+  }
+  &[data-bg="teepee"]{
+  	&:before{
+  		background-image: url('../images/teepee.svg');
+  	}
+  }
+  &[data-bg="house"]{
+  	&:before{
+  		background-image: url('../images/house.svg');
+  	}
+  }
 }
 
 

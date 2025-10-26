@@ -73,7 +73,7 @@ export function initVantaHotspots({
       if (s.z > 0.001) halfH = s.z / 2;
 
       const HOTSPOTS = [
-        { u: -0.7, v:  0.10, label: `
+        { bg: 'office', u: -0.7, v:  0.10, label: `
           <h2>Work Experience</h2>
           <ul>
             <li>Full Stack Web Developer</li>
@@ -81,7 +81,7 @@ export function initVantaHotspots({
           </ul>
           <a href="work" class="btn-primary">Learn More</a>` 
         },
-        { u: -0.2, v:  0.30, label: `
+        { bg: 'gallery', u: -0.2, v:  0.30, label: `
           <h2>Skills</h2>
           <ul>
             <li>Front-end: HTML, Javascript, Jquery, React</li>
@@ -92,7 +92,7 @@ export function initVantaHotspots({
             <li>Marketing: Hubl, SEO</li>
           </ul>
           <a href="/portfolio/" class="btn-primary">See Portfolio</a>` },
-        { u:  0.3, v: -0.10, label: `
+        { bg: 'teepee', u:  0.3, v: -0.10, label: `
           <h2>Education</h2>
           <ul>
             <li>Bachelor of Science:</li>
@@ -100,7 +100,7 @@ export function initVantaHotspots({
             <li>Oregon State University</li>
             <li>GPA: 4.0</li>
           </ul>` },
-        { u:  -0.2, v: -0.5, label: `
+        { bg: 'house', u:  -0.2, v: -0.5, label: `
           <h2>Contact</h2>
           <ul>
             <li><a href="mailto:info@lukemiller.io">info@lukemiller.io</a></li>
@@ -123,6 +123,8 @@ export function initVantaHotspots({
         label.innerHTML = h.label;
         d.appendChild(label);
         overlay.appendChild(d);
+
+        if (h.bg) d.dataset.bg = h.bg;
 
         if (h.id === 'disco') {
           d.classList.add('is-disco');
