@@ -4,6 +4,12 @@
   body.robot-cursor-ready { cursor: none; }
 }
 
+@media(max-width: 767px) {
+  body{
+    cursor: default !important;
+  }
+}
+
 /* --------------------- Host element ----------------------------- */
 #robot-cursor {
   position: fixed;
@@ -238,6 +244,7 @@ $pivot-y: 3px;
   #robot-svg-gallery {
     display: block;
     transform-origin: center bottom;
+    overflow: visible;
     #bot-front { display: inline; }
     #bot-right,
     #bot-left  { display: none; }

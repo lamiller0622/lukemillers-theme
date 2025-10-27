@@ -113,9 +113,9 @@ body {
 
 .home-mobile-slider {
 	background: $light;
-    height: 75vh;
+    height: 100vh;
     place-items: center;
-    padding-block: clamp(32px, 8vh, 120px) 0;
+    padding-block: clamp(32px, 4vh, 120px) 0;
     position: relative;
     isolation: isolate;
     border-bottom: solid 1px;
@@ -128,7 +128,8 @@ body {
 	  overscroll-behavior-x: contain;
 	  z-index: 1;
 	  box-shadow: none;
-	  height: 100%;
+	  height: 68%;
+	  border-bottom: solid 2px $primary;
 	  .glide__track {
 	    overflow: visible;
 	    height: 100%;
@@ -158,10 +159,19 @@ body {
 	    place-items: center;
 	    place-content: center;
 	    height: 100%;
+	    .big-dot{
+	    	background: $primary;
+	    	width: 30px;
+	    	height: 30px;
+	    	border-radius: 999px;
+	    	box-shadow: 0 0 0 2px rgba(255,255,255,.6);
+	    	bottom: -20%;
+	    }
 	    &__image {
 			height: 100%;
 			width: auto;
 			border: none;
+			object-fit: cover;
 	    }
 
 	    .lottie{
@@ -169,15 +179,18 @@ body {
 	    }
 
 	    &__content {
-	      background: #e3d9cf;
-	      display: block;
-	      margin-top: 1rem;
-	      padding: .5rem 1rem;
-	      overflow: visible;
-	      border: solid;
-	      z-index: 2;
-	      float: right;
-	      position: relative;
+			display: block;
+			margin: 1rem;
+			padding: 1.5rem 1rem;
+			overflow: visible;
+			z-index: 2;
+			float: right;
+			position: relative;
+			border: solid 1px $primary;
+		    background: #fff;
+		    color: $text-dark; 
+		    font-size: 12px; 
+		    line-height: 1;
 	    }
 
 	    &__title {
@@ -253,11 +266,53 @@ body {
 	    --card-h: 58vw;
 	}
 	#robot-wrap{
-		bottom: 0;
+		bottom: 12%;
 		top: auto;
 	}
-}
+	.disco-ball{
+		height: 300px;
+		position: absolute;
+		top: 0;
+	}
 
+	.floor-wrap {
+		position: absolute;
+		inset: 30% -20% 0;     
+		pointer-events: none;
+		perspective: 120px;
+		overflow: hidden;
+		.floor {
+			position: absolute;
+			inset: auto 0 0;
+			background-color: transparent;
+			--cell: clamp(28px, 7vw, 64px); 
+			background-image:
+			repeating-linear-gradient(  0deg, $primary 0 .5px, transparent 1px var(--cell)),
+			repeating-linear-gradient( 90deg, $primary 0 .5px, transparent 1px var(--cell));
+
+			transform: rotateX(72deg);
+			transform-origin: top center;
+			filter: drop-shadow(0 2px 0 rgba(0,0,0,.08));
+			will-change: transform, background-position;
+		}
+	}
+
+	.mini-globe{
+		width: 100%;
+		height: auto;
+		position: absolute;
+		border-radius: 12px;
+		overflow: hidden;
+		background: #e3d9cf; 
+		top: -23%;
+		margin-left: -13px;
+		@media (min-width: 768px){
+			display: none;
+		}
+	}
+	.mini-globe-canvas{ display:block; width:100%; height:100% }
+
+}
 
 
 

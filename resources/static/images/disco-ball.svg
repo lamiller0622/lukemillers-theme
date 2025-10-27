@@ -1,0 +1,68 @@
+<!-- Save as disco-wire.svg or inline it -->
+<svg viewBox="0 0 128 128"
+     width="96" height="96"
+     xmlns="http://www.w3.org/2000/svg"
+     aria-label="Wireframe Disco Globe">
+  <defs>
+    <!-- Colors from your Vanta config -->
+    <style>
+      .grid { stroke:#007074; stroke-width:1; fill:none; }
+      .outer{ stroke:#007074; stroke-width:1.2; fill:none; }
+      .spark{ stroke:#e45b31; stroke-width:1; stroke-linecap:round; opacity:.8; }
+      .dot  { fill:#007074; opacity:.9; }
+    </style>
+    <!-- Optional gentle spin -->
+    <style>
+      @keyframes spin { from{ transform:rotate(0deg); } to{ transform:rotate(360deg); } }
+      /* Works when SVG is inline (not as background-image) */
+      g.spin { transform-origin:64px 64px; animation: spin 24s linear infinite; }
+    </style>
+    <!-- Clip to a perfect circle so ellipses don't poke out -->
+    <clipPath id="ballClip">
+      <circle cx="64" cy="64" r="42"/>
+    </clipPath>
+  </defs>
+
+  <!-- Outer ring -->
+  <circle class="outer" cx="64" cy="64" r="42"/>
+
+  <!-- Wireframe (latitudes + longitudes), wrapped in an optional spinning group -->
+  <g class="spin" clip-path="url(#ballClip)">
+    <!-- latitudes (concentric circles) -->
+    <circle class="grid" cx="64" cy="64" r="35"/>
+    <circle class="grid" cx="64" cy="64" r="28"/>
+    <circle class="grid" cx="64" cy="64" r="21"/>
+    <circle class="grid" cx="64" cy="64" r="14"/>
+    <circle class="grid" cx="64" cy="64" r="7"/>
+
+    <!-- longitudes (ellipses with varying squish, rotated) -->
+    <!-- a slightly “tilted” look by mixing rx/ry and rotations -->
+    <ellipse class="grid" cx="64" cy="64" rx="42" ry="18" transform="rotate(0 64 64)"/>
+    <ellipse class="grid" cx="64" cy="64" rx="42" ry="18" transform="rotate(30 64 64)"/>
+    <ellipse class="grid" cx="64" cy="64" rx="42" ry="18" transform="rotate(60 64 64)"/>
+    <ellipse class="grid" cx="64" cy="64" rx="42" ry="18" transform="rotate(90 64 64)"/>
+    <ellipse class="grid" cx="64" cy="64" rx="42" ry="18" transform="rotate(120 64 64)"/>
+    <ellipse class="grid" cx="64" cy="64" rx="42" ry="18" transform="rotate(150 64 64)"/>
+
+    <!-- optional highlighted band (subtle cross like the desktop) -->
+    <g opacity=".35">
+      <ellipse class="grid" cx="64" cy="64" rx="42" ry="10" transform="rotate(12 64 64)"/>
+      <ellipse class="grid" cx="64" cy="64" rx="42" ry="10" transform="rotate(-18 64 64)"/>
+    </g>
+  </g>
+
+  <!-- orange sparks around the perimeter -->
+  <g class="spin" style="animation-duration:18s">
+    <line class="spark" x1="64" y1="18" x2="64" y2="10"/>
+    <line class="spark" x1="99" y1="32" x2="106" y2="27"/>
+    <line class="spark" x1="110" y1="64" x2="120" y2="64"/>
+    <line class="spark" x1="98" y1="96" x2="106" y2="101"/>
+    <line class="spark" x1="64" y1="110" x2="64" y2="118"/>
+    <line class="spark" x1="30" y1="96" x2="22" y2="101"/>
+    <line class="spark" x1="18" y1="64" x2="8"  y2="64"/>
+    <line class="spark" x1="30" y1="32" x2="22" y2="27"/>
+    <!-- a couple of mid-length interior sparks -->
+    <line class="spark" x1="86" y1="50" x2="92" y2="46" />
+    <line class="spark" x1="45" y1="72" x2="39" y2="76" />
+  </g>
+</svg>
