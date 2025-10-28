@@ -308,6 +308,9 @@ export function initVantaHotspots({
         mo.observe(robotHost, { attributes: true, attributeFilter: ['class'] });
         check();
       }
+      globalThis.VANTA_BASE = VANTA_BASE;
+      globalThis.DISCO_PALETTES = DISCO_PALETTES;
+      globalThis.applyVantaOptions = applyVantaOptions;
     });
   });
 

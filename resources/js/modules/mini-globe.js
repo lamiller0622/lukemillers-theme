@@ -1,26 +1,32 @@
 // vanilla-mini-globe.js
 export function mountMiniGlobe(hostEl, {
-  color = 0x007074,   // teal
-  accent = 0xe45b31,  // orange (not used in minimal build)
-  bg = 0xe3d9cf,
+  color = 0x007074,
+  accent = 0xe45b31,     // (unused here)
+  bg = 0xe3d9cf,         // ignored to keep transparency
   radius = 60,
   latStep = 15,
   lonStep = 15,
   spin = 0.0035
 } = {}) {
   if (!hostEl) return null;
-  const { THREE } = window; // you already import THREE elsewhere
+  const { THREE } = window;
 
   const w = hostEl.clientWidth || 300;
   const h = hostEl.clientHeight || 220;
 
+  // Transparent scene/canvas
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(bg);
+  scene.background = null; // <- keep transparent
 
   const cam = new THREE.PerspectiveCamera(60, w / h, 0.1, 2000);
   cam.position.set(0, 0, radius * 2.1);
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+  const renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    alpha: true,               // <- enable transparent canvas
+    premultipliedAlpha: true
+  });
+  renderer.setClearColor(0x000000, 0); // <- fully transparent
   renderer.setPixelRatio(Math.min(1.75, window.devicePixelRatio || 1));
   renderer.setSize(w, h, false);
   renderer.domElement.className = 'mini-globe-canvas';
@@ -30,9 +36,12 @@ export function mountMiniGlobe(hostEl, {
   const globe = new THREE.Group();
   scene.add(globe);
 
+  // Track materials for live recolor
+  const mats = [];
   const addLine = (pts) => {
     const geom = new THREE.BufferGeometry().setFromPoints(pts);
-    const mat  = new THREE.LineBasicMaterial({ color, opacity:0.95, transparent:true });
+    const mat  = new THREE.LineBasicMaterial({ color, opacity: 0.95, transparent: true });
+    mats.push(mat);
     globe.add(new THREE.Line(geom, mat));
   };
 
@@ -89,7 +98,12 @@ export function mountMiniGlobe(hostEl, {
   };
   tick();
 
-  return {
+  // Public API — only recolor the lines; keep background transparent
+  const ctl = {
+    setPalette({ color: c /*, backgroundColor: b (ignored) */ }) {
+      if (typeof c === 'number') mats.forEach(m => m.color.setHex(c));
+      renderer.render(scene, cam);
+    },
     pause(){ running = false; },
     resume(){ running = true; },
     destroy(){
@@ -99,4 +113,7 @@ export function mountMiniGlobe(hostEl, {
       hostEl.innerHTML = '';
     }
   };
+
+  hostEl.__miniGlobeCtl = ctl;
+  return ctl;
 }

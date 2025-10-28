@@ -25,8 +25,7 @@ $slides = $slides ?? [
             <li>Front-end: HTML, Javascript, Jquery, React</li>
             <li>Back-end: PHP, Laravel, SQL</li>
             <li>Software Development: python, Ruby, C, Assembly</li>
-            <li>Wordpress: WPML, ACF, CPT</li>
-            <li>Design: CSS, SCSS, Bootstrap, Typescript</li>
+            <li>Design: CSS, SCSS, Bootstrap, Tailwind</li>
             <li>Marketing: Hubl, SEO</li>
           </ul>
           <a href="work" class="btn-primary">See Portfolio</a>'
@@ -66,11 +65,17 @@ $autoplay = $autoplay ?? 0;
 </section>
 
 <section class="home-mobile-slider md:hidden">
-    <h1 class="text-4xl font-semibold relative z-4">Luke Miller</h1>
-    <p class="mt-4 max-w-xl relative z-4">Web Developer</p>
+  <h1 class="text-4xl font-semibold relative z-4 text-center">Luke Miller</h1>
+  <p class="mt-4 max-w-xl relative z-4 text-center">Web Developer</p>
   <div class="glide home-glide-portfolio" data-portfolio-glide data-autoplay="{{ (int) $autoplay }}">
     <div class="glide__track" data-glide-el="track">
       <ul class="glide__slides">
+        <li class="glide__slide relative" data-slide="globe">
+          <div class="mini-globe" aria-hidden="true"></div>
+          <article class="slide">
+            <div class="big-dot absolute"></div>
+          </article>
+        </li>
         @foreach($slides as $i => $s)
           <li class="glide__slide">
             <article class="slide">
@@ -86,12 +91,6 @@ $autoplay = $autoplay ?? 0;
             <div class="vanta-hotspot"></div>
           </li>
         @endforeach
-        <li class="glide__slide" data-slide="globe">
-          <div class="mini-globe" aria-hidden="true"></div>
-          <article class="slide">
-            <div class="big-dot absolute"></div>
-          </article>
-        </li>
       </ul>
     </div>
   </div>

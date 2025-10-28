@@ -1,5 +1,7 @@
+// portfolio-slider.js
 import Glide from '@glidejs/glide';
 
+// ------------------------------ helpers ------------------------------
 function setDepthClasses(root, activeIdx) {
   const lis = Array.from(root.querySelectorAll('.glide__slides > li'));
   if (!lis.length) return;
@@ -60,13 +62,13 @@ function mountWheelSwipe(glide, root, setPendingDir) {
 
     if (acc <= -STEP) {
       acc = 0;
-      setPendingDir('left');  
+      setPendingDir('left');
       glide.go('<');
       cooling = true;
       setTimeout(() => (cooling = false), COOLDOWN);
     } else if (acc >= STEP) {
       acc = 0;
-      setPendingDir('right');  
+      setPendingDir('right');
       glide.go('>');
       cooling = true;
       setTimeout(() => (cooling = false), COOLDOWN);
@@ -84,7 +86,7 @@ function mountTouchDir(root, setPendingDir) {
   if (!track) return;
 
   let startX = 0, startY = 0;
-  const THRESH = 18; // px – adjust if needed
+  const THRESH = 18;
 
   const onStart = (e) => {
     const t = e.touches && e.touches[0];
@@ -108,7 +110,24 @@ function mountTouchDir(root, setPendingDir) {
   track.addEventListener('touchmove',  onMove,  { passive: true });
 }
 
+// Palette utils (local to this file)
+const hexFromInt = (i) => '#' + ((i >>> 0).toString(16).padStart(6, '0'));
+const VANTA_BASE = { color: 0x007074, color2: 0xe45b31, backgroundColor: 0xe3d9cf };
+const DISCO_PALETTES = [
+  { color: 0xff3b3b, color2: 0x00e7ff, backgroundColor: 0x0d0221 },
+  { color: 0x9dff00, color2: 0xff00e6, backgroundColor: 0x011627 },
+  { color: 0xffd166, color2: 0x06d6a0, backgroundColor: 0x1a1a1a },
+  { color: 0x845ec2, color2: 0xff6f91, backgroundColor: 0x101018 },
+  { color: 0x00f5d4, color2: 0xf15bb5, backgroundColor: 0x0b132b },
+];
 
+// Compatible hook to desktop Vanta if available
+const applyVantaOptions =
+  (globalThis.applyVantaOptions) ||
+  (window && (window.applyVantaOptions || window.__applyVantaOptions)) ||
+  null;
+
+// ------------------------------ main ------------------------------
 export function mountPortfolioSliders() {
   document.querySelectorAll('[data-portfolio-glide]').forEach(root => {
     const autoplay = parseInt(root.dataset.autoplay || '0', 10) || 0;
@@ -145,11 +164,77 @@ export function mountPortfolioSliders() {
       },
     });
 
+    // Robot posture hooks (unchanged)
     const robotWrap = document.getElementById('robot-wrap');
     const setPose = (cls) => { if (robotWrap) { robotWrap.classList.remove('dir-left','dir-right','dir-neutral'); robotWrap.classList.add(cls); } };
     const startWalking = (dir) => { if (robotWrap) { setPose(dir === 'left' ? 'dir-left' : 'dir-right'); robotWrap.classList.add('walking'); } };
     const stopWalkingToNeutral = () => { if (robotWrap) { robotWrap.classList.remove('walking'); setTimeout(() => setPose('dir-neutral'), 60); } };
 
+    // Which slide should trigger dancing/colors? (your globe slide)
+    const slides = Array.from(root.querySelectorAll('.glide__slides > li'));
+    const danceIdx = (() => {
+      const i = slides.findIndex(s => s.dataset.slide === 'globe');
+      return i >= 0 ? i : 0;
+    })();
+
+    // Limit the background/mini-globe behavior to the MOBILE slider block
+    const isMobileSlider = !!root.closest('.home-mobile-slider');
+
+    // ---------- Mobile disco loop (runs only on dance slide) ----------
+    let mobileDiscoTimer = null;
+    let mobilePalIdx = 0;
+
+    function applyMobilePalette(pal, { lightText = false } = {}) {
+
+      const miniHost = document.querySelector('[data-slide="globe"] .mini-globe');
+      const ctl = miniHost && miniHost.__miniGlobeCtl;
+      if (ctl) ctl.setPalette({ color: pal.color }); 
+      const section = document.querySelector('.home-mobile-slider');
+      if (section) section.style.backgroundColor = hexFromInt(pal.backgroundColor);
+    }
+
+    function startMobileDisco() {
+      if (mobileDiscoTimer) return;
+      mobilePalIdx = 0;
+      applyMobilePalette(DISCO_PALETTES[mobilePalIdx % DISCO_PALETTES.length]);
+      mobileDiscoTimer = setInterval(() => {
+        mobilePalIdx++;
+        applyMobilePalette(DISCO_PALETTES[mobilePalIdx % DISCO_PALETTES.length]);
+      }, 1000);
+    }
+
+    function stopMobileDisco() {
+      if (!mobileDiscoTimer) return;
+      clearInterval(mobileDiscoTimer);
+      mobileDiscoTimer = null;
+      applyMobilePalette(VANTA_BASE);
+    }
+
+    // ---------- Your (kept) dance state updater, +tiny hooks ----------
+    const updateDanceState = () => {
+      if (!isMobileSlider || !robotWrap) return;
+
+      const onDanceSlide = (glide.index === danceIdx);
+      robotWrap.classList.toggle('dance', onDanceSlide);
+
+      if (onDanceSlide) {
+        robotWrap.classList.remove('walking');
+        setPose('dir-neutral');
+      }
+
+      const section = document.querySelector('.home-mobile-slider');
+      if (section) section.classList.toggle('light', onDanceSlide);
+
+      // Ping desktop Vanta (safe no-op if not present)
+      const pal = onDanceSlide ? DISCO_PALETTES[0] : VANTA_BASE;
+      if (typeof applyVantaOptions === 'function') applyVantaOptions(pal);
+
+      // Start/stop the mobile color loop
+      if (onDanceSlide) startMobileDisco();
+      else stopMobileDisco();
+    };
+
+    // ------------------------------ events ------------------------------
     const btnLeft  = root.querySelector('.glide__arrow--left');
     const btnRight = root.querySelector('.glide__arrow--right');
     let pendingDir = null;
@@ -163,9 +248,9 @@ export function mountPortfolioSliders() {
     const nSlides = originals.length || 1;
     const norm = (i) => ((i % nSlides) + nSlides) % nSlides;
     const shortestDir = (curr, target) => {
-      const f = (target - curr + nSlides) % nSlides; 
-      const b = (curr - target + nSlides) % nSlides; 
-      if (f === 0 && b === 0) return null;          
+      const f = (target - curr + nSlides) % nSlides;
+      const b = (curr - target + nSlides) % nSlides;
+      if (f === 0 && b === 0) return null;
       return f <= b ? 'right' : 'left';
     };
     const getDirection = (glide, e) => {
@@ -185,6 +270,7 @@ export function mountPortfolioSliders() {
     glide.on('mount.after', () => {
       setDepthClasses(root, glide.index);
       setPose('dir-neutral');
+      updateDanceState();
     });
 
     glide.on('run', (e) => {
@@ -196,9 +282,16 @@ export function mountPortfolioSliders() {
     glide.on('run.after', () => {
       setDepthClasses(root, glide.index);
       stopWalkingToNeutral();
+      updateDanceState();
     });
 
     glide.on('resize', () => setDepthClasses(root, glide.index));
+    glide.on('destroy', () => {
+      // make sure we stop the mobile loop if the slider is torn down
+      const section = document.querySelector('.home-mobile-slider');
+      if (section) section.style.backgroundColor = hexFromInt(VANTA_BASE.backgroundColor);
+      if (mobileDiscoTimer) { clearInterval(mobileDiscoTimer); mobileDiscoTimer = null; }
+    });
 
     const setPendingDirFromInput = (dir) => { pendingDir = dir; };
     mountWheelSwipe(glide, root, setPendingDirFromInput);

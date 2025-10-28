@@ -119,6 +119,11 @@ body {
     position: relative;
     isolation: isolate;
     border-bottom: solid 1px;
+    &.light{
+    	h1, p {
+    		color: #fff !important;
+    	}
+    }
     .home-glide-portfolio {
 	  position: relative;
 	  width: 100%;
@@ -266,8 +271,9 @@ body {
 	    --card-h: 58vw;
 	}
 	#robot-wrap{
-		bottom: 12%;
+		bottom: 16%;
 		top: auto;
+		padding-top: 2rem;
 	}
 	.disco-ball{
 		height: 300px;
@@ -299,13 +305,12 @@ body {
 
 	.mini-globe{
 		width: 100%;
-		height: auto;
+		height: 200px;
 		position: absolute;
 		border-radius: 12px;
 		overflow: hidden;
-		background: #e3d9cf; 
+		background: transparent !important; 
 		top: -23%;
-		margin-left: -13px;
 		@media (min-width: 768px){
 			display: none;
 		}
@@ -317,4 +322,5 @@ body {
 
 
 
-
+.home-mobile-slider { transition: background-color .35s ease; }
+[data-slide="globe"] .mini-globe { transition: background-color .35s ease; }

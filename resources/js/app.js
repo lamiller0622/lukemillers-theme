@@ -7,7 +7,7 @@ import Glide from '@glidejs/glide'
 import {mountPortfolioSliders} from './modules/portfolio-slider';
 import { mountPixelRobot } from './modules/cursor-robot';
 import { initVantaHotspots } from './modules/vanta-globe';
-import { mountMiniGlobe } from './modules/vanilla-globe';
+import { mountMiniGlobe } from './modules/mini-globe';
 
 
 document.addEventListener('DOMContentLoaded', () => {
