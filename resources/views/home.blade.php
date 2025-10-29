@@ -28,7 +28,7 @@ $slides = $slides ?? [
             <li>Design: CSS, SCSS, Bootstrap, Tailwind</li>
             <li>Marketing: Hubl, SEO</li>
           </ul>
-          <a href="work" class="btn-primary">See Portfolio</a>'
+          <a href="portfolio" class="btn-primary">See Portfolio</a>'
   ],
   [
     'title' => 'Education',

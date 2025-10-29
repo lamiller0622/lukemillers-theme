@@ -10,32 +10,59 @@
       'role' => 'Web Applications Developer',
       'company' => 'First Advantage',
       'years' => 'Nov 2024 – Present',
-      'stack' => ['Sage 10', 'Bootstrap5', 'WPML', 'ACF', 'CPT'],
+      'stack' => ['Sage 10', 'Laravel', 'Bootstrap5','SCSS', 'Hubl', 'Jquery', 'ACF', 'CPT', 'ACF', 'Elementor'],
       'highlights' => [
-        'Converted Drag & Drop Themed Site (Elementor) to MVC Theme (Sage 10).',
-        'Converted custom company modules into flexible content modules for easy frontend page building using ACF.',
-        'Built dynamic Hubspot templates and drag and drop modules for multiple marketing operation needs.',
-        'Planned and developed post-acquisition strategies to optimize backend and digital experience for both companies.'
+        'Convert Drag & Drop Themed Site (Elementor) to MVC Theme (Sage 10).',
+        'Create new custom company templates into flexible content modules for easy frontend page building using ACF.',
+        'Build dynamic Hubspot templates and drag and drop modules for multiple marketing operation needs.',
+        'Plann and develop post-acquisition strategies to optimize backend and digital experience for both companies.'
       ]
     ],
     [
       'role' => 'Web Applications Developer',
       'company' => 'Sterling Check',
       'years' => 'Apr 2021 - Nov 2024',
-      'stack' => ['Sage9','Bootstrap5','Jquery','Tailwind'],
+      'stack' => ['Sage9','Laravel','PHP', 'SCSS', 'JavaScript'],
       'highlights' => [
-        'Shop UX refresh & media perf',
-        'Reusable flexible-content blocks'
+        'Built high-level pages for company ( Homepage, Compliance Hub, About)',
+        'Developed numerous custom Wordpress themes, modules, fields and templates to improve speed and quality of life of the web team.',
+        'Converted hundreds of custom XD designs to pixel perfect web pages',
+        'Created custom HubSpot templates & modules for marketing operations.',
+        'Collaborated with digital marketers, UX/UI designers and SEO specialists on web projects.',
+        'Manage 15+ websites for the company as a small team of 2.',
       ]
     ],
     [
       'role' => 'Web Developer',
       'company' => 'Palermo Law',
       'years' => '2018 – Present',
-      'stack' => ['WordPress','Sage 11','ACF','PHP','JS'],
+      'stack' => ['PHP', 'HTML', 'CSS', 'GA4', 'Wordpress', 'AdWords'],
       'highlights' => [
-        'SEO practice-area system',
-        'Vite/Tailwind component library'
+        'Create, design and manage content for 5 websites.',
+        'Increased site rankings on Google and contributed to first page rankings for essential queries.',
+        'Optimized and corrected various performance issues.'
+      ]
+    ],
+    [
+      'role' => 'E-Commerce Web Developer',
+      'company' => 'Cambridge Kitchens Mfg.',
+      'years' => '2017 – 2018',
+      'stack' => ['WooCommerce', 'Jquery', 'PHP', 'CSS', 'Photoshop'],
+      'highlights' => [
+        'Built a complicated, measurement-based E-Commerce store.',
+        'Developed custom Scripts using JQuery to maximize allow for dynamic customizable options on the front-end.',
+        'Optimized site with custom Wordpress page templates/functions.',
+        'Photographed and Photoshopped every product for best online shop appearance.',
+        'Calculated product sales margins, arranged company shipping and prepared online store billing.'
+      ]
+    ],
+    [
+      'role' => 'Starbucks',
+      'company' => 'Cambridge Kitchens Mfg.',
+      'years' => '2014 – 2017',
+      'stack' => ['Coffee', 'Tea', 'Whipped Cream', 'Syrup'],
+      'highlights' => [
+        'I was a barista! And a barista trainer.'
       ]
     ],
   ];
