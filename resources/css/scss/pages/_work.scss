@@ -2,9 +2,6 @@
 
 $bp-md: 1000px;
 
-$font-code: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-$font-ui: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
-
 @mixin nice-scrollbar($track: $text-dark) {
   &::-webkit-scrollbar { width: 10px; }
   &::-webkit-scrollbar-thumb {
@@ -66,21 +63,15 @@ $font-ui: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Can
         }
         .title {
           text-align: center;
-          font: 500 12px $font-ui;
+          font: 500 12px;
           color: $white; 
           opacity: .9;
         }
 
-        .btn.small {
+        .btn-primary{
           font-size: 11px;
           padding: 4px 8px;
-          border-radius: 6px;
-          background: #111827;
-          color: #e5e7eb;
-          border: 1px solid #1f2937;
-          cursor: pointer;
-
-          &:hover { background:#0b1020; }
+          margin: 0;
         }
       }
       .monitor-screen {
@@ -92,7 +83,6 @@ $font-ui: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Can
 
         @include nice-scrollbar($text-dark);
         .code {
-          font-family: $font-code;
           font-size: clamp(12px, 14px, 15px);
           line-height: 1.65;
           color: $text-dark;
@@ -141,7 +131,7 @@ $font-ui: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Can
                 margin-left: 6px; 
               }
               .fn-body { 
-                padding: 8px 0px 12px 20px; 
+                padding: 0 0 0 20px; 
                 text-wrap: auto;
 
               }

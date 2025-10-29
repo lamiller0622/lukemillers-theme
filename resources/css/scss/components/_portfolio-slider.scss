@@ -24,8 +24,6 @@ body {
     background: repeating-linear-gradient(84deg, $text-dark 0, $text-dark 1px, $light 1px, $light 50px);
     background-size: 50px;
     position: relative;
-    place-items: center;
-    place-content: center;
   }
   .panelling{
     height: 25%;

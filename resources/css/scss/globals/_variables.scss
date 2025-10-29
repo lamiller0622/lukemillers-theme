@@ -11,8 +11,9 @@ $light-brown: #6d684b;
 $light-gray: #d0d1c9;
 $dark-gray: #afaba0; 
 
-h1,h2,h3,h4,h5,h6, p{
+h1,h2,h3,h4,h5,h6, p, body, li{
 	color: $text-dark;
+    font-family: "Rubik", sans-serif;
 }
 
 h1{

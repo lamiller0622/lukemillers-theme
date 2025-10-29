@@ -217,11 +217,6 @@ export function mountPortfolioSliders() {
       const onDanceSlide = (glide.index === danceIdx);
       robotWrap.classList.toggle('dance', onDanceSlide);
 
-      if (onDanceSlide) {
-        robotWrap.classList.remove('walking');
-        setPose('dir-neutral');
-      }
-
       const section = document.querySelector('.home-mobile-slider');
       if (section) section.classList.toggle('light', onDanceSlide);
 

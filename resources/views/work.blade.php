@@ -57,8 +57,8 @@
       ]
     ],
     [
-      'role' => 'Starbucks',
-      'company' => 'Cambridge Kitchens Mfg.',
+      'role' => 'Barista',
+      'company' => 'Starbucks',
       'years' => '2014 – 2017',
       'stack' => ['Coffee', 'Tea', 'Whipped Cream', 'Syrup'],
       'highlights' => [
@@ -79,12 +79,12 @@
             <span class="dot dot-close"></span>
             <span class="dot dot-min"></span>
             <span class="dot dot-max"></span>
-            <button type="button" class="btn small"><a href="/">Return Home</a></button>
+            <button type="button" class="btn-primary"><a href="/">Return Home</a></button>
           </div>
           <div class="title">Work Experience</div>
           <div class="actions">
-            <button type="button" class="btn small" data-expand-all>Expand All</button>
-            <button type="button" class="btn small" data-collapse-all>Collapse All</button>
+            <button type="button" class="btn-primary" data-expand-all>Expand All</button>
+            <button type="button" class="btn-primary" data-collapse-all>Collapse All</button>
           </div>
         </div>
 
@@ -109,7 +109,7 @@
                   <div><span class="kw">stack</span>   <span class="op">=</span> <span class="p">[</span>{!! collect($job['stack'])->map(fn($s)=>"<span class=\"str\">'{$s}'</span>")->implode('<span class=\"p\">, </span>') !!}<span class="p">]</span></div>
                   <div><span class="kw">highlights</span> <span class="op">=</span> <span class="p">[</span></div>
                   @foreach($job['highlights'] as $h)
-                    <div class="ps-6 mb-3"><span class="str">{{ $h }}</span><span class="p">{{ $loop->last ? '' : ',' }}</span></div>
+                    <div class="ps-6 mt-1"><span class="str">{{ $h }}</span><span class="p">{{ $loop->last ? '' : ',' }}</span></div>
                   @endforeach
                   <div><span class="p">]</span></div>
                   <!-- <div class="return"><span class="kw">return</span> <span class="str">f"{'{'}role{'}'} @ {'{'}company{'}'} ({'{'}years{'}'})"</span></div> -->
