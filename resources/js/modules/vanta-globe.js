@@ -81,7 +81,17 @@ export function initVantaHotspots({
           </ul>
           <a href="work" class="btn-primary">Learn More</a>` 
         },
-        { bg: 'gallery', u: -0.2, v:  0.30, label: `
+        { bg: 'teepee', u:  -0.2, v: -0.5, label: `
+          <h2>Education</h2>
+          <ul>
+            <li><b>Oregon State University</b></li>
+            <li>Bachelor of Science: Applied Computer Science</li>
+            <li>GPA: 4.0</li>
+            <li><b>Nassau Community College</b></li>
+            <li>Associate of Applied Science: Informtion Technology</li>
+            <li>GPA: 3.98</li>
+          </ul>` },
+        { bg: 'gallery', u: -0.15, v:  0.35, label: `
           <h2>Skills</h2>
           <ul>
             <li>Front-end: HTML, Javascript, Jquery, React</li>
@@ -92,15 +102,7 @@ export function initVantaHotspots({
             <li>Marketing: Hubl, SEO</li>
           </ul>
           <a href="/portfolio/" class="btn-primary">See Portfolio</a>` },
-        { bg: 'teepee', u:  0.3, v: -0.10, label: `
-          <h2>Education</h2>
-          <ul>
-            <li>Bachelor of Science:</li>
-            <li>Applied Computer Science</li>
-            <li>Oregon State University</li>
-            <li>GPA: 4.0</li>
-          </ul>` },
-        { bg: 'house', u:  -0.2, v: -0.5, label: `
+        { bg: 'house', u:  0.3, v: -0.10, label: `
           <h2>Contact</h2>
           <ul>
             <li><a href="mailto:info@lukemiller.io">info@lukemiller.io</a></li>

@@ -35,10 +35,12 @@ $slides = $slides ?? [
     'image' => @asset('images/teepee.svg'),
     'content' => '
           <ul>
-            <li>Bachelor of Science:</li>
-            <li>Applied Computer Science</li>
-            <li>Oregon State University</li>
+            <li><b>Oregon State University</b></li>
+            <li>Bachelor of Science: Applied Computer Science</li>
             <li>GPA: 4.0</li>
+            <li><b>Nassau Community College</b></li>
+            <li>Associate of Applied Science: Informtion Technology</li>
+            <li>GPA: 3.98</li>
           </ul>'
   ],
   [
@@ -58,7 +60,7 @@ $autoplay = $autoplay ?? 0;
   <div id="vanta-bg" class="absolute inset-0 z-0 pointer-events-none">
     <div id="vanta-hotspots" class="absolute inset-0 pointer-events-none"></div>
   </div>
-  <div class="relative z-10 container mx-auto py-24 ">
+  <div class="relative z-5 container mx-auto pt-24 ">
     <h1 class="text-4xl font-semibold">Luke Miller</h1>
     <p class="mt-4 max-w-xl">Web Developer</p>
   </div>
