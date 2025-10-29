@@ -29,6 +29,8 @@ export function initVantaHotspots({
       requestAnimationFrame(step);
     });
 
+    const homeSection = el.closest('section');
+
     const findGroundObject = (v) => {
       const scene = v.scene; let found = null;
       scene.traverse(o => {
@@ -287,17 +289,19 @@ export function initVantaHotspots({
       const startDisco = () => {
         if (inDisco) return;
         inDisco = true;
-        discoIndex = 0;
+        discoIndex = 0;      
         discoTimer = setInterval(() => {
           const p = DISCO_PALETTES[discoIndex % DISCO_PALETTES.length];
           applyVantaOptions(p);
           discoIndex++;
+          homeSection?.classList.add('light'); 
         }, 1000);
       };
 
       const stopDisco = () => {
         if (!inDisco) return;
         inDisco = false;
+        homeSection?.classList.remove('light');  
         if (discoTimer) clearInterval(discoTimer);
         discoTimer = null;
         applyVantaOptions(VANTA_BASE);

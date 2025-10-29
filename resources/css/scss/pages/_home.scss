@@ -1,4 +1,12 @@
 @use "../globals" as *;
+section{
+	&.light{
+    	h1, p {
+    		color: #fff !important;
+    	}
+    }
+}
+
 #vanta-hotspots { 
   position: absolute; 
   inset: 0; 
@@ -119,11 +127,6 @@ body {
     position: relative;
     isolation: isolate;
     border-bottom: solid 1px;
-    &.light{
-    	h1, p {
-    		color: #fff !important;
-    	}
-    }
     .home-glide-portfolio {
 	  position: relative;
 	  width: 100%;
