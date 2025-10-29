@@ -73,6 +73,7 @@ $autoplay = $autoplay ?? 0;
         <li class="glide__slide relative" data-slide="globe">
           <div class="mini-globe" aria-hidden="true"></div>
           <article class="slide">
+            <img class="slide__image h-auto w-full" src="@asset('images/swipe.svg')" loading="lazy" decoding="async" />
             <div class="big-dot absolute"></div>
           </article>
         </li>
@@ -85,7 +86,7 @@ $autoplay = $autoplay ?? 0;
                 <div class="content">{!! $s['content'] !!} </div>
               </div>
               @endif
-              <img class="slide__image" src="{{ $s['image'] }}" alt="{{ $s['title'] }}" loading="lazy" decoding="async" />
+              <img class="slide__image h-full w-auto" src="{{ $s['image'] }}" alt="{{ $s['title'] }}" loading="lazy" decoding="async" />
               <div class="big-dot absolute"></div>
             </article>
             <div class="vanta-hotspot"></div>
