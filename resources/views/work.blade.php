@@ -55,16 +55,7 @@
         'Photographed and Photoshopped every product for best online shop appearance.',
         'Calculated product sales margins, arranged company shipping and prepared online store billing.'
       ]
-    ],
-    [
-      'role' => 'Barista',
-      'company' => 'Starbucks',
-      'years' => '2014 – 2017',
-      'stack' => ['Coffee', 'Tea', 'Whipped Cream', 'Syrup'],
-      'highlights' => [
-        'I was a barista! And a barista trainer.'
-      ]
-    ],
+    ]
   ];
 
   $fn = fn($text) => trim(preg_replace('/[^a-z0-9]+/i','', $text), '_');

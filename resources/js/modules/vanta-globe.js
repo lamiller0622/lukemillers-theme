@@ -88,10 +88,8 @@ export function initVantaHotspots({
           <ul>
             <li><b>Oregon State University</b></li>
             <li>Bachelor of Science: Applied Computer Science</li>
-            <li>GPA: 4.0</li>
             <li><b>Nassau Community College</b></li>
-            <li>Associate of Applied Science: Informtion Technology</li>
-            <li>GPA: 3.98</li>
+            <li>Associate of Applied Science: Information Technology</li>
           </ul>` },
         { bg: 'gallery', u: -0.15, v:  0.35, label: `
           <h2>Skills</h2>
@@ -314,9 +312,6 @@ export function initVantaHotspots({
         mo.observe(robotHost, { attributes: true, attributeFilter: ['class'] });
         check();
       }
-      globalThis.VANTA_BASE = VANTA_BASE;
-      globalThis.DISCO_PALETTES = DISCO_PALETTES;
-      globalThis.applyVantaOptions = applyVantaOptions;
     });
   });
 

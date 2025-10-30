@@ -37,10 +37,8 @@ $slides = $slides ?? [
           <ul>
             <li><b>Oregon State University</b></li>
             <li>Bachelor of Science: Applied Computer Science</li>
-            <li>GPA: 4.0</li>
             <li><b>Nassau Community College</b></li>
-            <li>Associate of Applied Science: Informtion Technology</li>
-            <li>GPA: 3.98</li>
+            <li>Associate of Applied Science: Information Technology</li>
           </ul>'
   ],
   [
