@@ -75,6 +75,8 @@ html.robot-wave #robot-cursor {
 
 html.robot-wave #bot-bounce { animation-duration: 1.2s; }
 
+#robot-svg-gallery #bot-bounce { animation: none; }
+
 /* --------------------- Arm wave  --------------------- */
 @keyframes robot-arm-wave {
   0%   { transform: translate(0, 0) rotate(0deg); }
@@ -367,3 +369,4 @@ $bot-type-ease: cubic-bezier(.22, .61, .36, 1);
   44%  { transform: translateY(0); }
   100% { transform: translateY(0); }
 }
+
