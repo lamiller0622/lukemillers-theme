@@ -1,30 +1,45 @@
-// portfolio-slider.js
 import Glide from '@glidejs/glide';
 
 // ------------------------------ helpers ------------------------------
-function setDepthClasses(root, activeIdx) {
-  const lis = Array.from(root.querySelectorAll('.glide__slides > li'));
-  if (!lis.length) return;
+function setDepthClassesFromActive(root) {
+  const all = Array.from(root.querySelectorAll('.glide__slides > li'));
+  if (!all.length) return;
+  const active = root.querySelector('.glide__slides > li.glide__slide--active') || all[0];
+  const n = all.length;
+  const idx = all.indexOf(active);
+  const at = (i) => all[( (i % n) + n) % n];
+  // clear
+  all.forEach(li => li.querySelector('.slide')?.classList.remove(
+    'is-active','is-prev','is-next','is-2prev','is-2next'
+  ));
+  // apply around the actual DOM-active slide (clones OK)
+  at(idx)?.querySelector('.slide')?.classList.add('is-active');
+  at(idx-1)?.querySelector('.slide')?.classList.add('is-prev');
+  at(idx+1)?.querySelector('.slide')?.classList.add('is-next');
+  if (n > 3) {
+    at(idx-2)?.querySelector('.slide')?.classList.add('is-2prev');
+    at(idx+2)?.querySelector('.slide')?.classList.add('is-2next');
+  }
+}
 
-  const uniq = [...new Set(lis.map(li => li.dataset.idx))].map(Number).filter(n => !Number.isNaN(n));
-  const n = uniq.length;
-  if (!n) return;
-
-  const idx = (i) => ((i % n) + n) % n;
-  const a = idx(activeIdx);
-
-  const addFor = (i, cls) => {
-    const target = String(idx(i));
-    lis.forEach(li => {
-      if (li.dataset.idx === target) li.querySelector('.slide')?.classList.add(cls);
-    });
-  };
-
-  lis.forEach(li => li.querySelector('.slide')?.classList.remove('is-active','is-prev','is-next','is-2prev','is-2next'));
-  addFor(a, 'is-active');
-  addFor(a - 1, 'is-prev');
-  addFor(a + 1, 'is-next');
-  if (n > 3) { addFor(a - 2, 'is-2prev'); addFor(a + 2, 'is-2next'); }
+function restartRobot(el) {
+  if (!el) return;
+  // Hard reset animations on the elements that animate
+  const parts = [
+    el.querySelector('#bot-bounce'),
+    el.querySelector('#robot-shadow'),
+    el.querySelector('#antenna'),
+    // profile bob/arms when walking may need a kick too:
+    el.querySelector('#robot-svg-gallery'),
+    el.querySelector('#arm-right'),
+    el.querySelector('#arm-left'),
+    el.querySelector('#arm-mid'),
+  ].filter(Boolean);
+  parts.forEach(node => { node.style.animation = 'none'; });
+  // force reflow once
+  // eslint-disable-next-line no-unused-expressions
+  el.offsetWidth;
+  parts.forEach(node => { node.style.animation = ''; });
 }
 
 function getTargetIndex(glide, e) {
@@ -127,6 +142,15 @@ const applyVantaOptions =
   (window && (window.applyVantaOptions || window.__applyVantaOptions)) ||
   null;
 
+if (!globalThis.__discoGateInit) {
+  globalThis.__discoGateInit   = true;
+  globalThis.__discoGateOpened = false;
+  setTimeout(() => {
+    globalThis.__discoGateOpened = true;
+    window.dispatchEvent(new Event('discoGateOpened'));
+  }, 5000); // 5s stall after page load
+}
+
 // ------------------------------ main ------------------------------
 export function mountPortfolioSliders() {
   document.querySelectorAll('[data-portfolio-glide]').forEach(root => {
@@ -168,14 +192,14 @@ export function mountPortfolioSliders() {
     const robotWrap = document.getElementById('robot-wrap');
     const setPose = (cls) => { if (robotWrap) { robotWrap.classList.remove('dir-left','dir-right','dir-neutral'); robotWrap.classList.add(cls); } };
     const startWalking = (dir) => { if (robotWrap) { setPose(dir === 'left' ? 'dir-left' : 'dir-right'); robotWrap.classList.add('walking'); } };
-    const stopWalkingToNeutral = () => { if (robotWrap) { robotWrap.classList.remove('walking'); setTimeout(() => setPose('dir-neutral'), 60); } };
-
-    // Which slide should trigger dancing/colors? (your globe slide)
-    const slides = Array.from(root.querySelectorAll('.glide__slides > li'));
-    const danceIdx = (() => {
-      const i = slides.findIndex(s => s.dataset.slide === 'globe');
-      return i >= 0 ? i : 0;
-    })();
+    const stopWalkingToNeutral = () => {
+       if (!robotWrap) return;
+       robotWrap.classList.remove('walking');
+       setPose('dir-neutral');           // switch profile immediately
+       // (Optional) poke layout for Safari so animations re-arm cleanly
+       // eslint-disable-next-line no-unused-expressions
+       robotWrap.offsetWidth;
+    };
 
     // Limit the background/mini-globe behavior to the MOBILE slider block
     const isMobileSlider = !!root.closest('.home-mobile-slider');
@@ -210,24 +234,33 @@ export function mountPortfolioSliders() {
       applyMobilePalette(VANTA_BASE);
     }
 
-    // ---------- Your (kept) dance state updater, +tiny hooks ----------
+    // ---------- Dance state updater ----------
     const updateDanceState = () => {
       if (!isMobileSlider || !robotWrap) return;
 
-      const onDanceSlide = (glide.index === danceIdx);
-      robotWrap.classList.toggle('dance', onDanceSlide);
+      const curr = root.querySelector('.glide__slides > li.glide__slide--active');
+      const onDanceSlide = !!(curr && curr.dataset && curr.dataset.slide === 'globe');
+      const gateOpen = !!globalThis.__discoGateOpened;
+
+      // Only dance if on the slide & the gate has opened
+      const shouldDance = onDanceSlide && gateOpen;
+
+      const wasDancing = robotWrap.classList.contains('dance');
+      robotWrap.classList.toggle('dance', shouldDance);
+      if (shouldDance && !wasDancing) restartRobot(robotWrap);
 
       const section = document.querySelector('.home-mobile-slider');
-      if (section) section.classList.toggle('light', onDanceSlide);
+      if (section) section.classList.toggle('light', shouldDance);
 
-      // Ping desktop Vanta (safe no-op if not present)
-      const pal = onDanceSlide ? DISCO_PALETTES[0] : VANTA_BASE;
+      // Desktop Vanta + mobile palette loop
+      const pal = shouldDance ? DISCO_PALETTES[0] : VANTA_BASE;
       if (typeof applyVantaOptions === 'function') applyVantaOptions(pal);
-
-      // Start/stop the mobile color loop
-      if (onDanceSlide) startMobileDisco();
-      else stopMobileDisco();
+      if (shouldDance) startMobileDisco(); else stopMobileDisco();
     };
+
+    // Wait 5s before dancing begins
+    const onGateOpen = () => updateDanceState();
+    window.addEventListener('discoGateOpened', onGateOpen);
 
     // ------------------------------ events ------------------------------
     const btnLeft  = root.querySelector('.glide__arrow--left');
@@ -263,29 +296,34 @@ export function mountPortfolioSliders() {
     };
 
     glide.on('mount.after', () => {
-      setDepthClasses(root, glide.index);
+      setDepthClassesFromActive(root);
       setPose('dir-neutral');
       updateDanceState();
     });
 
     glide.on('run', (e) => {
-      const target = getTargetIndex(glide, e);
-      setDepthClasses(root, target);
+      // entering transition: ensure walking anim is live on WebKit
+      restartRobot(robotWrap);
       startWalking(getDirection(glide, e));
     });
 
     glide.on('run.after', () => {
-      setDepthClasses(root, glide.index);
+      setDepthClassesFromActive(root);
       stopWalkingToNeutral();
       updateDanceState();
     });
 
-    glide.on('resize', () => setDepthClasses(root, glide.index));
+    glide.on('resize', () => {
+      setDepthClassesFromActive(root);
+      restartRobot(robotWrap);
+      updateDanceState();
+    });
     glide.on('destroy', () => {
       // make sure we stop the mobile loop if the slider is torn down
       const section = document.querySelector('.home-mobile-slider');
       if (section) section.style.backgroundColor = hexFromInt(VANTA_BASE.backgroundColor);
       if (mobileDiscoTimer) { clearInterval(mobileDiscoTimer); mobileDiscoTimer = null; }
+      window.removeEventListener('discoGateOpened', onGateOpen);
     });
 
     const setPendingDirFromInput = (dir) => { pendingDir = dir; };
@@ -295,3 +333,21 @@ export function mountPortfolioSliders() {
     glide.mount();
   });
 }
+
+(() => {
+  const g = document.querySelector('#robot-svg-gallery');
+  const eyelidG = g?.querySelector('#eyelid');
+  if (!eyelidG) return;
+  const min = 2500, max = 6000;
+  const schedule = () => {
+    const delay = Math.floor(Math.random() * (max - min)) + min;
+    setTimeout(() => {
+      eyelidG.setAttribute('height', '4');   // close
+      setTimeout(() => {
+        eyelidG.setAttribute('height', '0'); // open
+        schedule();
+      }, 90);
+    }, delay);
+  };
+  schedule();
+})();

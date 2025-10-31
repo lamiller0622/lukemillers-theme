@@ -45,10 +45,7 @@ $slides = $slides ?? [
     'title' => 'Contact',
     'image' => @asset('images/house.svg'),
     'content' => '
-          <ul>
-            <li><a href="mailto:info@lukemiller.io">info@lukemiller.io</a></li>
-            <li><a target="_blank" href="https://www.linkedin.com/in/luke-miller96/">LinkedIn</a></li>
-          </ul>'
+          <a class="btn-primary mr-4" href="mailto:info@lukemiller.io">Email</a><a target="_blank" class="btn-primary" href="https://www.linkedin.com/in/luke-miller96/">LinkedIn</a>'
   ],
 ];
 $autoplay = $autoplay ?? 0;
@@ -96,101 +93,101 @@ $autoplay = $autoplay ?? 0;
     </div>
   </div>
   <div id=robot-wrap>
-      <svg id="robot-svg-gallery"
-         viewBox="0 -3 16 19"   
-         width="128" height="128"
-         shape-rendering="crispEdges"
-         xmlns="http://www.w3.org/2000/svg">
+    <svg id="robot-svg-gallery"
+       viewBox="0 -3 16 19"   
+       width="128" height="128"
+       shape-rendering="crispEdges"
+       xmlns="http://www.w3.org/2000/svg">
 
-          <!-- ================= NEUTRAL ================= -->
-          <g id="bot-front">
-            <g id="bot-bounce">
-              <!-- Legs -->
-              <rect x="6" y="14" width="2" height="2" fill="#6b7280"/>
-              <rect x="8" y="14" width="2" height="2" fill="#6b7280"/>
-              <!-- Neck -->
-              <rect x="7" y="9" width="2" height="1" fill="#9ca3af"/>
-              <!-- Antenna -->
-              <rect x="7" y="0" width="2" height="2" fill="#6b7280"/>
-              <rect x="7" y="0" width="2" height="1" fill="#ef4444"/>
-              <!-- Head back  -->
-              <rect x="3" y="3" width="10" height="6" fill="#9ca3af"/>
-              <rect x="4" y="4" width="8" height="4" fill="#d1d5db" mask="url(#blink-front)"/>
-              <rect x="5" y="5" width="2" height="2" fill="#60a5fa"/>
-              <rect x="9" y="5" width="2" height="2" fill="#60a5fa"/>
-              <defs>
-                <!-- Blink mask for eyes -->
-                <mask id="blink-mask">
-                  <!-- default: eyes visible (white) -->
-                  <rect x="0" y="0" width="16" height="16" fill="#fff"/>
-                  <!-- eyelid covers eyes during blink via CSS anim (we move this rect) -->
-                  <rect id="eyelid" x="4" y="5" width="8" height="0" fill="#000"/>
-                </mask>
-              </defs>
-              <!-- Ears --> 
-              <rect x="2" y="5" width="1" height="2" fill="#9ca3af"/> 
-              <rect x="13" y="5" width="1" height="2" fill="#9ca3af"/>
-              <!-- Body -->
-              <rect x="4" y="10" width="8" height="4" fill="#9ca3af"/>
-              <rect x="5" y="11" width="6" height="2" fill="#d1d5db"/>
-              <!-- Both arms visible from behind -->
-              <g id="arm-left-back"><rect x="3"  y="11" width="1" height="2" fill="#9ca3af"/></g>
-              <g id="arm-right">
-                <rect x="12" y="11" width="1" height="2" fill="#9ca3af"/>
-                <rect x="13" y="10" width="1" height="1" fill="#9ca3af"/>
-              </g>
+        <!-- ================= NEUTRAL ================= -->
+        <g id="bot-front">
+          <g id="bot-bounce">
+            <!-- Legs -->
+            <rect x="6" y="14" width="2" height="2" fill="#6b7280"/>
+            <rect x="8" y="14" width="2" height="2" fill="#6b7280"/>
+            <!-- Neck -->
+            <rect x="7" y="9" width="2" height="1" fill="#9ca3af"/>
+            <!-- Antenna -->
+            <rect x="7" y="0" width="2" height="2" fill="#6b7280"/>
+            <rect x="7" y="0" width="2" height="1" fill="#ef4444"/>
+            <!-- Head back  -->
+            <rect x="3" y="3" width="10" height="6" fill="#9ca3af"/>
+            <rect x="4" y="4" width="8" height="4" fill="#d1d5db" mask="url(#blink-front)"/>
+            <rect x="5" y="5" width="2" height="2" fill="#60a5fa"/>
+            <rect x="9" y="5" width="2" height="2" fill="#60a5fa"/>
+            <defs>
+              <!-- Blink mask for eyes -->
+              <mask id="blink-front">
+                <!-- default: eyes visible (white) -->
+                <rect x="0" y="0" width="16" height="16" fill="#fff"/>
+                <!-- eyelid covers eyes during blink via CSS anim (we move this rect) -->
+                <rect id="eyelid" x="4" y="5" width="8" height="0" fill="#000"/>
+              </mask>
+            </defs>
+            <!-- Ears --> 
+            <rect x="2" y="5" width="1" height="2" fill="#9ca3af"/> 
+            <rect x="13" y="5" width="1" height="2" fill="#9ca3af"/>
+            <!-- Body -->
+            <rect x="4" y="10" width="8" height="4" fill="#9ca3af"/>
+            <rect x="5" y="11" width="6" height="2" fill="#d1d5db"/>
+            <!-- Both arms visible from behind -->
+            <g id="arm-left-back"><rect x="3"  y="11" width="1" height="2" fill="#9ca3af"/></g>
+            <g id="arm-right">
+              <rect x="12" y="11" width="1" height="2" fill="#9ca3af"/>
+              <rect x="13" y="10" width="1" height="1" fill="#9ca3af"/>
             </g>
           </g>
+        </g>
 
-          <!-- ================= RIGHT PROFILE ================= -->
-          <g id="bot-right">
-            <!-- Legs -->
-            <rect x="6" y="14" width="2" height="2" fill="#6b7280"/>
-            <rect x="8" y="14" width="2" height="2" fill="#6b7280"/>
-            <!-- Neck -->
-            <rect x="7" y="9" width="2" height="1" fill="#9ca3af"/>
-            <!-- Antenna -->
-            <rect x="7" y="0" width="2" height="2" fill="#6b7280"/>
-            <rect x="7" y="0" width="2" height="1" fill="#ef4444"/>
-            <!-- Head (one ear only, on the near/right side) -->
-            <rect x="3" y="3" width="10" height="6" fill="#9ca3af"/>
-            <rect x="4" y="4" width="8" height="4" fill="#d1d5db"/>
-            <!-- near ear only -->
-            <rect x="6" y="5" width="2" height="2" fill="#9ca3af"/>
-            <!-- Eye looking right -->
-            <rect x="10" y="5" width="2" height="2" fill="#60a5fa"/>
-            <!-- Body -->
-            <rect x="4" y="10" width="8" height="4" fill="#9ca3af"/>
-            <rect x="5" y="11" width="6" height="2" fill="#d1d5db"/>
-            <!-- arm -->
-            <g id="arm-mid"><rect x="8" y="11" width="1" height="2" fill="#9ca3af"/></g>
-          </g>
+        <!-- ================= RIGHT PROFILE ================= -->
+        <g id="bot-right">
+          <!-- Legs -->
+          <rect x="6" y="14" width="2" height="2" fill="#6b7280"/>
+          <rect x="8" y="14" width="2" height="2" fill="#6b7280"/>
+          <!-- Neck -->
+          <rect x="7" y="9" width="2" height="1" fill="#9ca3af"/>
+          <!-- Antenna -->
+          <rect x="7" y="0" width="2" height="2" fill="#6b7280"/>
+          <rect x="7" y="0" width="2" height="1" fill="#ef4444"/>
+          <!-- Head (one ear only, on the near/right side) -->
+          <rect x="3" y="3" width="10" height="6" fill="#9ca3af"/>
+          <rect x="4" y="4" width="8" height="4" fill="#d1d5db"/>
+          <!-- near ear only -->
+          <rect x="6" y="5" width="2" height="2" fill="#9ca3af"/>
+          <!-- Eye looking right -->
+          <rect x="10" y="5" width="2" height="2" fill="#60a5fa"/>
+          <!-- Body -->
+          <rect x="4" y="10" width="8" height="4" fill="#9ca3af"/>
+          <rect x="5" y="11" width="6" height="2" fill="#d1d5db"/>
+          <!-- arm -->
+          <g id="arm-mid"><rect x="8" y="11" width="1" height="2" fill="#9ca3af"/></g>
+        </g>
 
-          <!-- ================= LEFT PROFILE ================= -->
-          <g id="bot-left">
-            <!-- Legs -->
-            <rect x="6" y="14" width="2" height="2" fill="#6b7280"/>
-            <rect x="8" y="14" width="2" height="2" fill="#6b7280"/>
-            <!-- Neck -->
-            <rect x="7" y="9" width="2" height="1" fill="#9ca3af"/>
-            <!-- Antenna -->
-            <rect x="7" y="0" width="2" height="2" fill="#6b7280"/>
-            <rect x="7" y="0" width="2" height="1" fill="#ef4444"/>
-            <!-- Head (one ear only, on the near/left side) -->
-            <rect x="3" y="3" width="10" height="6" fill="#9ca3af"/>
-            <rect x="4" y="4" width="8" height="4" fill="#d1d5db"/>
-            <!-- near ear only -->
-            <rect x="8" y="5" width="2" height="2" fill="#9ca3af"/>
-            <!-- eye looking left -->
-            <rect x="4" y="5" width="2" height="2" fill="#60a5fa"/>
-            <!-- Body -->
-            <rect x="4" y="10" width="8" height="4" fill="#9ca3af"/>
-            <rect x="5" y="11" width="6" height="2" fill="#d1d5db"/>
-            <!-- arm -->
-            <g id="arm-mid"><rect x="7" y="11" width="1" height="2" fill="#9ca3af"/></g>
-          </g>
-      </svg>
-    </div>
+        <!-- ================= LEFT PROFILE ================= -->
+        <g id="bot-left">
+          <!-- Legs -->
+          <rect x="6" y="14" width="2" height="2" fill="#6b7280"/>
+          <rect x="8" y="14" width="2" height="2" fill="#6b7280"/>
+          <!-- Neck -->
+          <rect x="7" y="9" width="2" height="1" fill="#9ca3af"/>
+          <!-- Antenna -->
+          <rect x="7" y="0" width="2" height="2" fill="#6b7280"/>
+          <rect x="7" y="0" width="2" height="1" fill="#ef4444"/>
+          <!-- Head (one ear only, on the near/left side) -->
+          <rect x="3" y="3" width="10" height="6" fill="#9ca3af"/>
+          <rect x="4" y="4" width="8" height="4" fill="#d1d5db"/>
+          <!-- near ear only -->
+          <rect x="8" y="5" width="2" height="2" fill="#9ca3af"/>
+          <!-- eye looking left -->
+          <rect x="4" y="5" width="2" height="2" fill="#60a5fa"/>
+          <!-- Body -->
+          <rect x="4" y="10" width="8" height="4" fill="#9ca3af"/>
+          <rect x="5" y="11" width="6" height="2" fill="#d1d5db"/>
+          <!-- arm -->
+          <g id="arm-mid"><rect x="7" y="11" width="1" height="2" fill="#9ca3af"/></g>
+        </g>
+    </svg>
+  </div>
   <div class="floor-wrap">
     <div class="floor">
   </div>

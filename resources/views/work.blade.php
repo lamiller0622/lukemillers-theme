@@ -70,7 +70,7 @@
             <span class="dot dot-close"></span>
             <span class="dot dot-min"></span>
             <span class="dot dot-max"></span>
-            <button type="button" class="btn-primary"><a href="/">Return Home</a></button>
+            <button type="button" class="btn-primary"><a href="/"><span class="md:inline-block hidden">Return </span>Home</a></button>
           </div>
           <div class="title">Work Experience</div>
           <div class="actions">

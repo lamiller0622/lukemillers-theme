@@ -104,10 +104,8 @@ export function initVantaHotspots({
           <a href="/portfolio/" class="btn-primary">See Portfolio</a>` },
         { bg: 'house', u:  0.3, v: -0.10, label: `
           <h2>Contact</h2>
-          <ul>
-            <li><a href="mailto:info@lukemiller.io">info@lukemiller.io</a></li>
-            <li><a target="_blank" href="https://www.linkedin.com/in/luke-miller96/">LinkedIn</a></li>
-          </ul>` },
+          <a class="btn-primary mr-4" href="mailto:info@lukemiller.io">Email</a>
+          <a target="_blank" class="btn-primary" href="https://www.linkedin.com/in/luke-miller96/">LinkedIn</a>` },
         { id: 'secret', u:  0.1, v: .9, label: `
           <div class="secret"><a href="/mixes" class="btn-primary">fun</a></div>` },
         { id: 'disco', u: 0.85, v: -0.75, label: `

@@ -69,6 +69,9 @@ html.robot-wave #robot-cursor {
   100% { --ty: 0px;   --rot: 0deg;  }
 }
 
+#robot-wrap:not(.walking):not(.dance) #robot-svg-gallery #bot-bounce{
+  animation: robot-bounce-tilt 2.0s cubic-bezier(.22,.61,.36,1) infinite ;
+}
 
 html.robot-wave #bot-bounce { animation-duration: 1.2s; }
 

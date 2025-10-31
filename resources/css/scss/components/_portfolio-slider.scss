@@ -12,12 +12,19 @@ body {
     position: relative;
     isolation: isolate;
     border-bottom: solid 1px;
+    @media(max-width: 767px){
+      height: 70vh;
+      padding: 0;
+    }
 }
 
 .floor{
   height: 25vh;
   place-items: center;
   place-content: center;
+  @media(max-width: 767px){
+    height: 20vh;
+  }
   .wood-floor{
     height: 75%;
     width: 100%;

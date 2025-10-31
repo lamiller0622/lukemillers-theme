@@ -18,7 +18,7 @@ export function mountPixelRobot({
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return () => {};
 
   const host   = document.getElementById('robot-cursor');
-  const eyelid = document.getElementById('eyelid');
+  const eyelid = host.querySelector('#eyelid');
   if (!host || !eyelid) return () => {};
 
   // Size & reveal
