@@ -4,10 +4,9 @@
 @extends('layouts.app')
 
 @push('head')
-  <meta property="og:image" content="https://pub-eb118f23ac7b48a3985b8985ef92286c.r2.dev/cover.png">
+  <meta property="og:image" content="https://lukemiller.io/wp-content/uploads/2025/10/cropped-robot.png">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta property="og:title" content="Mixes 2024 (Reprise)">
-  <meta property="og:description" content="Last year's mixes condensed.">
+  <meta property="og:title" content="Lukes Mixes">
   <meta property="og:type" content="music.song">
   <meta name="twitter:card" content="summary_large_image">
   <title>Mixes 2024 (Reprise) — Luke Miller</title>
@@ -23,7 +22,7 @@
       'artist'   => 'Luke Miller',
       'album'    => 'Mixes 2024',
       'audioUrl' => 'https://lukemiller.io/wp-content/24-compiled-meta.m4a',
-      'artwork'  => 'https://pub-eb118f23ac7b48a3985b8985ef92286c.r2.dev/cover.png',
+      'artwork'  => 'https://lukemiller.io/wp-content/uploads/2025/10/cropped-robot.png',
       'chapters' => parse_audacity_labels(
         get_theme_file_path('resources/static/2024-Labels.txt')
       ),
@@ -34,9 +33,20 @@
       'artist'   => 'Luke Miller',
       'album'    => 'Mixes 2025',
       'audioUrl' => 'https://lukemiller.io/wp-content/25raw-meta.m4a',
-      'artwork'  => 'https://pub-eb118f23ac7b48a3985b8985ef92286c.r2.dev/cover.png',
+      'artwork'  => 'https://lukemiller.io/wp-content/uploads/2025/10/cropped-robot.png',
       'chapters' => parse_audacity_labels(
         get_theme_file_path('resources/static/labels1.txt')
+      ),
+    ],
+    [
+      'slug'     => 'hannahs-birthday',
+      'title'    => 'Hannah‘s Birthday,
+      'artist'   => 'Luke Miller',
+      'album'    => 'Hannah‘s Birthday,
+      'audioUrl' => 'https://lukemiller.io/wp-content/hannahs-mix-meta.m4a',
+      'artwork'  => 'https://lukemiller.io/wp-content/uploads/2025/10/cropped-robot.png',
+      'chapters' => parse_audacity_labels(
+        get_theme_file_path('resources/static/hannah-labels.txt')
       ),
     ],
   ];
