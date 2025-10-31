@@ -70,7 +70,7 @@ audio {
       flex: 1;
     }
     &.active{
-      background: $light;
+      background: rgba(0, 136, 206,.5);
     }
   }
 }

@@ -40,9 +40,9 @@
     ],
     [
       'slug'     => 'hannahs-birthday',
-      'title'    => 'Hannah‘s Birthday,
+      'title'    => 'Hannah‘s Birthday',
       'artist'   => 'Luke Miller',
-      'album'    => 'Hannah‘s Birthday,
+      'album'    => 'Hannah‘s Birthday',
       'audioUrl' => 'https://lukemiller.io/wp-content/hannahs-mix-meta.m4a',
       'artwork'  => 'https://lukemiller.io/wp-content/uploads/2025/10/cropped-robot.png',
       'chapters' => parse_audacity_labels(
