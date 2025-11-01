@@ -36,6 +36,10 @@ h2{
     	background: $primary;
     	color: #fff;
     }
+    @media(max-width: 767px){
+        padding: 4px 6px;
+        font-size: 12px;
+    }
 }
 
 ul{

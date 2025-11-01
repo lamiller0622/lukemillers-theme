@@ -70,12 +70,12 @@
             <span class="dot dot-close"></span>
             <span class="dot dot-min"></span>
             <span class="dot dot-max"></span>
-            <button type="button" class="btn-primary"><a href="/"><span class="md:inline-block hidden">Return </span>Home</a></button>
+            <button type="button" class="btn-primary"><a href="/"><span class="md:inline-block hidden">Return </span> Home</a></button>
           </div>
           <div class="title">Work Experience</div>
           <div class="actions">
-            <button type="button" class="btn-primary" data-expand-all>Expand All</button>
-            <button type="button" class="btn-primary" data-collapse-all>Collapse All</button>
+            <button type="button" class="btn-primary" data-expand-all><span class="md:inline-block hidden">Expand All</span><span class="md:hidden">+</span></button>
+            <button type="button" class="btn-primary" data-collapse-all><span class="md:inline-block hidden">Collapse All</span><span class="md:hidden">-</span></button>
           </div>
         </div>
 
