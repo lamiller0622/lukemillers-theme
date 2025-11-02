@@ -146,15 +146,28 @@ const nextBtn = $('#next');
 const picker  = $('#mixPicker');
 const titleEl = $('#mixTitle');
 const dl      = $('#downloadLink');
+const SCROLL_AFTER_INDEX = 5;
 
 let AUDIO_URL = "";
 let chapters = [];
 let KEY = "";
 let lastChapterIdx = -1;
+let lastScrolledIdx = -1;
 
 /* =========================
    Utils
    ========================= */
+
+function scrollActiveIntoView(idx) {
+  if (!ul) return;
+  if (idx < SCROLL_AFTER_INDEX) return;           // ignore early chapters
+  if (idx === lastScrolledIdx) return;            // only once per chapter
+  const li = ul.children[idx];
+  if (!li) return;
+  li.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  lastScrolledIdx = idx;
+}
+
 function fmt(t){
   t = Math.max(0, Math.floor(t));
   const h = Math.floor(t/3600), m = Math.floor((t%3600)/60), s = t%60;
@@ -168,6 +181,8 @@ function chapterIndexAt(t){
 }
 function qs(name){ const v=new URLSearchParams(location.search).get(name); return v?decodeURIComponent(v):null; }
 function setQS(name,val){ const u=new URL(location.href); u.searchParams.set(name,val); history.replaceState(null,'',u.toString()); }
+
+
 
 /* =========================
    UI: chapter list
@@ -185,6 +200,7 @@ function buildChapterList(){
 function highlight(){
   const idx = chapterIndexAt(audio.currentTime);
   [...ul.children].forEach((li,i)=>li.classList.toggle('active', i===idx));
+  scrollActiveIntoView(idx);
 }
 
 /* =========================
@@ -266,6 +282,7 @@ async function loadMix(slug, opts={autoplay:false, keepTime:false}){
   chapters  = mix.chapters.slice();
   KEY = "mix_progress_" + AUDIO_URL;
   lastChapterIdx = -1;
+  lastScrolledIdx = -1;
 
   // Set the source (old ordering)
   audio.src = AUDIO_URL;

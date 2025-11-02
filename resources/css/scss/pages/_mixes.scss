@@ -9,11 +9,14 @@ body {
   margin:0; 
   color:var(--fg); 
   background:var(--bg); 
+  overflow: hidden;
 }
 .wrap { 
   max-width: 767px; 
   margin: 0 auto; 
-  padding: 20px; 
+  height: 100svh;
+  display: flex;
+  flex-direction: column; 
 }
 
 p.desc { 
@@ -54,6 +57,10 @@ audio {
   padding:0; 
   padding:2rem 1rem 60px; 
   background: rgba(255,255,255,.8);
+  -webkit-overflow-scrolling: touch;
+  flex: 1 1 auto;                       
+  overflow: auto; 
+  scroll-padding-top: 20px; 
   li{
     display:flex; 
     gap:12px; 
@@ -112,4 +119,5 @@ audio {
   inset: 0;
   z-index: -1;          /* behind everything */
 }
+
 
