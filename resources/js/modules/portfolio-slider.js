@@ -169,8 +169,8 @@ export function mountPortfolioSliders() {
       startAt: 0,
       perView: pv3,
       focusAt: 'center',
-      gap: 20,
-      peek: { before: 120, after: 120 },
+      gap: 50,
+      peek: { before: 30,  after: 30  },
       autoplay,
       hoverpause: true,
       perTouch: 1,
@@ -180,11 +180,11 @@ export function mountPortfolioSliders() {
       animationDuration: 1500,
       keyboard: true,
       breakpoints: {
-        1280: { perView: pv3, gap: 32, peek: { before: 100, after: 100 } },
-        1024: { perView: pv3, gap: 28, peek: { before: 80,  after: 80  } },
-        900:  { perView: pv3, gap: 28, peek: { before: 70,  after: 70  } },
-        768:  { perView: pv1, gap: 22, peek: { before: 48,  after: 48  } },
-        520:  { perView: pv1, gap: 18, peek: { before: 36,  after: 36  } },
+        1280: { perView: pv3, gap: 50, peek: { before: 30,  after: 30  } },
+        1024: { perView: pv3, gap: 50, peek: { before: 30,  after: 30  } },
+        900:  { perView: pv3, gap: 50, peek: { before: 30,  after: 30  } },
+        768:  { perView: pv1, gap: 50, peek: { before: 48,  after: 48  } },
+        520:  { perView: pv1, gap: 50, peek: { before: 36,  after: 36  } },
       },
     });
 
