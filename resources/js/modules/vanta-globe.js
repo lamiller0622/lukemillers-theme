@@ -94,12 +94,11 @@ export function initVantaHotspots({
         { bg: 'gallery', u: -0.15, v:  0.35, label: `
           <h2>Skills</h2>
           <ul>
-            <li>Front-end: HTML, Javascript, Jquery, React</li>
-            <li>Back-end: PHP, Laravel, SQL</li>
-            <li>Software Development: python, Ruby, C, Assembly</li>
-            <li>Wordpress: WPML, ACF, CPT</li>
-            <li>Design: CSS, SCSS, Bootstrap, Typescript</li>
-            <li>Marketing: Hubl, SEO</li>
+            <li>Front-end: HTML, SCSS, Javascript, Jquery, React, Typescript</li>
+            <li>Back-end: PHP, Laravel, MySQL, Python, Ruby</li>
+            <li>Design: Photoshop, Figma</li>
+            <li>CMS/Frameworks: WordPress (ACF, CPT, WPML, Sage, Elementor), Shopify</li>
+            <li>Marketing: Hubl, SEO, GA4/GTM, Email HTML</li>
           </ul>
           <a href="/portfolio/" class="btn-primary">See Portfolio</a>` },
         { bg: 'house', u:  0.3, v: -0.10, label: `

@@ -22,11 +22,11 @@ $slides = $slides ?? [
     'image' => @asset('images/gallery.svg'),
     'content' => '
           <ul>
-            <li>Front-end: HTML, Javascript, Jquery, React</li>
-            <li>Back-end: PHP, Laravel, SQL</li>
-            <li>Software Development: python, Ruby, C, Assembly</li>
-            <li>Design: CSS, SCSS, Bootstrap, Tailwind</li>
-            <li>Marketing: Hubl, SEO</li>
+            <li>Front-end: HTML, JavaScript, jQuery, React, SCSS, TypeScript</li>
+            <li>Back-end: Laravel, MySQL, PHP, Python, Ruby</li>
+            <li>CMS/Frameworks: Shopify, WordPress (ACF, CPT, Elementor, Sage, WPML)</li>
+            <li>Design: Figma, Photoshop</li>
+            <li>Marketing: Email Development, GA4/GTM, HubL, SEO</li>
           </ul>
           <a href="portfolio" class="btn-primary">See Portfolio</a>'
   ],
