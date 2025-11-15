@@ -12,10 +12,11 @@
       'years' => 'Nov 2024 – Present',
       'stack' => ['Sage 10', 'Laravel', 'Bootstrap5','SCSS', 'Hubl', 'Jquery', 'ACF', 'CPT', 'ACF', 'Elementor'],
       'highlights' => [
-        'Convert Drag & Drop Themed Site (Elementor) to MVC Theme (Sage 10).',
-        'Create new custom company templates into flexible content modules for easy frontend page building using ACF.',
-        'Build dynamic Hubspot templates and drag and drop modules for multiple marketing operation needs.',
-        'Plann and develop post-acquisition strategies to optimize backend and digital experience for both companies.'
+        'Convert Drag & Drop Themed Site (Elementor) to MVC Theme (Sage 10) for fadv.com.',
+        'Built reusable ACF flexible content modules, allowing for 50+ unique product page creations with minimal development time',
+        'Developed modular HubSpot landing page templates supporting dozens of monthly campaigns.',
+        'Led technical integration of two company websites post-acquisition, consolidating tech stack and improving digital experience for both companies.',
+        'Built responsive email template system with dynamic content personalization'
       ]
     ],
     [
