@@ -37,8 +37,8 @@
 4880.702268	5267.370826	Haunted Thique - Beyonce
 5267.370797	5423.986245	Abracadabra - Lady Gaga
 5423.986245	5499.477253	Shadow of a Man - Lady Gaga
-5499.477253	5586.525893	Telephone - Lade Gaga (feat. Beyonce)
-5586.525893	5686.495652	My Humps - The Black Eyed Peas
+5499.477253	5586.969976	Telephone - Lade Gaga (feat. Beyonce)
+5586.969976	5686.495652	My Humps - The Black Eyed Peas
 5686.495652	5839.812967	Sugar On My Tongue - Tyler the Creater
 5839.812967	5960.873231	Alter Ego - Doechii
 5960.873231	6085.174299	1991 - Azealia Banks
@@ -63,8 +63,22 @@
 8347.291610	8464.025510	AAAHH MEN! - Doja Cat
 8464.025510	8602.619184	Stupid Love - Lady Gaga
 8602.619184	8685.099116	Heavy Metal Lover - Lady Gaga
-8685.099116	8816.510839	Get Back - Britney Spears
-8816.510839	8988.493001	Hot Stuff - Donna Summer
+8685.099116	8817.087790	Get Back - Britney Spears
+8817.087790	8988.493001	Hot Stuff - Donna Summer
 8988.027953	9076.808310	Bad Girls - Donna Summer
 9076.808310	9202.416564	She Wolf - Shakira
-9202.400035	9228.022054	Can't Get You Out of My Head - Kylie Minogue
+9202.400035	9331.882224	Can't Get You Out of My Head - Kylie Minogue
+9331.879819	9447.780522	Make Me Feel (Remix) - Janelle Monae
+9447.780522	9555.711519	Only Girl (In the World) - Rihanna
+9555.711519	9586.309252	Rain Over Me - Marc Anthony
+9586.309252	9721.375601	Down For Whatever - Kelly Rowland
+9721.375601	9852.165059	Dirty Dancer - Enrique Iglesias & Usher
+9852.165059	9997.541933	You Make Me Feel - Cobra Starships
+9997.541933	10134.879087	OPULENCE - Beyonce
+10134.879087	10233.917437	Kiss - Demi Lovato
+10233.917437	10330.839734	Von Dutch - Charli XCX
+10330.839734	10454.312573	Marry The Night - Lady Gaga
+10454.312573	10573.844376	Drove All Night - Celine Dion
+10573.844376	10717.475083	All or Nothing - Cher
+10717.475083	10809.285027	Run Away - Cher
+10809.285027	10922.539418	Superheroes - Daft Punk
