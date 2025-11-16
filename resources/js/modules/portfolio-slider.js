@@ -2,67 +2,26 @@ import Glide from '@glidejs/glide';
 
 // ------------------------------ helpers ------------------------------
 function setDepthClasses(root, targetIdx) {
-  const all = Array.from(root.querySelectorAll('.glide__slides > li'));
-  if (!all.length) return;
+  const slides = root.querySelectorAll('.glide__slides > li .slide');
+  const n = slides.length;
   
-  const n = all.length;
-  const at = (i) => all[((i % n) + n) % n];
-  
-  // Clear all
-  all.forEach(li => {
-    const slide = li.querySelector('.slide');
-    if (slide) {
-      slide.classList.remove('is-active','is-prev','is-next');
-      // Force browser to acknowledge removal
-      void slide.offsetWidth;
-    }
+  slides.forEach((slide, i) => {
+    slide.classList.remove('is-active', 'is-prev', 'is-next');
+    const norm = ((targetIdx % n) + n) % n;
+    if (i === norm) slide.classList.add('is-active');
+    if (i === ((norm - 1 + n) % n)) slide.classList.add('is-prev');
+    if (i === ((norm + 1) % n)) slide.classList.add('is-next');
   });
-  
-  // Apply based on provided index
-  const activeSlide = at(targetIdx)?.querySelector('.slide');
-  const prevSlide = at(targetIdx-1)?.querySelector('.slide');
-  const nextSlide = at(targetIdx+1)?.querySelector('.slide');
-  
-  if (activeSlide) activeSlide.classList.add('is-active');
-  if (prevSlide) prevSlide.classList.add('is-prev');
-  if (nextSlide) nextSlide.classList.add('is-next');
 }
 
 function restartRobot(el) {
   if (!el) return;
-  // Hard reset animations on the elements that animate
-  const parts = [
-    el.querySelector('#bot-bounce'),
-    el.querySelector('#robot-shadow'),
-    el.querySelector('#antenna'),
-    // profile bob/arms when walking may need a kick too:
-    el.querySelector('#robot-svg-gallery'),
-    el.querySelector('#arm-right'),
-    el.querySelector('#arm-left'),
-    el.querySelector('#arm-mid'),
-  ].filter(Boolean);
-  parts.forEach(node => { node.style.animation = 'none'; });
-  // force reflow once
-  // eslint-disable-next-line no-unused-expressions
-  el.offsetWidth;
-  parts.forEach(node => { node.style.animation = ''; });
-}
-
-function getTargetIndex(glide, e) {
-  const n = glide._c.Sizes.length;
-  const norm = (i) => ((i % n) + n) % n;
-
-  if (e && typeof e.steps === 'number') return norm(glide.index + e.steps);
-  if (e && typeof e.direction === 'string' && typeof e.steps === 'number') {
-    return norm(glide.index + (e.direction === '>' ? +e.steps : -e.steps));
-  }
-  if (e && typeof e.movement === 'string') {
-    if (e.movement === '>') return norm(glide.index + 1);
-    if (e.movement === '<') return norm(glide.index - 1);
-    const eq = e.movement.match(/^=(\d+)$/);
-    if (eq) return norm(parseInt(eq[1], 10));
-  }
-  return norm(glide.index);
+  const parts = el.querySelectorAll('#bot-bounce, #robot-shadow, #antenna, #robot-svg-gallery, #arm-right, #arm-left, #arm-mid');
+  parts.forEach(node => { 
+    node.style.animation = 'none';
+    void el.offsetWidth;
+    node.style.animation = '';
+  });
 }
 
 function mountWheelSwipe(glide, root, setPendingDir) {
@@ -97,41 +56,9 @@ function mountWheelSwipe(glide, root, setPendingDir) {
   };
 
   track.addEventListener('wheel', onWheel, { passive: false });
-  glide.on('destroy', () => {
-    track.removeEventListener('wheel', onWheel, { passive: false });
-  });
+  glide.on('destroy', () => track.removeEventListener('wheel', onWheel));
 }
 
-function mountTouchDir(root, setPendingDir) {
-  const track = root.querySelector('.glide__track');
-  if (!track) return;
-
-  let startX = 0, startY = 0;
-  const THRESH = 18;
-
-  const onStart = (e) => {
-    const t = e.touches && e.touches[0];
-    if (!t) return;
-    startX = t.clientX;
-    startY = t.clientY;
-  };
-
-  const onMove = (e) => {
-    const t = e.touches && e.touches[0];
-    if (!t) return;
-    const dx = t.clientX - startX;
-    const dy = t.clientY - startY;
-
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > THRESH) {
-      setPendingDir(dx < 0 ? 'right' : 'left');
-    }
-  };
-
-  track.addEventListener('touchstart', onStart, { passive: true });
-  track.addEventListener('touchmove',  onMove,  { passive: true });
-}
-
-// Palette utils (local to this file)
 const hexFromInt = (i) => '#' + ((i >>> 0).toString(16).padStart(6, '0'));
 const VANTA_BASE = { color: 0x007074, color2: 0xe45b31, backgroundColor: 0xe3d9cf };
 const DISCO_PALETTES = [
@@ -142,42 +69,29 @@ const DISCO_PALETTES = [
   { color: 0x00f5d4, color2: 0xf15bb5, backgroundColor: 0x0b132b },
 ];
 
-// Compatible hook to desktop Vanta if available
-const applyVantaOptions =
-  (globalThis.applyVantaOptions) ||
-  (window && (window.applyVantaOptions || window.__applyVantaOptions)) ||
-  null;
-
 if (!globalThis.__discoGateInit) {
-  globalThis.__discoGateInit   = true;
+  globalThis.__discoGateInit = true;
   globalThis.__discoGateOpened = false;
   setTimeout(() => {
     globalThis.__discoGateOpened = true;
     window.dispatchEvent(new Event('discoGateOpened'));
-  }, 5000); // 5s stall after page load
+  }, 5000);
 }
 
 // ------------------------------ main ------------------------------
 export function mountPortfolioSliders() {
   document.querySelectorAll('[data-portfolio-glide]').forEach(root => {
-    const autoplay = parseInt(root.dataset.autoplay || '0', 10) || 0;
-
-    const originals = Array.from(root.querySelectorAll('.glide__slides > li'))
-      .filter(li => !li.classList.contains('glide__slide--clone'));
-    originals.forEach((li, i) => { li.dataset.idx = String(i); });
-
-    const n = originals.length;
-    const pv3 = Math.min(3, n);
-    const pv1 = 1;
+    const n = root.querySelectorAll('.glide__slides > li').length;
+    const isMobile = root.closest('.home-mobile-slider');
 
     const glide = new Glide(root, {
       type: 'carousel',
       startAt: 0,
-      perView: pv3,
+      perView: Math.min(3, n),
       focusAt: 'center',
       gap: 50,
-      peek: { before: 30,  after: 30  },
-      autoplay,
+      peek: { before: 30, after: 30 },
+      autoplay: parseInt(root.dataset.autoplay || '0', 10) || 0,
       hoverpause: true,
       perTouch: 1,
       swipeThreshold: 40,
@@ -186,174 +100,150 @@ export function mountPortfolioSliders() {
       animationDuration: 1500,
       keyboard: true,
       breakpoints: {
-        1280: { perView: pv3, gap: 50, peek: { before: 30,  after: 30  } },
-        1024: { perView: pv3, gap: 50, peek: { before: 30,  after: 30  } },
-        900:  { perView: pv3, gap: 50, peek: { before: 30,  after: 30  } },
-        768:  { perView: pv1, gap: 50, peek: { before: 48,  after: 48  } },
-        520:  { perView: pv1, gap: 50, peek: { before: 36,  after: 36  } },
+        900: { perView: Math.min(3, n), gap: 50, peek: { before: 30, after: 30 } },
+        768: { perView: 1, gap: 50, peek: { before: 48, after: 48 } },
+        520: { perView: 1, gap: 50, peek: { before: 36, after: 36 } },
       },
     });
 
-    // Robot posture hooks (unchanged)
     const robotWrap = document.getElementById('robot-wrap');
-    const setPose = (cls) => { if (robotWrap) { robotWrap.classList.remove('dir-left','dir-right','dir-neutral'); robotWrap.classList.add(cls); } };
-    const startWalking = (dir) => { if (robotWrap) { setPose(dir === 'left' ? 'dir-left' : 'dir-right'); robotWrap.classList.add('walking'); } };
-    const stopWalkingToNeutral = () => {
-       if (!robotWrap) return;
-       robotWrap.classList.remove('walking');
-       setPose('dir-neutral');           // switch profile immediately
-       // (Optional) poke layout for Safari so animations re-arm cleanly
-       // eslint-disable-next-line no-unused-expressions
-       robotWrap.offsetWidth;
+    let pendingDir = null;
+    
+    const setPose = (cls) => {
+      if (!robotWrap) return;
+      robotWrap.classList.remove('dir-left', 'dir-right', 'dir-neutral');
+      robotWrap.classList.add(cls);
     };
-
-    // Limit the background/mini-globe behavior to the MOBILE slider block
-    const isMobileSlider = !!root.closest('.home-mobile-slider');
-
-    // ---------- Mobile disco loop (runs only on dance slide) ----------
-    let mobileDiscoTimer = null;
-    let mobilePalIdx = 0;
-
-    function applyMobilePalette(pal, { lightText = false } = {}) {
-
-      const miniHost = document.querySelector('[data-slide="globe"] .mini-globe');
-      const ctl = miniHost && miniHost.__miniGlobeCtl;
-      if (ctl) ctl.setPalette({ color: pal.color }); 
+    
+    const startWalking = (dir) => {
+      if (!robotWrap) return;
+      setPose(dir === 'left' ? 'dir-left' : 'dir-right');
+      robotWrap.classList.add('walking');
+    };
+    
+    const stopWalking = () => {
+      if (!robotWrap) return;
+      robotWrap.classList.remove('walking');
+      setPose('dir-neutral');
+      void robotWrap.offsetWidth;
+    };
+    
+    const getDirection = (e) => {
+      if (pendingDir) {
+        const d = pendingDir;
+        pendingDir = null;
+        return d;
+      }
+      if (e?.direction === '>') return 'right';
+      if (e?.direction === '<') return 'left';
+      return 'right';
+    };
+    
+    // Mobile disco
+    let discoTimer = null;
+    let palIdx = 0;
+    
+    const applyPalette = (pal) => {
+      const miniGlobe = document.querySelector('[data-slide="globe"] .mini-globe');
+      if (miniGlobe?.__miniGlobeCtl) miniGlobe.__miniGlobeCtl.setPalette({ color: pal.color });
+      
       const section = document.querySelector('.home-mobile-slider');
       if (section) section.style.backgroundColor = hexFromInt(pal.backgroundColor);
-    }
-
-    function startMobileDisco() {
-      if (mobileDiscoTimer) return;
-      mobilePalIdx = 0;
-      applyMobilePalette(DISCO_PALETTES[mobilePalIdx % DISCO_PALETTES.length]);
-      mobileDiscoTimer = setInterval(() => {
-        mobilePalIdx++;
-        applyMobilePalette(DISCO_PALETTES[mobilePalIdx % DISCO_PALETTES.length]);
+      
+      const applyVanta = window.applyVantaOptions || window.__applyVantaOptions;
+      if (applyVanta) applyVanta(pal);
+    };
+    
+    const startDisco = () => {
+      if (discoTimer) return;
+      palIdx = 0;
+      applyPalette(DISCO_PALETTES[0]);
+      discoTimer = setInterval(() => {
+        palIdx = (palIdx + 1) % DISCO_PALETTES.length;
+        applyPalette(DISCO_PALETTES[palIdx]);
       }, 1000);
-    }
-
-    function stopMobileDisco() {
-      if (!mobileDiscoTimer) return;
-      clearInterval(mobileDiscoTimer);
-      mobileDiscoTimer = null;
-      applyMobilePalette(VANTA_BASE);
-    }
-
-    // ---------- Dance state updater ----------
-    const updateDanceState = () => {
-      if (!isMobileSlider || !robotWrap) return;
-
-      const curr = root.querySelector('.glide__slides > li.glide__slide--active');
-      const onDanceSlide = !!(curr && curr.dataset && curr.dataset.slide === 'globe');
-      const gateOpen = !!globalThis.__discoGateOpened;
-
-      // Only dance if on the slide & the gate has opened
-      const shouldDance = onDanceSlide && gateOpen;
-
+    };
+    
+    const stopDisco = () => {
+      if (discoTimer) clearInterval(discoTimer);
+      discoTimer = null;
+      applyPalette(VANTA_BASE);
+    };
+    
+    const updateDance = () => {
+      if (!isMobile || !robotWrap) return;
+      
+      const active = root.querySelector('.glide__slide--active');
+      const onDance = active?.dataset?.slide === 'globe' && globalThis.__discoGateOpened;
+      
       const wasDancing = robotWrap.classList.contains('dance');
-      robotWrap.classList.toggle('dance', shouldDance);
-      if (shouldDance && !wasDancing) restartRobot(robotWrap);
-
-      const section = document.querySelector('.home-mobile-slider');
-      if (section) section.classList.toggle('light', shouldDance);
-
-      // Desktop Vanta + mobile palette loop
-      const pal = shouldDance ? DISCO_PALETTES[0] : VANTA_BASE;
-      if (typeof applyVantaOptions === 'function') applyVantaOptions(pal);
-      if (shouldDance) startMobileDisco(); else stopMobileDisco();
+      robotWrap.classList.toggle('dance', onDance);
+      if (onDance && !wasDancing) restartRobot(robotWrap);
+      
+      document.querySelector('.home-mobile-slider')?.classList.toggle('light', onDance);
+      
+      onDance ? startDisco() : stopDisco();
     };
 
-    // Wait 5s before dancing begins
-    const onGateOpen = () => updateDanceState();
-    window.addEventListener('discoGateOpened', onGateOpen);
-
-    // ------------------------------ events ------------------------------
-    const btnLeft  = root.querySelector('.glide__arrow--left');
+    // Arrow clicks
+    const btnLeft = root.querySelector('.glide__arrow--left');
     const btnRight = root.querySelector('.glide__arrow--right');
-    let pendingDir = null;
-    const markLeft  = () => { pendingDir = 'left';  };
-    const markRight = () => { pendingDir = 'right'; };
-    btnLeft?.addEventListener('pointerdown', markLeft,  { passive: true });
-    btnLeft?.addEventListener('click',       markLeft,  { passive: true });
-    btnRight?.addEventListener('pointerdown',markRight, { passive: true });
-    btnRight?.addEventListener('click',      markRight, { passive: true });
+    btnLeft?.addEventListener('click', () => { pendingDir = 'left'; }, { passive: true });
+    btnRight?.addEventListener('click', () => { pendingDir = 'right'; }, { passive: true });
 
-    const nSlides = originals.length || 1;
-    const norm = (i) => ((i % nSlides) + nSlides) % nSlides;
-    const shortestDir = (curr, target) => {
-      const f = (target - curr + nSlides) % nSlides;
-      const b = (curr - target + nSlides) % nSlides;
-      if (f === 0 && b === 0) return null;
-      return f <= b ? 'right' : 'left';
-    };
-    const getDirection = (glide, e) => {
-      if (pendingDir) { const d = pendingDir; pendingDir = null; return d; }
-      if (e && typeof e.steps === 'number')     return e.steps > 0 ? 'right' : 'left';
-      if (e && typeof e.direction === 'string') return e.direction === '>' ? 'right' : 'left';
-      if (e && typeof e.movement === 'string') {
-        if (e.movement === '>') return 'right';
-        if (e.movement === '<') return 'left';
-        const m = e.movement.match(/^=(\d+)$/);
-        if (m) return shortestDir(glide.index, norm(parseInt(m[1], 10)));
-      }
-      const target = getTargetIndex(glide, e);
-      return shortestDir(glide.index, target);
-    };
+    // Trackpad swipe
+    mountWheelSwipe(glide, root, (dir) => { pendingDir = dir; });
 
+    // Events
     glide.on('mount.after', () => {
       setDepthClasses(root, glide.index);
       setPose('dir-neutral');
-      updateDanceState();
+      updateDance();
     });
-
+    
     glide.on('run', (e) => {
-      // entering transition: ensure walking anim is live on WebKit
       restartRobot(robotWrap);
-      startWalking(getDirection(glide, e));
+      startWalking(getDirection(e));
     });
-
+    
     glide.on('run.after', () => {
-      setDepthClasses(root, glide.index);
-      stopWalkingToNeutral();
-      updateDanceState();
+      stopWalking();
+      updateDance();
     });
-
+    
     glide.on('resize', () => {
       setDepthClasses(root, glide.index);
       restartRobot(robotWrap);
-      updateDanceState();
+      updateDance();
     });
+    
     glide.on('destroy', () => {
-      // make sure we stop the mobile loop if the slider is torn down
-      const section = document.querySelector('.home-mobile-slider');
-      if (section) section.style.backgroundColor = hexFromInt(VANTA_BASE.backgroundColor);
-      if (mobileDiscoTimer) { clearInterval(mobileDiscoTimer); mobileDiscoTimer = null; }
-      window.removeEventListener('discoGateOpened', onGateOpen);
+      stopDisco();
+      window.removeEventListener('discoGateOpened', updateDance);
     });
 
-    const setPendingDirFromInput = (dir) => { pendingDir = dir; };
-    mountWheelSwipe(glide, root, setPendingDirFromInput);
-    mountTouchDir(root, setPendingDirFromInput);
-
+    window.addEventListener('discoGateOpened', updateDance);
     glide.mount();
   });
 }
 
+// Eyelid blink
 (() => {
   const g = document.querySelector('#robot-svg-gallery');
-  const eyelidG = g?.querySelector('#eyelid');
+  if (!g) return; // Add this check
+  
+  const eyelidG = g.querySelector('#eyelid');
   if (!eyelidG) return;
+  
   const min = 2500, max = 6000;
-  const schedule = () => {
-    const delay = Math.floor(Math.random() * (max - min)) + min;
+  const blink = () => {
     setTimeout(() => {
-      eyelidG.setAttribute('height', '4');   // close
+      eyelidG.setAttribute('height', '4');
       setTimeout(() => {
-        eyelidG.setAttribute('height', '0'); // open
-        schedule();
+        eyelidG.setAttribute('height', '0');
+        blink();
       }, 90);
-    }, delay);
+    }, 2500 + Math.random() * 3500);
   };
-  schedule();
+  blink();
 })();

@@ -17,10 +17,12 @@ export function mountPixelRobot({
   if (window.matchMedia('(pointer: coarse)').matches) return () => {};
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return () => {};
 
-  const host   = document.getElementById('robot-cursor');
-  const eyelid = host.querySelector('#eyelid');
-  if (!host || !eyelid) return () => {};
+  const host = document.getElementById('robot-cursor');
+  if (!host) return () => {}; 
 
+  const eyelid = host.querySelector('#eyelid');
+  if (!eyelid) return () => {};
+  
   // Size & reveal
   host.style.width  = `${size}px`;
   host.style.height = `${size}px`;
