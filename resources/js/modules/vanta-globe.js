@@ -94,11 +94,11 @@ export function initVantaHotspots({
         { bg: 'gallery', u: -0.15, v:  0.35, label: `
           <h2>Skills</h2>
           <ul>
-            <li>Front-end: HTML, SCSS, Javascript, Jquery, React, Typescript</li>
-            <li>Back-end: PHP, Laravel, MySQL, Python, Ruby</li>
-            <li>Design: Photoshop, Figma</li>
-            <li>CMS/Frameworks: WordPress (ACF, CPT, WPML, Sage, Elementor), Shopify</li>
-            <li>Marketing: Hubl, SEO, GA4/GTM, Email HTML</li>
+            <li>Front-end: HTML, JavaScript, jQuery, React, SCSS, TypeScript</li>
+            <li>Back-end: Laravel, MySQL, PHP, Python, Ruby</li>
+            <li>CMS/Frameworks: Shopify, WordPress (ACF, CPT, Elementor, Sage, WPML)</li>
+            <li>Design: Figma, Photoshop</li>
+            <li>Marketing: Email Development, GA4/GTM, HubL, SEO</li>
           </ul>
           <a href="/portfolio/" class="btn-primary">See Portfolio</a>` },
         { bg: 'house', u:  0.3, v: -0.10, label: `
@@ -183,7 +183,7 @@ export function initVantaHotspots({
         nodes.forEach(n => {
           n.el.addEventListener('click', (e) => {
             const link = e.target.closest('.label a[href]');
-            if (!link) return;
+            if (!link || !n.el.contains(link)) return;
 
             if (prefersReduce || !robot || typeof robot.goto !== 'function' || typeof robot.jumpInto !== 'function') {
               e.preventDefault();

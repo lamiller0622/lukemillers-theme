@@ -1,25 +1,31 @@
 import Glide from '@glidejs/glide';
 
 // ------------------------------ helpers ------------------------------
-function setDepthClassesFromActive(root) {
+function setDepthClasses(root, targetIdx) {
   const all = Array.from(root.querySelectorAll('.glide__slides > li'));
   if (!all.length) return;
-  const active = root.querySelector('.glide__slides > li.glide__slide--active') || all[0];
+  
   const n = all.length;
-  const idx = all.indexOf(active);
-  const at = (i) => all[( (i % n) + n) % n];
-  // clear
-  all.forEach(li => li.querySelector('.slide')?.classList.remove(
-    'is-active','is-prev','is-next','is-2prev','is-2next'
-  ));
-  // apply around the actual DOM-active slide (clones OK)
-  at(idx)?.querySelector('.slide')?.classList.add('is-active');
-  at(idx-1)?.querySelector('.slide')?.classList.add('is-prev');
-  at(idx+1)?.querySelector('.slide')?.classList.add('is-next');
-  if (n > 3) {
-    at(idx-2)?.querySelector('.slide')?.classList.add('is-2prev');
-    at(idx+2)?.querySelector('.slide')?.classList.add('is-2next');
-  }
+  const at = (i) => all[((i % n) + n) % n];
+  
+  // Clear all
+  all.forEach(li => {
+    const slide = li.querySelector('.slide');
+    if (slide) {
+      slide.classList.remove('is-active','is-prev','is-next');
+      // Force browser to acknowledge removal
+      void slide.offsetWidth;
+    }
+  });
+  
+  // Apply based on provided index
+  const activeSlide = at(targetIdx)?.querySelector('.slide');
+  const prevSlide = at(targetIdx-1)?.querySelector('.slide');
+  const nextSlide = at(targetIdx+1)?.querySelector('.slide');
+  
+  if (activeSlide) activeSlide.classList.add('is-active');
+  if (prevSlide) prevSlide.classList.add('is-prev');
+  if (nextSlide) nextSlide.classList.add('is-next');
 }
 
 function restartRobot(el) {
@@ -296,7 +302,7 @@ export function mountPortfolioSliders() {
     };
 
     glide.on('mount.after', () => {
-      setDepthClassesFromActive(root);
+      setDepthClasses(root, glide.index);
       setPose('dir-neutral');
       updateDanceState();
     });
@@ -308,13 +314,13 @@ export function mountPortfolioSliders() {
     });
 
     glide.on('run.after', () => {
-      setDepthClassesFromActive(root);
+      setDepthClasses(root, glide.index);
       stopWalkingToNeutral();
       updateDanceState();
     });
 
     glide.on('resize', () => {
-      setDepthClassesFromActive(root);
+      setDepthClasses(root, glide.index);
       restartRobot(robotWrap);
       updateDanceState();
     });
