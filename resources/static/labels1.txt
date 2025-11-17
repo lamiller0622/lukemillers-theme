@@ -81,4 +81,13 @@
 10454.312573	10573.844376	Drove All Night - Celine Dion
 10573.844376	10717.475083	All or Nothing - Cher
 10717.475083	10809.285027	Run Away - Cher
-10809.285027	10922.539418	Superheroes - Daft Punk
+10809.285027	10877.370839	Superheroes - Daft Punk
+10877.370839	10974.888503	One Night Only (Disco Version) - Beyonce, Anika Noni Rose, Sharon Leal
+10974.888503	11107.357989	Safe - Cardi B feat. Kehlani
+11107.357989	11167.643395	LIKE ME - Future
+11167.643395	11252.951663	Bodega Baddie - Cardi B
+11252.951663	11394.157485	m.A.A.d. city - Kendrick Lamar
+11394.157485	11486.689437	Cut Her Off - K Camp
+11486.689437	11581.113305	Still Tippin - Mike Jones
+11581.113305	11683.448828	Big Difference - Nicki Minaj
+11683.448828	11711.613175	Toxic - Britney Spears
