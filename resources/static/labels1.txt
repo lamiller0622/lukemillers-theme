@@ -90,4 +90,9 @@
 11394.157485	11486.689437	Cut Her Off - K Camp
 11486.689437	11581.113305	Still Tippin - Mike Jones
 11581.113305	11683.448828	Big Difference - Nicki Minaj
-11683.448828	11711.613175	Toxic - Britney Spears
+11683.448828	11817.525528	Toxic - Britney Spears
+11817.525931	11943.443740	Break Free - Ariana Grande
+11943.443740	12092.370125	Psychadelic Switch - Carly Rae Jepson
+12092.370125	12219.542435	Fast - Demi Lovato
+12219.542435	12325.319274	Dior - MK
+12325.319274	12580.332018	Highway to Love - Lady Gaga
