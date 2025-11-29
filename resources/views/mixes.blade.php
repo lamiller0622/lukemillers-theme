@@ -40,7 +40,7 @@
     ],
     [
       'slug'     => 'hannahs-birthday',
-      'title'    => 'Hannah‘s Birthday',
+      'title'    => 'Hannah‘s 30th',
       'artist'   => 'Luke Miller',
       'album'    => 'Hannah‘s Birthday',
       'audioUrl' => 'https://lukemiller.io/wp-content/hannahs-mix-meta.m4a',
