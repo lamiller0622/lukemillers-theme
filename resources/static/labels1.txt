@@ -17,82 +17,80 @@
 2071.171517	2230.133220	Buttons - Pussycat Dolls
 2230.133220	2391.444626	Not Like Us - Kendrick Lamar
 2391.444626	2535.351043	Naughty Girl - Beyonce
-2535.206783	2693.332857	Love to Love You Baby - Donna Summer
-2693.332857	2860.781285	I Feel Love - Donna Summer
-2860.925306	3034.870680	Future Lover - Madonna
-3034.870680	3234.738390	Lucky Star (Live) - Madonna
-3234.738390	3484.178011	Hung Up (Live) - Madonna
-3484.240068	3631.638776	Be With You - Enrique Iglesias
-3631.638776	3736.309751	One in a Million - Basson
-3736.309751	3846.348889	Tragedy - Steps
-3846.348889	3970.951859	Take It - Dom Dolla
-3970.951859	4049.711111	Luxury - Axealia Banks
-4049.711111	4197.215147	Baddy on the Floor - Jamie xx
-4197.215147	4275.329410	One More Time - Daft Punk
-4275.329410	4415.112177	SLIDE - Doechii
-4415.112177	4543.937823	Ring, Ring, Ring - Tyler the Creator
-4543.937823	4667.059456	Drip Drip - KAYTRANADA
-4667.059456	4783.434082	Please Babe - KAYTRANADA
-4783.434082	4880.702268	We Dance to the Beat - Robyn
-4880.702268	5267.370826	Haunted Thique - Beyonce
-5267.370797	5423.986245	Abracadabra - Lady Gaga
-5423.986245	5499.477253	Shadow of a Man - Lady Gaga
-5499.477253	5586.969976	Telephone - Lade Gaga (feat. Beyonce)
-5586.969976	5686.495652	My Humps - The Black Eyed Peas
-5686.495652	5839.812967	Sugar On My Tongue - Tyler the Creater
-5839.812967	5960.873231	Alter Ego - Doechii
-5960.873231	6085.174299	1991 - Azealia Banks
-6085.174299	6229.217154	With Every Heartbeat - Robyn
-6229.217154	6274.366649	Baptized in Fear - The Weeknd
-6274.366649	6367.312269	Open Hearts - The Weeknd
-6367.312269	6578.802330	Walk Of Fame - Miley Cyrus
-6578.802330	6700.840373	Dim All The Lights - Donna Summer
-6700.840373	6765.307958	Don't Fucking Tell Me What To Do - Robyn
-6765.307958	6936.249077	Dance in the Dark - Lady Gaga
-6936.249077	7061.388184	The Dead Dance - Lady Gaga
-7061.509239	7282.804431	Every Girl You've Ever Loved - Miley Cyrus
-7282.810726	7398.831315	Deeper and Deeper - Madonna
-7398.831315	7529.628254	COZY - Beyonce
-7529.628254	7702.280249	Gimme More - Britney Spears
-7702.280249	7798.845669	Blah Blah Blah - Kesha
-7798.845669	7900.881111	NUEVAYoL - Bad Bunny
-7900.881111	7984.322086	Verano Rosa - KAROL G
-7984.322086	8083.129546	Un Gatito Me Llamo - KAROL G
-8083.129546	8235.302154	We R Who We R - Kesha
-8235.302154	8347.291610	Gypsy Woman (She's Homeless) (La Da Dee La Da Da) - Crystal Waters
-8347.291610	8464.025510	AAAHH MEN! - Doja Cat
-8464.025510	8602.619184	Stupid Love - Lady Gaga
-8602.619184	8685.099116	Heavy Metal Lover - Lady Gaga
-8685.099116	8817.087790	Get Back - Britney Spears
-8817.087790	8988.493001	Hot Stuff - Donna Summer
-8988.027953	9076.808310	Bad Girls - Donna Summer
-9076.808310	9202.416564	She Wolf - Shakira
-9202.400035	9331.882224	Can't Get You Out of My Head - Kylie Minogue
-9331.879819	9447.780522	Make Me Feel (Remix) - Janelle Monae
-9447.780522	9555.711519	Only Girl (In the World) - Rihanna
-9555.711519	9586.309252	Rain Over Me - Marc Anthony
-9586.309252	9721.375601	Down For Whatever - Kelly Rowland
-9721.375601	9852.165059	Dirty Dancer - Enrique Iglesias & Usher
-9852.165059	9997.541933	You Make Me Feel - Cobra Starships
-9997.541933	10134.879087	OPULENCE - Beyonce
-10134.879087	10233.917437	Kiss - Demi Lovato
-10233.917437	10330.839734	Von Dutch - Charli XCX
-10330.839734	10454.312573	Marry The Night - Lady Gaga
-10454.312573	10573.844376	Drove All Night - Celine Dion
-10573.844376	10717.475083	All or Nothing - Cher
-10717.475083	10809.285027	Run Away - Cher
-10809.285027	10877.370839	Superheroes - Daft Punk
-10877.370839	10974.888503	One Night Only (Disco Version) - Beyonce, Anika Noni Rose, Sharon Leal
-10974.888503	11107.357989	Safe - Cardi B feat. Kehlani
-11107.357989	11167.643395	LIKE ME - Future
-11167.643395	11252.951663	Bodega Baddie - Cardi B
-11252.951663	11394.157485	m.A.A.d. city - Kendrick Lamar
-11394.157485	11486.689437	Cut Her Off - K Camp
-11486.689437	11581.113305	Still Tippin - Mike Jones
-11581.113305	11683.448828	Big Difference - Nicki Minaj
-11683.448828	11817.525528	Toxic - Britney Spears
-11817.525931	11943.443740	Break Free - Ariana Grande
-11943.443740	12092.370125	Psychadelic Switch - Carly Rae Jepson
-12092.370125	12219.542435	Fast - Demi Lovato
-12219.542435	12325.319274	Dior - MK
-12325.319274	12580.332018	Highway to Love - Lady Gaga
+2535.206783	2650.529558	Love to Love You Baby - Donna Summer
+2650.529558	2818.350454	I Feel Love - Donna Summer
+2818.350454	2970.171599	Future Lover - Madonna
+2970.171599	3108.419959	Lucky Star (Live) - Madonna
+3108.419959	3357.967820	Hung Up (Live) - Madonna
+3357.895964	3505.294671	Be With You - Enrique Iglesias
+3505.294671	3609.965646	One in a Million - Basson
+3609.965646	3720.004785	Tragedy - Steps
+3720.004785	3844.607755	Take It - Dom Dolla
+3844.607755	3923.367007	Luxury - Axealia Banks
+3923.367007	4070.871043	Baddy on the Floor - Jamie xx
+4070.871043	4148.985306	One More Time - Daft Punk
+4148.985306	4288.768073	SLIDE - Doechii
+4288.768073	4417.593719	Ring, Ring, Ring - Tyler the Creator
+4417.593719	4540.715351	Drip Drip - KAYTRANADA
+4540.774671	4657.149297	Please Babe - KAYTRANADA
+4657.149297	4754.417483	We Dance to the Beat - Robyn
+4754.417483	5141.086041	Haunted Thique - Beyonce
+5141.086013	5297.701461	Abracadabra - Lady Gaga
+5297.701461	5373.192469	Shadow of a Man - Lady Gaga
+5373.192469	5460.685191	Telephone - Lade Gaga (feat. Beyonce)
+5460.685191	5560.210867	My Humps - The Black Eyed Peas
+5560.210867	5713.528182	Sugar On My Tongue - Tyler the Creater
+5682.803171	5803.863435	Alter Ego - Doechii
+5803.863435	5928.815997	1991 - Azealia Banks
+5928.815997	6072.690493	With Every Heartbeat - Robyn
+6072.690493	6117.269416	Baptized in Fear - The Weeknd
+6117.269416	6210.215035	Open Hearts - The Weeknd
+6210.215035	6421.705096	Walk Of Fame - Miley Cyrus
+6421.705096	6543.743139	Dim All The Lights - Donna Summer
+6543.743139	6608.210724	Don't Fucking Tell Me What To Do - Robyn
+6608.210724	6779.151844	Dance in the Dark - Lady Gaga
+6779.151844	6904.290950	The Dead Dance - Lady Gaga
+6904.412005	7125.707197	Every Girl You've Ever Loved - Miley Cyrus
+7125.713492	7241.734082	Deeper and Deeper - Madonna
+7241.734082	7372.531020	COZY - Beyonce
+7372.531020	7545.183016	Gimme More - Britney Spears
+7545.183016	7641.748435	Blah Blah Blah - Kesha
+7641.748435	7743.783878	NUEVAYoL - Bad Bunny
+7743.783878	7827.224853	Verano Rosa - KAROL G
+7827.224853	7926.032313	Un Gatito Me Llamo - KAROL G
+7926.032313	8078.204921	We R Who We R - Kesha
+8078.204921	8190.194376	Gypsy Woman (She's Homeless) (La Da Dee La Da Da) - Crystal Waters
+8190.194376	8306.928277	AAAHH MEN! - Doja Cat
+8306.928277	8445.521950	Stupid Love - Lady Gaga
+8445.521950	8528.001882	Heavy Metal Lover - Lady Gaga
+8528.001882	8659.990556	Get Back - Britney Spears
+8659.990556	8831.395767	Hot Stuff - Donna Summer
+8830.930719	8919.711077	Bad Girls - Donna Summer
+8919.711077	9045.319331	She Wolf - Shakira
+9045.302802	9174.784990	Can't Get You Out of My Head - Kylie Minogue
+9174.782585	9290.683288	Make Me Feel (Remix) - Janelle Monae
+9290.683288	9398.614286	Only Girl (In the World) - Rihanna
+9398.614286	9429.212018	Rain Over Me - Marc Anthony
+9429.212018	9564.278367	Down For Whatever - Kelly Rowland
+9564.278367	9695.207414	Dirty Dancer - Enrique Iglesias & Usher
+9695.207414	9832.381967	OPULENCE - Beyonce
+9832.381967	9931.420317	Kiss - Demi Lovato
+9931.420317	10028.342614	Von Dutch - Charli XCX
+10028.342614	10151.815453	Marry The Night - Lady Gaga
+10151.815453	10271.347256	Drove All Night - Celine Dion
+10271.347256	10414.977963	All or Nothing - Cher
+10414.998379	10496.446871	Superheroes - Daft Punk
+10496.446871	10593.964535	One Night Only (Disco Version) - Beyonce, Anika Noni Rose, Sharon Leal
+10593.964535	10726.434021	Safe - Cardi B feat. Kehlani
+10726.434021	10786.719427	LIKE ME - Future
+10786.719427	10872.027695	Bodega Baddie - Cardi B
+10872.027695	11013.233517	m.A.A.d. city - Kendrick Lamar
+11013.233517	11105.765468	Cut Her Off - K Camp
+11105.765468	11200.189337	Still Tippin - Mike Jones
+11200.189337	11302.524860	Big Difference - Nicki Minaj
+11302.524860	11436.601559	Toxic - Britney Spears
+11436.601962	11562.519772	Break Free - Ariana Grande
+11562.519772	11711.446157	Psychadelic Switch - Carly Rae Jepson
+11711.446157	11838.618467	Fast - Demi Lovato
+11838.618467	11944.395306	Dior - MK
+11944.395306	12199.408050	Highway to Love - Lady Gaga
