@@ -28,8 +28,8 @@
       ),
     ],
     [
-      'slug'     => 'take-it',
-      'title'    => '2025 Mix (In Progress)',
+      'slug'     => 'mix-2025',
+      'title'    => '2025 Mix',
       'artist'   => 'Luke Miller',
       'album'    => 'Mixes 2025',
       'audioUrl' => 'https://lukemiller.io/wp-content/25raw-meta.m4a',
