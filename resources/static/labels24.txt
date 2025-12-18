@@ -1,0 +1,137 @@
+0.000000	117.955521	Angels in the Snow - Cher & Cyndi Lauper
+117.955521	270.453536	Life - Robyn
+270.453536	379.527192	Rhythm is a Dancer - Snap!
+379.527192	433.737609	How Do I Make You Love Me? - The Weeknd
+433.737609	631.065020	Take My Breath - The Weeknd
+631.065020	876.827188	Forbidden Love - Madonna
+876.827188	1031.037737	Jump - Madonna
+1030.986146	1157.892446	Monster - Lady Gaga
+1157.892446	1267.436576	ALIEN SUPERSTAR - Beyonce
+1267.436576	1412.488095	Yes, and? - Ariana Grande
+1412.488095	1543.182365	Say it Right - Nelly Furtado
+1543.182358	1764.914376	Pokerface - Lady Gaga
+1764.914376	1915.519736	Get Naked - Britney Spears
+1915.519736	2113.148794	One More Drink - Heidi Montag
+2113.148794	2228.422721	Joyride - Kesha
+2228.422721	2301.237274	In the Dark - Dev
+2301.237274	2448.385431	4th of July - Kelis
+2448.385431	2555.425722	SWEET - Beyonce
+2555.425722	2640.671061	Sticky - Drake
+2640.671061	2700.510452	In Ha Mood - Ice Spice
+2700.510452	2758.931237	FTCU - Nicki Minaj
+2758.931237	2837.341474	Princess Diana - Ice Spice & Nicki Minaj
+2837.341474	2914.164340	Ice Attack - Future
+2914.164340	2988.402177	Everything is Romantic - Charli XCX
+2988.402177	3195.319446	Sao Paolo - The Weeknd & Anitta
+3195.319446	3317.066122	Eat Your Man - Dom Dolla & Nelly Furtado
+3317.066122	3458.356593	Take it Off - Kesha
+3458.356593	3553.977562	Miss Amor - Azealia Banks
+3553.977562	3637.216092	Disease - Lady Gaga
+3637.216092	3721.128947	Never Leave You - Lumadee
+3721.128947	3819.691959	Red Ruby Da Sleeze - Nicki Minaj
+3819.691959	3889.236420	La Tortura - Shakira
+3889.236420	3980.544794	LOKERA - Rauw Alejandro
+3980.544794	4070.352208	My Neck, My Back - Khia
+4070.352208	4191.679774	Truffle Butter - Nicki Minaj & Drake
+4191.679774	4300.679184	Lovin on Me - Jack Harlow
+4300.679184	4421.584284	Maneater - Nelly Furtado
+4421.584284	4581.666368	Judas - Lady Gaga
+4581.666368	4626.176996	Cash Shit - Megan Thee Stallion
+4626.176996	4689.428941	Mercy - Chloe
+4689.428941	4806.562173	Rush - Troye Sivan
+4806.562173	4932.625889	Guess - Charli XCX feat. Billie Eilish
+4932.625889	5012.381799	Drip, Drop - Erika Jayne
+5012.381799	5163.177062	Indestructible - Robyn
+5163.177062	5268.308149	Push Up On Me - Rihanna
+5268.308149	5321.461382	With Love - Hilary Duff
+5321.461382	5506.649935	Bad Romance - Lady Gaga
+5506.649935	5631.469609	Break the Ice - Britney Spears
+5631.469609	5745.103409	Give it Up To Me - Shakira
+5745.103409	5841.508545	Promiscuous Girl - Nelly Furtado
+5841.508545	5947.072169	ENERGY - Beyonce
+5947.072169	6094.250677	I'll Do it - Heidi Montag
+6094.250677	6230.398141	World Class Sinner - Lily Rose Depp
+6230.398141	6336.144713	Cannibal - Kesha
+6336.144713	6504.669560	Pretty Mess - Erika Jayne
+6504.669560	6683.276729	Schiebe - Lady Gaga
+6683.276729	6841.789684	Sorry - Madonna
+6841.789684	6990.446395	EKG - Natalie Portman
+6990.446395	7134.487668	Believe - Cher
+7134.487668	7293.317203	Be My Lover - La Bouche
+7293.317203	7382.824348	Bills - Yungness & Jaminn
+7382.824348	7488.105691	Goodies - Dillon Francis
+7488.105691	7629.593379	Low - DISTRXCT
+7629.593379	7805.205417	Ojos Asi - Shakira
+7805.205417	7918.280996	In Da Ghetto - J Balvin
+7918.280996	8016.217531	Acapella - Kelis
+8016.217531	8189.475485	Stero Love - Edward Maya
+8189.475485	8310.774744	We Found Love - Rihanna
+8310.774744	8433.382314	Scream - Usher
+8433.382314	8609.905216	The Edge of Glory - Lady Gaga
+8609.905216	8734.148980	I'm Your GPU - Astro Bot
+8734.148980	8886.244444	Erotica (Live) - Madonna
+8886.244444	9026.339258	Like a Virgin (Live) - Madonna
+9026.339258	9109.047869	Come Home - Vybz Kartel
+9109.047869	9204.427660	Una Noche en Medellin - Karol G
+9204.427660	9293.880940	Safaera - Bad Bunny
+9293.880940	9353.516460	Perra - J Balvin
+9353.516460	9481.677267	Chained to the Rhythm - Katy Perry
+9481.677267	9615.003484	If You Had My Love - J Lo
+9615.003484	9746.153666	The Boy is Mine - Brandy & Monica
+9746.153666	9847.418528	Love Don't Cost a Thing - J Lo
+9847.418528	9912.558812	Dollhouse - Lily Rose Depp & The Weeknd
+9912.558812	10048.245302	What Hurts the Most - Cascada
+10048.245302	10094.865171	Eusexua - FKA Twigs
+10094.865171	10177.445224	Bow Down - Beyonce
+10177.445224	10275.337321	Flawless (Remix) - Beyonce
+10275.337321	10353.760020	You're Not Alone - Olive
+10353.760020	10468.186461	Don't Think I'm Not - Kandi
+10468.186461	10573.055545	Like a Boy - Ciara
+10573.055545	10725.980652	Hot N Cold - Katy Perry
+10725.980652	10869.275909	Desire - SG Lewis & Tove Lo
+10869.275909	10996.110582	Better Off Alone - Alice Deejay
+10996.110582	11120.740713	L'amour Doujours - Gigi D'Agostino
+11120.740713	11203.772759	365 (Remix) - Charli XCX
+11203.772759	11314.246431	Body Language - Heidi Montag
+11314.246431	11401.289241	Massive - Drake
+11401.289241	11538.183841	All You Children - Jamie XX
+11538.183841	11642.371447	RIIVERDANCE - Beyonce
+11642.371447	11761.200909	The Big Big Beat - Azealia Banks
+11761.200909	11834.747794	BIZCOCHITO - Rosalia
+11834.747794	11932.842030	El Apagon - Bad Bunny
+11932.842030	11991.981113	EL CLuB - Bad Bunny
+11991.981113	12124.656209	Paparazzi - Lady Gaga
+12124.656209	12209.287356	VIRGO'S GROOVE - Beyonce
+12209.287356	12357.714590	Dancing on My Own - Robyn
+12357.714590	12468.321807	Teenage Dream - Katy Perry
+12468.321807	12610.983981	Girls Just Wanna Have Fun - Cyndi Lauper
+12610.983981	12794.050953	I Wanna Dance With Somebody - Whitney Houston
+12794.050953	12870.977691	TU PERROTA - Natti Natasha
+12870.977691	12984.892845	No Long Talking - Prayah & Spice
+12984.892845	13056.627828	Gyal Time Again - Konshens & Charly Black
+13056.627828	13177.429541	Oops...I Did it Again - Britney Spears
+13177.429541	13291.918575	...Baby One More Time - Britney Spears
+13291.918575	13404.972909	Starboy - The Weeknd
+13404.972909	13487.037730	I Feel it Coming - The Weeknd
+13487.037730	13561.642113	Your Type - Carly Rae Jepsen
+13561.642113	13648.297973	BELLAKEO - Peso Pluma & Anitta
+13648.297973	13743.275091	VeLDA - Bad Bunny
+13743.275091	13850.016747	TQC - Karol G & Shakira
+13850.016747	13925.073810	So Mi Like it - Spice
+13925.073810	14056.349728	One Of Your Girls - The Weeknd & Lily Rose Depp
+14056.349728	14111.301497	Rude Boy - Rihanna
+14111.301497	14268.093662	Umbrella - Rihanna
+14268.093662	14340.032415	911 - Wyclef Jean & Mary J Blige
+14340.032415	14432.900359	Me, Myself and I - Beyonce
+14432.900359	14513.431263	I'm Real - J Lo & Ja Rule
+14513.431263	14561.162346	HISS - Megan Thee Stallion
+14561.162346	14652.708115	Survivor - Destiny's Child
+14652.708115	14743.464123	Heartless - The Weeknd
+14743.464123	14929.453087	Get Together - Madonna
+14929.453087	15017.680112	Sunglasses At Night - Heidi Klum
+15017.680112	15195.214493	212 - Azealia Banks
+15195.214493	15307.208798	U Are My High - DJ Snake & Future
+15307.208798	15381.031411	New Bottega - Azealia Banks
+15381.031411	15504.909357	Si Antes Te Hubiera Conocido - Karol G
+15504.909357	15590.257110	The Edge - DISTRXCT
+15590.257110	15914.777007	Hung Up - Madonna
