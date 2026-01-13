@@ -2,6 +2,8 @@
 
 use Roots\Acorn\Application;
 
+require_once get_template_directory() . '/app/api-chat.php';
+
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
@@ -83,27 +85,25 @@ if (!function_exists('parse_audacity_labels')) {
 }
 
 function theme_asset_url($entry) {
-  $manifest_path = get_stylesheet_directory() . '/manifest.json'; // or /public/manifest.json if you configured it there
+  $manifest_path = get_stylesheet_directory() . '/manifest.json'; 
   if (!file_exists($manifest_path)) return null;
 
   $manifest = json_decode(file_get_contents($manifest_path), true);
   if (!isset($manifest[$entry])) return null;
 
-  // Vite manifest "file" is relative to outDir (public/)
   $path = $manifest[$entry]['file'] ?? '';
   if (!$path) return null;
 
-  // Build absolute URL that matches vite.config.js base
   return get_stylesheet_directory_uri() . '/public/' . $path;
 }
 
 add_action('wp_enqueue_scripts', function () {
-  // CSS (if emitted)
+
   if ($css = theme_asset_url('resources/styles/app.css')) {
     wp_enqueue_style('theme-app', $css, [], null);
   }
 
-  // JS
+
   if ($js = theme_asset_url('resources/scripts/app.js')) {
     wp_enqueue_script('theme-app', $js, [], null, true);
   }
