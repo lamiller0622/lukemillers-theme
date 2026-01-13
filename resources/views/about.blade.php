@@ -5,30 +5,86 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="chat-container">
-    <div class="chat-header">
-      <h1>Chat with Luke's Robot</h1>
-      <p>Ask me anything about Luke's work, skills, or background!</p>
-    </div>
-    
-    <div class="chat-messages" id="chatMessages">
-      <div class="message bot">
-        <div class="message-content">
-          Hey there! I'm Luke's robot speaking on his behalf. What would you like to know about Luke?
+<section class="about-page">
+  <div class="robot-speaker-container">
+    <div class="chat-container">
+      <div class="chat-header">
+        <h1>About Luke</h1>
+        <a class="btn-primary" href="/" >Return Home</a>
+      </div>
+      
+      <div class="chat-messages" id="chatMessages">
+        <div class="message bot">
+          <div class="message-content">
+            Hey there! I'm Luke's robot speaking on his behalf. What would you like to know about Luke?
+          </div>
         </div>
       </div>
+      
+      <div class="chat-input-container">
+        <input 
+          type="text" 
+          id="chatInput" 
+          placeholder="Type your message..." 
+          autocomplete="off"
+        />
+        <button id="chatSend" type="button">Send</button>
+      </div>
     </div>
-    
-    <div class="chat-input-container">
-      <input 
-        type="text" 
-        id="chatInput" 
-        placeholder="Type your message..." 
-        autocomplete="off"
-      />
-      <button id="chatSend" type="button">Send</button>
-    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="120" height="120">
+      <!-- Robot (upper body only, behind podium) -->
+      <g id="bot-front">
+        <!-- Antenna -->
+        <rect x="11" y="2" width="2" height="2" fill="#6b7280"/>
+        <rect x="11" y="2" width="2" height="1" fill="#ef4444"/>
+        
+        <!-- Head back -->
+        <rect x="7" y="5" width="10" height="6" fill="#9ca3af"/>
+        <rect x="8" y="6" width="8" height="4" fill="#d1d5db"/>
+        
+        <!-- Eyes -->
+        <rect x="9" y="7" width="2" height="2" fill="#60a5fa"/>
+        <rect x="13" y="7" width="2" height="2" fill="#60a5fa"/>
+        
+        <!-- Ears --> 
+        <rect x="6" y="7" width="1" height="2" fill="#9ca3af"/> 
+        <rect x="17" y="7" width="1" height="2" fill="#9ca3af"/>
+        
+        <!-- Neck -->
+        <rect x="11" y="11" width="2" height="1" fill="#9ca3af"/>
+        
+        <!-- Body (partial, visible above podium) -->
+        <rect x="8" y="12" width="8" height="2" fill="#9ca3af"/>
+        <rect x="9" y="12" width="6" height="2" fill="#d1d5db"/>
+        
+        <!-- Arms resting on podium -->
+        <rect x="6" y="13" width="2" height="2" fill="#9ca3af"/>
+        <rect x="16" y="13" width="2" height="2" fill="#9ca3af"/>
+      </g>
+      
+      <!-- Podium -->
+      <g id="podium">
+        <!-- Podium top surface -->
+        <rect x="4" y="14" width="16" height="2" fill="#4b5563"/>
+        
+        <!-- Podium front panel -->
+        <rect x="5" y="16" width="14" height="6" fill="#374151"/>
+        
+        <!-- Podium detail/emblem -->
+        <rect x="10" y="18" width="4" height="2" fill="#6b7280"/>
+        
+        <!-- Podium base -->
+        <rect x="6" y="22" width="12" height="2" fill="#4b5563"/>
+      </g>
+    </svg>
   </div>
+
+  <div class="about-container">
+    
+  </div>
+  
+</section>
+  
 @endsection
 
 @push('scripts')

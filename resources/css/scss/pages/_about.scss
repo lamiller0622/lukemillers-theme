@@ -1,99 +1,140 @@
-.chat-container {
+@use "../globals" as *;
+.about-page{
+  --bg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800'%3E%3Cdefs%3E%3CradialGradient id='v' cx='50%25' cy='30%25' r='80%25'%3E%3Cstop offset='0%25' stop-color='%23b45309'/%3E%3Cstop offset='60%25' stop-color='%23a16207'/%3E%3Cstop offset='100%25' stop-color='%2398410c'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='1200' height='800' fill='url(%23v)'/%3E%3Cpolygon points='600,0 0,800 220,800' fill='%2398410c' opacity='0.28'/%3E%3Cpolygon points='600,0 220,800 420,800' fill='%23a16207' opacity='0.22'/%3E%3Cpolygon points='600,0 420,800 600,800' fill='%23b45309' opacity='0.18'/%3E%3Cpolygon points='600,0 600,800 780,800' fill='%23b45309' opacity='0.18'/%3E%3Cpolygon points='600,0 780,800 980,800' fill='%23a16207' opacity='0.22'/%3E%3Cpolygon points='600,0 980,800 1200,800' fill='%2398410c' opacity='0.28'/%3E%3Crect x='0' y='420' width='1200' height='34' fill='%2398410c' opacity='0.25'/%3E%3Cg opacity='0.85'%3E%3Crect x='140' y='426' width='20' height='20' fill='%23ef4444'/%3E%3Crect x='165' y='426' width='20' height='20' fill='%2360a5fa'/%3E%3Crect x='190' y='426' width='20' height='20' fill='%23ef4444'/%3E%3Crect x='215' y='426' width='20' height='20' fill='%2360a5fa'/%3E%3Crect x='240' y='426' width='20' height='20' fill='%23ef4444'/%3E%3Crect x='265' y='426' width='20' height='20' fill='%2360a5fa'/%3E%3Crect x='290' y='426' width='20' height='20' fill='%23ef4444'/%3E%3Crect x='315' y='426' width='20' height='20' fill='%2360a5fa'/%3E%3Crect x='340' y='426' width='20' height='20' fill='%23ef4444'/%3E%3Crect x='365' y='426' width='20' height='20' fill='%2360a5fa'/%3E%3Crect x='390' y='426' width='20' height='20' fill='%23ef4444'/%3E%3Crect x='415' y='426' width='20' height='20' fill='%2360a5fa'/%3E%3C/g%3E%3Crect y='700' width='1200' height='100' fill='%23000' opacity='0.18'/%3E%3C/svg%3E");
+  background: var(--bg) center / cover no-repeat;
+  padding: 2rem 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .robot-speaker-container{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .chat-container {
   max-width: 600px;
-  margin: 2rem auto;
-  padding: 0 1rem;
-}
-
-.chat-header {
-  text-align: center;
-  margin-bottom: 1.5rem;
-  
-  h1 {
-    margin-bottom: 0.5rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 16px;
+  border: 2px solid #ddd;
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 50px; 
+    border-width: 20px 15px 0 15px;
+    border-style: solid;
+    border-color: white transparent transparent transparent;
   }
-  
-  p {
-    color: #666;
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: -24px;
+    left: 48px; // slightly offset from ::after
+    border-width: 22px 17px 0 17px;
+    border-style: solid;
+    border-color: #ddd transparent transparent transparent;
   }
 }
 
-.chat-messages {
-  height: 400px;
-  overflow-y: auto;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  background: #fafafa;
-}
-
-.message {
-  margin-bottom: 1rem;
-  display: flex;
-  
-  &.user {
-    justify-content: flex-end;
+  .chat-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .btn-primary{
+      margin: 0;
+    }
+    h1 {
+      margin-bottom: 0.5rem;
+      color: $text-dark;
+    }
     
-    .message-content {
-      background: #007bff;
-      color: white;
+    p {
+      color: $text-dark;
     }
   }
-  
-  &.bot .message-content {
-    background: #e9e9e9;
-    color: #333;
-  }
-  
-  &.typing .message-content {
-    opacity: 0.6;
-  }
-}
 
-.message-content {
-  max-width: 80%;
-  padding: 0.75rem 1rem;
-  border-radius: 12px;
-  line-height: 1.4;
-}
-
-.chat-input-container {
-  display: flex;
-  gap: 0.5rem;
-  
-  input {
-    flex: 1;
-    padding: 0.75rem 1rem;
+  .chat-messages {
+    height: 400px;
+    overflow-y: auto;
     border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 1rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background: #fafafa;
+  }
+
+  .message {
+    margin-bottom: 1rem;
+    display: flex;
     
-    &:focus {
-      outline: none;
-      border-color: #007bff;
+    &.user {
+      justify-content: flex-end;
+      
+      .message-content {
+        background: $primary;
+        color: white;
+      }
     }
     
-    &:disabled {
-      background: #f5f5f5;
+    &.bot .message-content {
+      background: $light;
+      color: $text-dark;
+    }
+    
+    &.typing .message-content {
+      opacity: 0.6;
     }
   }
-  
-  button {
-    padding: 0.75rem 1.5rem;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1rem;
+
+  .message-content {
+    max-width: 80%;
+    padding: 0.75rem 1rem;
+    line-height: 1.4;
+  }
+
+  .chat-input-container {
+    display: flex;
+    gap: 0.5rem;
     
-    &:hover {
-      background: #0056b3;
+    input {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border: 1px solid #ddd;
+      font-size: 1rem;
+      
+      &:focus {
+        outline: none;
+        border-color: $primary;
+      }
+      
+      &:disabled {
+        background: #f5f5f5;
+      }
     }
     
-    &:disabled {
-      background: #ccc;
-      cursor: not-allowed;
+    button {
+      padding: 0.75rem 1.5rem;
+      background: $primary;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      
+      &:hover {
+        background: $dark-teal;
+      }
+      
+      &:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+      }
     }
   }
+
 }

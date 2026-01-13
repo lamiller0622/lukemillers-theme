@@ -70,7 +70,8 @@ export function initVantaHotspots({
           <li>Bachelor of Science: Applied Computer Science</li>
           <li><b>Nassau Community College</b></li>
           <li>Associate of Applied Science: Information Technology</li>
-        </ul>` },
+        </ul>
+        <a href="/about/" class="btn-primary">More About Luke</a>` },
       { bg: 'gallery', u: -0.15, v: 0.35, label: `
         <h2>Skills</h2>
         <ul>

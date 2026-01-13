@@ -39,7 +39,8 @@ $slides = $slides ?? [
             <li>Bachelor of Science: Applied Computer Science</li>
             <li><b>Nassau Community College</b></li>
             <li>Associate of Applied Science: Information Technology</li>
-          </ul>'
+          </ul>
+          <a href="about" class="btn-primary">More About Luke</a>'
   ],
   [
     'title' => 'Contact',
