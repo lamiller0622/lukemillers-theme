@@ -67,7 +67,7 @@ export function initVantaHotspots({
         <h2>Education</h2>
         <ul>
           <li><b>Oregon State University</b></li>
-          <li>Bachelor of Science: Applied Computer Science</li>
+          <li>Bachelor of Science: Computer Science</li>
           <li><b>Nassau Community College</b></li>
           <li>Associate of Applied Science: Information Technology</li>
         </ul>
