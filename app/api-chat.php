@@ -4,7 +4,8 @@ add_action('rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'luke_handle_chat',
         'permission_callback' => function(WP_REST_Request $request) {
-            return check_ajax_referer('luke_chat_nonce', 'nonce', false);
+            $nonce = $request->get_param('nonce');
+            return wp_verify_nonce($nonce, 'luke_chat_nonce');
         },
     ]);
 });

@@ -13,12 +13,35 @@
   ]);
 @endphp
 
-<section class="about-page ">
-  <div class="container grid grid-cols-12">
-    <div class="robot-speaker-container col-span-12 lg:col-span-6">
+<section class="about-page  lg:max-h-[100vh] max-h-none lg:h-[100vh] h-auto">
+  <div class="container grid grid-cols-12 gap-12 items-end justify center">
+    <div class="about-container col-span-12 lg:col-span-7 h-full overflow-y-auto  lg:max-h-[75vh] ">
+      <div class="p-12 bg-white text-lg">
+        <h1 class="text-4xl font-semibold pb-8">
+          {{ the_title() }}
+        </h1>
+          
+        {{ the_content() }}
+          
+        <div class="grid grid-cols-[3fr_4fr] gap-2 my-8 h-100" >
+          <div class="row-span-2 overflow-hidden">
+            <img src="https://lukemiller.io/wp-content/uploads/2026/03/IMG_0844-scaled.jpg" alt="Luke Miller" class="w-full h-full object-cover hover:scale-105 transition-transform duration-400">
+          </div>
+          <div class="overflow-hidden">
+            <img src="https://lukemiller.io/wp-content/uploads/2026/03/20f76b74-b50a-4167-8b5a-bb8d6d059f89.jpg" alt="Luke" class="w-full h-full object-cover hover:scale-105 transition-transform duration-400 h-60">
+          </div>
+          <div class="overflow-hidden bg-gray-100">
+            <img src="https://lukemiller.io/wp-content/uploads/2026/03/IMG_8333.jpg" alt="Luke" class="w-full object-cover hover:scale-105 transition-transform duration-400  h-40">
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+    <div class="robot-speaker-container col-span-12 lg:col-span-5">
       <div class="chat-container">
         <div class="chat-header">
-          <h1>About Luke</h1>
+          <h2>Ask a Question</h2>
           <a class="btn-primary" href="/" >Return Home</a>
         </div>
         
@@ -88,21 +111,7 @@
       </svg>
     </div>
 
-    <div class="about-container col-span-12 lg:col-span-6">
-      <div class="p-12 bg-white">
-        <p>Hey, I'm Luke 👋</p>
-          
-        <p>I'm a full-stack web developer based in Manhattan with 9+ years of experience building fast, polished websites that actually work as hard as they look. I specialize in WordPress (Sage 10/11, ACF, you name it), modern frontend development with SCSS and React, and the kind of backend architecture that keeps everything running clean under the hood.</p>
-          
-        <p>By day I'm converting legacy codebases into clean, scalable architecture, and leading technical integrations at First Advantage. By night I'm probably perfecting a pasta dish, planning my next trip, or grinding through a souls-like.</p>
-          
-        <p>I've got a B.S. in Computer Science from Oregon State (4.0 GPA) and I've been building on the web since before half the tools I use daily existed. I care about clean code, pixel-perfect design, and shipping things that make both developers and clients happy.</p>
-          
-        <p>I've traveled to 40+ countries, an avid gym-goer, and I genuinely love what I do — which I think shows in the work.</p>
-          
-        <p>Want to build something great? Let's talk.</p>
-      </div>
-    </div>
+    
   </div>
 
   
