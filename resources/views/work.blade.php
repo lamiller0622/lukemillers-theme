@@ -10,13 +10,28 @@
       'role' => 'Web Applications Developer',
       'company' => 'First Advantage',
       'years' => 'Nov 2024 – Present',
-      'stack' => ['Sage 10', 'Laravel', 'Bootstrap5','SCSS', 'Hubl', 'Jquery', 'ACF', 'CPT', 'ACF', 'Elementor'],
+      'stack' => ['Sage 10', 'Sage 11', 'Laravel', 'Bootstrap5','SCSS', 'Tailwind', 'Hubl', 'ACF', 'CPT', 'ACF', 'Elementor'],
       'highlights' => [
         'Convert Drag & Drop Themed Site (Elementor) to MVC Theme (Sage 10) for fadv.com.',
+        'Engineered an advanced AJAX-powered resource center with multi-taxonomy filtering (resource type, industry, tags), full-text search via SearchWP, pagination with "Load More" functionality, shareable and trackable filter URLs, and intelligent caching using WordPress transients and WP Cron for optimized performance.',
+        'Built a Sage 11 (Vite/Tailwind) microsite, adapting existing Sage 10 SCSS/Bootstrap modules from fadv.com for the new architecture.',
         'Built reusable ACF flexible content modules, allowing for 50+ unique product page creations with minimal development time',
-        'Developed modular HubSpot landing page templates supporting dozens of monthly campaigns.',
+        'Developed modular HubSpot landing page supporting dozens of monthly campaigns.',
         'Led technical integration of two company websites post-acquisition, consolidating tech stack and improving digital experience for both companies.',
         'Built responsive email template system with dynamic content personalization'
+      ]
+    ],
+    [
+      'role' => 'Web Developer',
+      'company' => 'Palermo Law',
+      'years' => '2018 – 2022, 2025 – Present',
+      'stack' => ['PHP', 'WordPress', 'SCSS', 'Bootstrap 5', 'ACF', 'esbuild', 'GitHub Actions', 'WP Engine', 'GA4'],
+      'highlights' => [
+        'Inherited a WordPress theme with a bloated, agency-built stylesheet exceeding 35,000+ lines of manually edited compiled CSS added directly to the output file rather than maintained through source files. Audited and rebuilt the entire CSS architecture from scratch using a modular SCSS component system, reducing the stylesheet to under 3,500 lines while maintaining full visual fidelity.',
+        'Consolidated 100+ files of near-identical location page templates, headers, menus, and sidebars into universal components, eliminating redundant template-specific overrides.',
+        'Implemented proper dev environment with version control and CI/CD pipeline deploying to WP Engine staging and production.',
+        'Improved Core Web Vitals significantly — FCP from 8.6s to 2.1s and TBT from 400ms to 110ms — through hero image refactoring, asset dequeuing, and deferred third-party script loading.',
+        'Migrated hardcoded page data to ACF Options Page and CPT architecture, enabling dynamic content management across 9 office locations.',
       ]
     ],
     [
@@ -31,17 +46,6 @@
         'Created custom HubSpot templates & modules for marketing operations.',
         'Collaborated with digital marketers, UX/UI designers and SEO specialists on web projects.',
         'Manage 15+ websites for the company as a small team of 2.',
-      ]
-    ],
-    [
-      'role' => 'Web Developer',
-      'company' => 'Palermo Law',
-      'years' => '2018 – Present',
-      'stack' => ['PHP', 'HTML', 'CSS', 'GA4', 'Wordpress', 'AdWords'],
-      'highlights' => [
-        'Create, design and manage content for 5 websites.',
-        'Increased site rankings on Google and contributed to first page rankings for essential queries.',
-        'Optimized and corrected various performance issues.'
       ]
     ],
     [

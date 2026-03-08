@@ -1,22 +1,34 @@
 <?php
-
 add_action('rest_api_init', function () {
     register_rest_route('luke/v1', '/chat', [
         'methods' => 'POST',
         'callback' => 'luke_handle_chat',
-        'permission_callback' => '__return_true',
+        'permission_callback' => function(WP_REST_Request $request) {
+            return check_ajax_referer('luke_chat_nonce', 'nonce', false);
+        },
     ]);
 });
 
 function luke_handle_chat($request) {
+    // Rate limiting
+    $ip = $_SERVER['REMOTE_ADDR'];
+    $transient_key = 'chat_limit_' . md5($ip);
+    $count = (int) get_transient($transient_key);
+
+    if ($count >= 10) {
+        return new WP_Error('rate_limit', 'Too many requests', ['status' => 429]);
+    }
+    set_transient($transient_key, $count + 1, 60);
+
+    // Nonce is already verified above in permission_callback, just grab it
+    $nonce = sanitize_text_field($request->get_param('nonce'));
     $message = sanitize_text_field($request->get_param('message'));
-    
+
     if (empty($message)) {
         return new WP_Error('no_message', 'Message is required', ['status' => 400]);
     }
 
     $api_key = env('OPENAI_API_KEY');
-    
     if (!$api_key) {
         return new WP_Error('no_key', 'API key not configured', ['status' => 500]);
     }
@@ -31,6 +43,8 @@ Luke Miller is a full-stack web developer with 9+ years of experience building f
 CURRENT ROLE:
 Web Applications Developer at First Advantage (Nov 2024 – Present)
 - Converting Elementor-based sites to MVC architecture using Sage 10
+- Engineered an advanced AJAX-powered resource center with multi-taxonomy filtering (resource type, industry, tags), full-text search via SearchWP, pagination with "Load More" functionality, shareable and trackable filter URLs, and intelligent caching using WordPress transients and WP Cron for optimized performance.
+- Built a Sage 11 (Vite/Tailwind) microsite, adapting existing Sage 10 SCSS/Bootstrap modules from fadv.com for the new architecture.
 - Building reusable ACF flexible content modules enabling 50+ unique product pages with minimal dev time
 - Developing modular HubSpot landing page templates for dozens of monthly campaigns
 - Leading technical integration of company websites post-acquisition
@@ -45,10 +59,17 @@ Web Applications Developer at Sterling (Apr 2021 - Nov 2024)
 - Managed 15+ websites as part of a small team of 2
 - Built multiple regional sites for global expansion (.sg, .com.au, .in, .de, .nl, .fr)
 
-Web Developer at Palermo Law (2018 – Present, ongoing side work)
-- Creates, designs, and manages content for 5 websites
-- Achieved first-page Google rankings for essential queries
-- Optimized site performance
+WordPress Developer — Palermo Law 
+Multi-location personal injury firm, 9 offices across Long Island, NY
+- Theme Architecture & Codebase Restructure
+- Inherited a WordPress theme with a bloated, agency-built stylesheet exceeding 35,000+ lines of manually edited compiled CSS — styles were added directly to the output file rather than maintained through source files. Audited and rebuilt the entire CSS architecture from scratch using a modular SCSS component system, reducing the stylesheet to under 3,500 lines while maintaining full visual fidelity. Introduced a proper compile.scss entry point, component-based partials (_hero.scss, _awards.scss, _faqs.scss, etc.), and npm build tooling using Sass and esbuild for JS bundling. Eliminated 20+ near-identical location page templates by migrating to universal component-based styles that apply across all location pages without template-specific overrides.
+- CI/CD Deployment Pipeline
+- Set up a GitHub Actions workflow to automate deployment to WP Engine staging and production environments, using the WP Engine SSH Gateway action with REMOTE_PATH targeting to deploy only theme files. Established a dev / main branch structure with build steps (SCSS compilation, JS bundling via esbuild) running in the pipeline before deploy.
+- Core Web Vitals & PageSpeed Optimization
+- Achieved significant performance improvements on a site previously scoring in the 50s:
+
+Ed Palermo / Chris Palermo (separate sites)
+-Extended the same SCSS build architecture and GitHub Actions deployment pipeline to two related attorney sites. Documented and enforced template usage to prevent AI content generation tools from defaulting to incorrect templates and breaking page layouts.
 
 E-Commerce Web Developer at Cambridge Kitchens (2017 – 2018)
 - Built a complex measurement-based WooCommerce store from scratch
@@ -109,7 +130,7 @@ PROMPT;
     }
 
     $body = json_decode(wp_remote_retrieve_body($response), true);
-    
+
     if (isset($body['error'])) {
         return new WP_Error('openai_error', $body['error']['message'], ['status' => 500]);
     }

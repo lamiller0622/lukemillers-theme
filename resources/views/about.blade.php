@@ -5,89 +5,118 @@
 @extends('layouts.app')
 
 @section('content')
-<section class="about-page">
-  <div class="robot-speaker-container">
-    <div class="chat-container">
-      <div class="chat-header">
-        <h1>About Luke</h1>
-        <a class="btn-primary" href="/" >Return Home</a>
-      </div>
-      
-      <div class="chat-messages" id="chatMessages">
-        <div class="message bot">
-          <div class="message-content">
-            Hey there! I'm Luke's robot speaking on his behalf. What would you like to know about Luke?
+
+@php
+  wp_localize_script('your-theme-handle', 'lukeChat', [
+    'nonce' => wp_create_nonce('luke_chat_nonce'),
+    'apiUrl' => home_url('/wp-json/luke/v1/chat'),
+  ]);
+@endphp
+
+<section class="about-page ">
+  <div class="container grid grid-cols-12">
+    <div class="robot-speaker-container col-span-12 lg:col-span-6">
+      <div class="chat-container">
+        <div class="chat-header">
+          <h1>About Luke</h1>
+          <a class="btn-primary" href="/" >Return Home</a>
+        </div>
+        
+        <div class="chat-messages" id="chatMessages">
+          <div class="message bot">
+            <div class="message-content">
+              Hey there! I'm Luke's robot speaking on his behalf. What would you like to know about Luke?
+            </div>
           </div>
         </div>
+        
+        <div class="chat-input-container">
+          <input 
+            type="text" 
+            id="chatInput" 
+            placeholder="Type your message..." 
+            autocomplete="off"
+          />
+          <button id="chatSend" type="button">Send</button>
+        </div>
       </div>
-      
-      <div class="chat-input-container">
-        <input 
-          type="text" 
-          id="chatInput" 
-          placeholder="Type your message..." 
-          autocomplete="off"
-        />
-        <button id="chatSend" type="button">Send</button>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="120" height="120">
+        <!-- Robot (upper body only, behind podium) -->
+        <g id="bot-front">
+          <!-- Antenna -->
+          <rect x="11" y="2" width="2" height="2" fill="#6b7280"/>
+          <rect x="11" y="2" width="2" height="1" fill="#ef4444"/>
+          
+          <!-- Head back -->
+          <rect x="7" y="5" width="10" height="6" fill="#9ca3af"/>
+          <rect x="8" y="6" width="8" height="4" fill="#d1d5db"/>
+          
+          <!-- Eyes -->
+          <rect x="9" y="7" width="2" height="2" fill="#60a5fa"/>
+          <rect x="13" y="7" width="2" height="2" fill="#60a5fa"/>
+          
+          <!-- Ears --> 
+          <rect x="6" y="7" width="1" height="2" fill="#9ca3af"/> 
+          <rect x="17" y="7" width="1" height="2" fill="#9ca3af"/>
+          
+          <!-- Neck -->
+          <rect x="11" y="11" width="2" height="1" fill="#9ca3af"/>
+          
+          <!-- Body (partial, visible above podium) -->
+          <rect x="8" y="12" width="8" height="2" fill="#9ca3af"/>
+          <rect x="9" y="12" width="6" height="2" fill="#d1d5db"/>
+          
+          <!-- Arms resting on podium -->
+          <rect x="6" y="13" width="2" height="2" fill="#9ca3af"/>
+          <rect x="16" y="13" width="2" height="2" fill="#9ca3af"/>
+        </g>
+        
+        <!-- Podium -->
+        <g id="podium">
+          <!-- Podium top surface -->
+          <rect x="4" y="14" width="16" height="2" fill="#4b5563"/>
+          
+          <!-- Podium front panel -->
+          <rect x="5" y="16" width="14" height="6" fill="#374151"/>
+          
+          <!-- Podium detail/emblem -->
+          <rect x="10" y="18" width="4" height="2" fill="#6b7280"/>
+          
+          <!-- Podium base -->
+          <rect x="6" y="22" width="12" height="2" fill="#4b5563"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="about-container col-span-12 lg:col-span-6">
+      <div class="p-12 bg-white">
+        <p>Hey, I'm Luke 👋</p>
+          
+        <p>I'm a full-stack web developer based in Manhattan with 9+ years of experience building fast, polished websites that actually work as hard as they look. I specialize in WordPress (Sage 10/11, ACF, you name it), modern frontend development with SCSS and React, and the kind of backend architecture that keeps everything running clean under the hood.</p>
+          
+        <p>By day I'm converting legacy codebases into clean, scalable architecture, and leading technical integrations at First Advantage. By night I'm probably perfecting a pasta dish, planning my next trip, or grinding through a souls-like.</p>
+          
+        <p>I've got a B.S. in Computer Science from Oregon State (4.0 GPA) and I've been building on the web since before half the tools I use daily existed. I care about clean code, pixel-perfect design, and shipping things that make both developers and clients happy.</p>
+          
+        <p>I've traveled to 40+ countries, an avid gym-goer, and I genuinely love what I do — which I think shows in the work.</p>
+          
+        <p>Want to build something great? Let's talk.</p>
       </div>
     </div>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="120" height="120">
-      <!-- Robot (upper body only, behind podium) -->
-      <g id="bot-front">
-        <!-- Antenna -->
-        <rect x="11" y="2" width="2" height="2" fill="#6b7280"/>
-        <rect x="11" y="2" width="2" height="1" fill="#ef4444"/>
-        
-        <!-- Head back -->
-        <rect x="7" y="5" width="10" height="6" fill="#9ca3af"/>
-        <rect x="8" y="6" width="8" height="4" fill="#d1d5db"/>
-        
-        <!-- Eyes -->
-        <rect x="9" y="7" width="2" height="2" fill="#60a5fa"/>
-        <rect x="13" y="7" width="2" height="2" fill="#60a5fa"/>
-        
-        <!-- Ears --> 
-        <rect x="6" y="7" width="1" height="2" fill="#9ca3af"/> 
-        <rect x="17" y="7" width="1" height="2" fill="#9ca3af"/>
-        
-        <!-- Neck -->
-        <rect x="11" y="11" width="2" height="1" fill="#9ca3af"/>
-        
-        <!-- Body (partial, visible above podium) -->
-        <rect x="8" y="12" width="8" height="2" fill="#9ca3af"/>
-        <rect x="9" y="12" width="6" height="2" fill="#d1d5db"/>
-        
-        <!-- Arms resting on podium -->
-        <rect x="6" y="13" width="2" height="2" fill="#9ca3af"/>
-        <rect x="16" y="13" width="2" height="2" fill="#9ca3af"/>
-      </g>
-      
-      <!-- Podium -->
-      <g id="podium">
-        <!-- Podium top surface -->
-        <rect x="4" y="14" width="16" height="2" fill="#4b5563"/>
-        
-        <!-- Podium front panel -->
-        <rect x="5" y="16" width="14" height="6" fill="#374151"/>
-        
-        <!-- Podium detail/emblem -->
-        <rect x="10" y="18" width="4" height="2" fill="#6b7280"/>
-        
-        <!-- Podium base -->
-        <rect x="6" y="22" width="12" height="2" fill="#4b5563"/>
-      </g>
-    </svg>
   </div>
 
-  <div class="about-container">
-    
-  </div>
   
 </section>
   
 @endsection
 
 @push('scripts')
+<script>
+  const lukeChat = {
+    nonce: '{{ wp_create_nonce('luke_chat_nonce') }}',
+    apiUrl: '{{ home_url('/wp-json/luke/v1/chat') }}'
+  };
+</script>
 <script>
 (function() {
   const messages = document.getElementById('chatMessages');
@@ -128,10 +157,10 @@
     addTypingIndicator();
 
     try {
-      const response = await fetch(API_URL, {
+      const response = await fetch(lukeChat.apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text })
+        body: JSON.stringify({ message: text, nonce: lukeChat.nonce })
       });
 
       const data = await response.json();

@@ -7,7 +7,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
+  p{
+    margin-bottom: 1rem;
+  }
   .robot-speaker-container{
     display: flex;
     flex-direction: column;
