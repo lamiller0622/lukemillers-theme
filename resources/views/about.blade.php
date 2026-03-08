@@ -13,10 +13,10 @@
   ]);
 @endphp
 
-<section class="about-page  lg:max-h-[100vh] max-h-none lg:h-[100vh] h-auto">
-  <div class="container grid grid-cols-12 gap-12 items-end justify center">
-    <div class="about-container col-span-12 lg:col-span-7 h-full overflow-y-auto  lg:max-h-[75vh] ">
-      <div class="p-12 bg-white text-lg">
+<section class="about-page flex lg:max-h-[100vh] max-h-none lg:h-[100vh] h-auto items-start">
+  <div class="container grid grid-cols-12 gap-12 items-stretch h-full lg:max-h-[75vh] ">
+    <div class="about-container col-span-12 lg:col-span-7 h-full overflow-y-auto ">
+      <div class="p-12 bg-white text-lg min-h-full">
         <h1 class="text-4xl font-semibold pb-8">
           {{ the_title() }}
         </h1>
@@ -110,10 +110,8 @@
         </g>
       </svg>
     </div>
-
     
   </div>
-
   
 </section>
   
