@@ -129,7 +129,8 @@
   const messages = document.getElementById('chatMessages');
   const input = document.getElementById('chatInput');
   const sendBtn = document.getElementById('chatSend');
-  const API_URL = '{{ home_url('/wp-json/luke/v1/chat') }}';
+
+  let conversationHistory = []; // 👈 added
 
   function addMessage(text, isBot = false) {
     const div = document.createElement('div');
@@ -138,7 +139,6 @@
     messages.appendChild(div);
     messages.scrollTop = messages.scrollHeight;
   }
-
   function addTypingIndicator() {
     const div = document.createElement('div');
     div.className = 'message bot typing';
@@ -147,33 +147,33 @@
     messages.appendChild(div);
     messages.scrollTop = messages.scrollHeight;
   }
-
   function removeTypingIndicator() {
     const typing = document.getElementById('typingIndicator');
     if (typing) typing.remove();
   }
-
   async function sendMessage() {
     const text = input.value.trim();
     if (!text) return;
-
     addMessage(text, false);
     input.value = '';
     input.disabled = true;
     sendBtn.disabled = true;
     addTypingIndicator();
-
     try {
       const response = await fetch(lukeChat.apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text, nonce: lukeChat.nonce })
+        body: JSON.stringify({
+          message: text,
+          nonce: lukeChat.nonce,
+          history: conversationHistory.slice(-10) // 👈 added, keeps last 5 exchanges
+        })
       });
-
       const data = await response.json();
       removeTypingIndicator();
-
       if (data.reply) {
+        conversationHistory.push({ role: 'user', content: text });        // 👈 added
+        conversationHistory.push({ role: 'assistant', content: data.reply }); // 👈 added
         addMessage(data.reply, true);
       } else if (data.message) {
         addMessage('Sorry, something went wrong: ' + data.message, true);
@@ -182,12 +182,10 @@
       removeTypingIndicator();
       addMessage('Sorry, I had trouble connecting. Please try again.', true);
     }
-
     input.disabled = false;
     sendBtn.disabled = false;
     input.focus();
   }
-
   sendBtn.addEventListener('click', sendMessage);
   input.addEventListener('keypress', function(e) {
     if (e.key === 'Enter') sendMessage();

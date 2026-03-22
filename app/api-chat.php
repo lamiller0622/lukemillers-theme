@@ -110,17 +110,26 @@ GUIDELINES FOR RESPONSES:
 - Don't make up information about Luke that isn't provided above
 PROMPT;
 
+    $history = array_map(function($msg) {
+        return [
+            'role'    => sanitize_text_field($msg['role']),
+            'content' => sanitize_text_field($msg['content']),
+        ];
+    }, $history);
+
+
     $response = wp_remote_post('https://api.openai.com/v1/chat/completions', [
         'headers' => [
             'Authorization' => 'Bearer ' . $api_key,
-            'Content-Type' => 'application/json',
+            'Content-Type'  => 'application/json',
         ],
         'body' => json_encode([
-            'model' => 'gpt-4o-mini',
-            'messages' => [
-                ['role' => 'system', 'content' => $system_prompt],
-                ['role' => 'user', 'content' => $message],
-            ],
+            'model'    => 'gpt-4o-mini',
+            'messages' => array_merge(
+                [['role' => 'system', 'content' => $system_prompt]],
+                $history,
+                [['role' => 'user', 'content' => $message]],
+            ),
             'max_tokens' => 500,
         ]),
         'timeout' => 30,
