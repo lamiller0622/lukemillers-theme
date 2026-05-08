@@ -22,7 +22,7 @@ $mixes = collect(get_field('mixes') ?: [])->map(fn($m) => [
   'album'    => $m['album'],
   'audioUrl' => $m['audio_url'],
   'artwork'  => $m['artwork'],
-  'chapters' => parse_audacity_labels_string($m['labels_raw']),
+  'chapters' => parse_audacity_labels($m['labels_raw']),
 ])->all();
 @endphp
 
