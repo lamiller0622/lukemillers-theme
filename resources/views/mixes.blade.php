@@ -15,53 +15,15 @@
 @section('content')
 
 @php
-  $mixes = [
-    [
-      'slug'     => 'mix-2025',
-      'title'    => '2025 Mix',
-      'artist'   => 'Luke Miller',
-      'album'    => 'Mixes 2025',
-      'audioUrl' => 'https://lukemiller.io/wp-content/25raw-meta.m4a',
-      'artwork'  => 'https://lukemiller.io/wp-content/uploads/2025/10/cropped-robot.png',
-      'chapters' => parse_audacity_labels(
-        get_theme_file_path('resources/static/labels1.txt')
-      ),
-    ],
-    [
-      'slug'     => 'mix-2024',
-      'title'    => '2024 Mix',
-      'artist'   => 'Luke Miller',
-      'album'    => 'Mixes 2024',
-      'audioUrl' => 'https://lukemiller.io/wp-content/24raw-meta.m4a',
-      'artwork'  => 'https://lukemiller.io/wp-content/uploads/2025/10/cropped-robot.png',
-      'chapters' => parse_audacity_labels(
-        get_theme_file_path('resources/static/labels24.txt')
-      ),
-    ],
-    [
-      'slug'     => 'mixes-2024-reprise',
-      'title'    => 'Mixes 2024 (Reprise)',
-      'artist'   => 'Luke Miller',
-      'album'    => 'Mixes 2024',
-      'audioUrl' => 'https://lukemiller.io/wp-content/24-compiled-meta.m4a',
-      'artwork'  => 'https://lukemiller.io/wp-content/uploads/2025/10/cropped-robot.png',
-      'chapters' => parse_audacity_labels(
-        get_theme_file_path('resources/static/2024-Labels.txt')
-      ),
-    ],
-    
-    [
-      'slug'     => 'hannahs-birthday',
-      'title'    => 'Hannah‘s 30th',
-      'artist'   => 'Luke Miller',
-      'album'    => 'Hannah‘s Birthday',
-      'audioUrl' => 'https://lukemiller.io/wp-content/hannahs-mix-meta.m4a',
-      'artwork'  => 'https://lukemiller.io/wp-content/uploads/2025/10/cropped-robot.png',
-      'chapters' => parse_audacity_labels(
-        get_theme_file_path('resources/static/hannah-labels.txt')
-      ),
-    ],
-  ];
+$mixes = collect(get_field('mixes') ?: [])->map(fn($m) => [
+  'slug'     => $m['slug'],
+  'title'    => $m['title'],
+  'artist'   => $m['artist'],
+  'album'    => $m['album'],
+  'audioUrl' => $m['audio_url'],
+  'artwork'  => $m['artwork'],
+  'chapters' => parse_audacity_labels_string($m['labels_raw']),
+])->all();
 @endphp
 
   <div id="vanta-bg-disc" aria-hidden="true"></div>
