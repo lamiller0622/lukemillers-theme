@@ -58,10 +58,10 @@ $mixes = collect(get_field('mixes') ?: [])->map(fn($m) => [
           <div class="time"><span id="cur">00:00</span> / <span id="dur">—:—</span></div>
         </div>
 
-        <a id="downloadLink" href="#" download
+        <!-- <a id="downloadLink" href="#" download
            style="display:inline-block;margin-top:1rem;margin-bottom:1rem;text-decoration:none;border:1px solid #0002;padding:10px 12px;border-radius:10px">
           ⤓ Download
-        </a>
+        </a> -->
       </div>
 
       <ul id="chapters" class="chapters"></ul>
