@@ -19,11 +19,6 @@ body {
   flex-direction: column; 
 }
 
-.page-template-video-mixes{
-  .wrap { 
-    max-width: 960px; 
-  }
-}
 
 p.desc { 
   margin: 0 0 16px; color: var(--muted); 
@@ -129,7 +124,61 @@ video {
 #vanta-bg-disc{
   position: fixed;
   inset: 0;
-  z-index: -1;          /* behind everything */
+  z-index: -1;          
 }
 
+.page-template-video-mixes {
+  .wrap {
+    max-width: 1280px;
+    margin: 0 auto;
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+    padding: 12px 1rem;
+  }
 
+  .video-layout {
+    display: flex;
+    gap: 1.5rem;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .video-col {
+    flex: 3;
+    min-width: 0;
+  }
+
+  .video-wrapper {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+
+    video {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .chapters {
+    flex: 2;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-padding-top: 20px;
+    padding: 1rem;
+    list-style: none;
+    background: rgba(255,255,255,.8);
+    border-radius: 12px;
+  }
+
+  @media (max-width: 767px) {
+    .video-layout {
+      flex-direction: column;
+    }
+    .chapters {
+      flex: 1 1 auto;
+    }
+  }
+}

@@ -29,63 +29,45 @@ $mixes = collect(get_field('mixes') ?: [])->map(fn($m) => [
   <div id="vanta-bg-disc" aria-hidden="true"></div>
 
   <div class="wrap">
-    <div class="player">
-
-      <div class="mix-header">
-        <label for="mixPicker" class="small" style="opacity:.8; margin-right: 1rem">Choose Mix</label>
-        <select id="mixPicker" class="btn-primary"></select>
-      </div>
-
-      <h1 id="mixTitle">Video Mixes</h1>
-
-      <div class="video-wrapper">
-        <video id="video" preload="metadata" controls playsinline></video>
-      </div>
-
-      <div class="controls">
-        <button id="prev" class="btn-primary icon-btn">
-          <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M15 18l-6-6 6-6"></path>
-          </svg>
-          <span>Prev track</span>
-        </button>
-        <button id="next" class="btn-primary icon-btn">
-          <span>Next track</span>
-          <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 6l6 6-6 6"></path>
-          </svg>
-        </button>
-        <div class="time"><span id="cur">00:00</span> / <span id="dur">—:—</span></div>
-      </div>
-
-      <a id="downloadLink" href="#" download
-         style="display:inline-block;margin-top:1rem;margin-bottom:1rem;margin-left:auto;text-decoration:none;border:1px solid #0002;padding:10px 12px;border-radius:10px">
-        ⤓ Download
-      </a>
+    <div class="mix-header">
+      <label for="mixPicker" class="small" style="opacity:.8; margin-right: 1rem">Choose Mix</label>
+      <select id="mixPicker" class="btn-primary"></select>
     </div>
 
-    <ul id="chapters" class="chapters"></ul>
+    <h1 id="mixTitle">Video Mixes</h1>
 
+    <div class="video-layout">
+      <div class="video-col">
+        <div class="video-wrapper">
+          <video id="video" preload="metadata" controls playsinline></video>
+        </div>
+
+        <div class="controls">
+          <button id="prev" class="btn-primary icon-btn">
+            <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 18l-6-6 6-6"></path>
+            </svg>
+            <span>Prev track</span>
+          </button>
+          <button id="next" class="btn-primary icon-btn">
+            <span>Next track</span>
+            <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 6l6 6-6 6"></path>
+            </svg>
+          </button>
+          <div class="time"><span id="cur">00:00</span> / <span id="dur">—:—</span></div>
+        </div>
+
+        <a id="downloadLink" href="#" download
+           style="display:inline-block;margin-top:1rem;margin-bottom:1rem;text-decoration:none;border:1px solid #0002;padding:10px 12px;border-radius:10px">
+          ⤓ Download
+        </a>
+      </div>
+
+      <ul id="chapters" class="chapters"></ul>
+    </div>
   </div>
 @endsection
-
-@push('styles')
-<style>
-  .video-wrapper {
-    width: 100%;
-    max-width: 960px;
-    margin: 0 auto 1rem;
-    border-radius: 12px;
-    overflow: hidden;
-    background: #000;
-  }
-  .video-wrapper video {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-</style>
-@endpush
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js" defer></script>
