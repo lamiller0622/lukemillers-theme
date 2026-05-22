@@ -19,6 +19,12 @@ body {
   flex-direction: column; 
 }
 
+.page-template-video-mixes{
+  .wrap { 
+    max-width: 960px; 
+  }
+}
+
 p.desc { 
   margin: 0 0 16px; color: var(--muted); 
 }
@@ -45,6 +51,12 @@ audio {
       transform: translateY(1px);
     }
   }
+}
+
+video {
+  width: 100%;
+  margin: 1rem 0;
+  border-radius: 12px;
 }
 
 .time { 
