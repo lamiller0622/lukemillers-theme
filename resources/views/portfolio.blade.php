@@ -7,74 +7,106 @@
 
 
 @php
-$slides = $slides ?? [
-  [
-    'title' => 'First Advantage',
-    'lottie' => @asset('/fadv-lottie.json'),
-    'image' => 'https://lukemiller.io/wp-content/fadv.gif',
-    'url' => 'https://www.fadv.com', 
-    'meta' => 'HR Tech • 2025'
-  ],
-  [
-    'title' => 'David Casavant Archive',    
-    'image' => 'https://lukemiller.io/wp-content/uploads/2025/10/dca.png',       
-    'url' => 'https://shop.davidcasavantarchive.com/',                    
-    'meta' => 'Fashion • 2025'
-  ],
-  [
-    'title' => 'Palermo Law',     
-    'lottie' => @asset('/palermo-lottie.json'),          
-    'image' => 'https://lukemiller.io/wp-content/palermo.gif',      
-    'url' => 'https://www.palermolawyers.com/',                    
-    'meta' => 'Law • 2023'
-  ],
-  [
-    'title' => 'Sterling',       
-    'lottie' => @asset('/st-lottie.json'),          
-    'image' => 'https://lukemiller.io/wp-content/sterling.gif', 
-    'url' => 'https://www.sterlingcheck.com/',                    
-    'meta' => 'HR • 2024'
-  ],
-  [
-    'title' => 'Cambridge Kitchens', 
-    'lottie' => @asset('/cambridge-lottie.json'),
-    'image' => 'https://lukemiller.io/wp-content/cambridge.gif',       
-    'url' => 'https://cambridgekitchens.com/',                    
-    'meta' => 'Manufacturing • 2018'
-  ],
-  [
-    'title' => 'Vanity Photo Booths',
-    'lottie' => @asset('/vanity-lottie.json'),
-    'image' => 'https://lukemiller.io/wp-content/vanity.gif',
-    'url' => 'https://vanityphotobooths.com/', 
-    'meta' => 'Entertainment • 2019'
-  ],
-  [
-    'title' => 'EFL Clinic', 
-    'image' => 'https://lukemiller.io/wp-content/uploads/2025/10/efl.png',       
-    'url' => 'https://eflclinic.com/',                    
-    'meta' => 'Healthcare • 2020'
-  ],
-  [
-    'title' => 'Be @ Work',    
-    'image' => 'https://lukemiller.io/wp-content/uploads/2025/10/bwork.png',       
-    'url' => 'https://bworkco.com/',                    
-    'meta' => 'Real Estate • 2021'
-  ],
-  [
-    'title' => 'Suffolk Divorce Mediation',       
-    'image' => 'https://lukemiller.io/wp-content/uploads/2025/10/sdm.png', 
-    'url' => 'https://suffolkdivorcemediation.com/',                    
-    'meta' => 'Law • 2022'
-  ],
-  [
-    'title' => 'World Ship Society',               
-    'image' => 'https://lukemiller.io/wp-content/uploads/2025/10/worldship.png',      
-    'url' => 'https://worldshipny.com/',                    
-    'meta' => 'Maritime • 2021'
-  ],
-];
-$autoplay = $autoplay ?? 0;
+$acf_slides = get_field('portfolio_slides');
+$acf_autoplay = get_field('portfolio_autoplay');
+
+if (!empty($acf_slides)) {
+    $slides = array_map(function ($slide) {
+        // Resolve image from upload or URL
+        $image = '';
+        if (($slide['image_type'] ?? '') === 'url' && !empty($slide['image_url'])) {
+            $image = $slide['image_url'];
+        } elseif (!empty($slide['image_upload'])) {
+            $image = $slide['image_upload'];
+        }
+
+        // Resolve lottie path from filename
+        $lottie = '';
+        if (!empty($slide['lottie_filename'])) {
+            $lottie = \Roots\asset($slide['lottie_filename'])->uri();
+        }
+
+        return [
+            'title'  => $slide['title'] ?? '',
+            'lottie' => $lottie,
+            'image'  => $image,
+            'url'    => $slide['url'] ?? '',
+            'meta'   => $slide['meta'] ?? '',
+        ];
+    }, $acf_slides);
+
+    $autoplay = !empty($acf_autoplay) ? (int) $acf_autoplay : 0;
+} else {
+    // Hardcoded fallback
+    $slides = [
+        [
+            'title' => 'First Advantage',
+            'lottie' => \Roots\asset('fadv-lottie.json')->uri(),
+            'image' => 'https://lukemiller.io/wp-content/fadv.gif',
+            'url' => 'https://www.fadv.com',
+            'meta' => 'HR Tech • 2025'
+        ],
+        [
+            'title' => 'David Casavant Archive',
+            'image' => 'https://lukemiller.io/wp-content/uploads/2025/10/dca.png',
+            'url' => 'https://shop.davidcasavantarchive.com/',
+            'meta' => 'Fashion • 2025'
+        ],
+        [
+            'title' => 'Palermo Law',
+            'lottie' => \Roots\asset('palermo-lottie.json')->uri(),
+            'image' => 'https://lukemiller.io/wp-content/palermo.gif',
+            'url' => 'https://www.palermolawyers.com/',
+            'meta' => 'Law • 2023'
+        ],
+        [
+            'title' => 'Sterling',
+            'lottie' => \Roots\asset('st-lottie.json')->uri(),
+            'image' => 'https://lukemiller.io/wp-content/sterling.gif',
+            'url' => 'https://www.sterlingcheck.com/',
+            'meta' => 'HR • 2024'
+        ],
+        [
+            'title' => 'Cambridge Kitchens',
+            'lottie' => \Roots\asset('cambridge-lottie.json')->uri(),
+            'image' => 'https://lukemiller.io/wp-content/cambridge.gif',
+            'url' => 'https://cambridgekitchens.com/',
+            'meta' => 'Manufacturing • 2018'
+        ],
+        [
+            'title' => 'Vanity Photo Booths',
+            'lottie' => \Roots\asset('vanity-lottie.json')->uri(),
+            'image' => 'https://lukemiller.io/wp-content/vanity.gif',
+            'url' => 'https://vanityphotobooths.com/',
+            'meta' => 'Entertainment • 2019'
+        ],
+        [
+            'title' => 'EFL Clinic',
+            'image' => 'https://lukemiller.io/wp-content/uploads/2025/10/efl.png',
+            'url' => 'https://eflclinic.com/',
+            'meta' => 'Healthcare • 2020'
+        ],
+        [
+            'title' => 'Be @ Work',
+            'image' => 'https://lukemiller.io/wp-content/uploads/2025/10/bwork.png',
+            'url' => 'https://bworkco.com/',
+            'meta' => 'Real Estate • 2021'
+        ],
+        [
+            'title' => 'Suffolk Divorce Mediation',
+            'image' => 'https://lukemiller.io/wp-content/uploads/2025/10/sdm.png',
+            'url' => 'https://suffolkdivorcemediation.com/',
+            'meta' => 'Law • 2022'
+        ],
+        [
+            'title' => 'World Ship Society',
+            'image' => 'https://lukemiller.io/wp-content/uploads/2025/10/worldship.png',
+            'url' => 'https://worldshipny.com/',
+            'meta' => 'Maritime • 2021'
+        ],
+    ];
+    $autoplay = 0;
+}
 @endphp
 
 <section class="slider-center">
