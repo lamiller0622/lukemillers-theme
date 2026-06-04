@@ -5,63 +5,90 @@
 
 @section('content')
 @php
-  $experience = [
-    [
-      'role' => 'Web Applications Developer',
-      'company' => 'First Advantage',
-      'years' => 'Nov 2024 – Present',
-      'stack' => ['Sage 10', 'Sage 11', 'Laravel', 'Bootstrap5','SCSS', 'Tailwind', 'Hubl', 'ACF', 'CPT', 'ACF', 'Elementor'],
-      'highlights' => [
-        'Convert Drag & Drop Themed Site (Elementor) to MVC Theme (Sage 10) for fadv.com.',
-        'Engineered an advanced AJAX-powered resource center with multi-taxonomy filtering (resource type, industry, tags), full-text search via SearchWP, pagination with "Load More" functionality, shareable and trackable filter URLs, and intelligent caching using WordPress transients and WP Cron for optimized performance.',
-        'Built a Sage 11 (Vite/Tailwind) microsite, adapting existing Sage 10 SCSS/Bootstrap modules from fadv.com for the new architecture.',
-        'Built reusable ACF flexible content modules, allowing for 50+ unique product page creations with minimal development time',
-        'Developed modular HubSpot landing page supporting dozens of monthly campaigns.',
-        'Led technical integration of two company websites post-acquisition, consolidating tech stack and improving digital experience for both companies.',
-        'Built responsive email template system with dynamic content personalization'
-      ]
-    ],
-    [
-      'role' => 'Web Developer',
-      'company' => 'Palermo Law',
-      'years' => '2018 – 2022, 2025 – Present',
-      'stack' => ['PHP', 'WordPress', 'SCSS', 'Bootstrap 5', 'ACF', 'esbuild', 'GitHub Actions', 'WP Engine', 'GA4'],
-      'highlights' => [
-        'Inherited a WordPress theme with a bloated, agency-built stylesheet exceeding 35,000+ lines of manually edited compiled CSS added directly to the output file rather than maintained through source files. Audited and rebuilt the entire CSS architecture from scratch using a modular SCSS component system, reducing the stylesheet to under 3,500 lines while maintaining full visual fidelity.',
-        'Consolidated 100+ files of near-identical location page templates, headers, menus, and sidebars into universal components, eliminating redundant template-specific overrides.',
-        'Implemented proper dev environment with version control and CI/CD pipeline deploying to WP Engine staging and production.',
-        'Improved Core Web Vitals significantly — FCP from 8.6s to 2.1s and TBT from 400ms to 110ms — through hero image refactoring, asset dequeuing, and deferred third-party script loading.',
-        'Migrated hardcoded page data to ACF Options Page and CPT architecture, enabling dynamic content management across 9 office locations.',
-      ]
-    ],
-    [
-      'role' => 'Web Applications Developer',
-      'company' => 'Sterling Check',
-      'years' => 'Apr 2021 - Nov 2024',
-      'stack' => ['Sage9','Laravel','PHP', 'SCSS', 'JavaScript'],
-      'highlights' => [
-        'Built high-level pages for company ( Homepage, Compliance Hub, About)',
-        'Developed numerous custom Wordpress themes, modules, fields and templates to improve speed and quality of life of the web team.',
-        'Converted hundreds of custom XD designs to pixel perfect web pages',
-        'Created custom HubSpot templates & modules for marketing operations.',
-        'Collaborated with digital marketers, UX/UI designers and SEO specialists on web projects.',
-        'Manage 15+ websites for the company as a small team of 2.',
-      ]
-    ],
-    [
-      'role' => 'E-Commerce Web Developer',
-      'company' => 'Cambridge Kitchens Mfg.',
-      'years' => '2017 – 2018',
-      'stack' => ['WooCommerce', 'Jquery', 'PHP', 'CSS', 'Photoshop'],
-      'highlights' => [
-        'Built a complicated, measurement-based E-Commerce store.',
-        'Developed custom Scripts using JQuery to maximize allow for dynamic customizable options on the front-end.',
-        'Optimized site with custom Wordpress page templates/functions.',
-        'Photographed and Photoshopped every product for best online shop appearance.',
-        'Calculated product sales margins, arranged company shipping and prepared online store billing.'
-      ]
-    ]
-  ];
+  $acf_experience = get_field('work_experience');
+
+  if (!empty($acf_experience)) {
+      $experience = array_map(function ($job) {
+          $stack = [];
+          if (!empty($job['stack'])) {
+              $stack = array_column($job['stack'], 'technology');
+              $stack = array_filter($stack);
+          }
+
+          $highlights = [];
+          if (!empty($job['highlights'])) {
+              $highlights = array_column($job['highlights'], 'highlight');
+              $highlights = array_filter($highlights);
+          }
+
+          return [
+              'role'       => $job['role'] ?? '',
+              'company'    => $job['company'] ?? '',
+              'years'      => $job['years'] ?? '',
+              'stack'      => array_values($stack),
+              'highlights' => array_values($highlights),
+          ];
+      }, $acf_experience);
+  } else {
+      // Hardcoded fallback
+      $experience = [
+        [
+          'role' => 'Web Applications Developer',
+          'company' => 'First Advantage',
+          'years' => 'Nov 2024 – Present',
+          'stack' => ['Sage 10', 'Sage 11', 'Laravel', 'Bootstrap5','SCSS', 'Tailwind', 'Hubl', 'ACF', 'CPT', 'ACF', 'Elementor'],
+          'highlights' => [
+            'Convert Drag & Drop Themed Site (Elementor) to MVC Theme (Sage 10) for fadv.com.',
+            'Engineered an advanced AJAX-powered resource center with multi-taxonomy filtering (resource type, industry, tags), full-text search via SearchWP, pagination with "Load More" functionality, shareable and trackable filter URLs, and intelligent caching using WordPress transients and WP Cron for optimized performance.',
+            'Built a Sage 11 (Vite/Tailwind) microsite, adapting existing Sage 10 SCSS/Bootstrap modules from fadv.com for the new architecture.',
+            'Built reusable ACF flexible content modules, allowing for 50+ unique product page creations with minimal development time',
+            'Developed modular HubSpot landing page supporting dozens of monthly campaigns.',
+            'Led technical integration of two company websites post-acquisition, consolidating tech stack and improving digital experience for both companies.',
+            'Built responsive email template system with dynamic content personalization'
+          ]
+        ],
+        [
+          'role' => 'Web Developer',
+          'company' => 'Palermo Law',
+          'years' => '2018 – 2022, 2025 – Present',
+          'stack' => ['PHP', 'WordPress', 'SCSS', 'Bootstrap 5', 'ACF', 'esbuild', 'GitHub Actions', 'WP Engine', 'GA4'],
+          'highlights' => [
+            'Inherited a WordPress theme with a bloated, agency-built stylesheet exceeding 35,000+ lines of manually edited compiled CSS added directly to the output file rather than maintained through source files. Audited and rebuilt the entire CSS architecture from scratch using a modular SCSS component system, reducing the stylesheet to under 3,500 lines while maintaining full visual fidelity.',
+            'Consolidated 100+ files of near-identical location page templates, headers, menus, and sidebars into universal components, eliminating redundant template-specific overrides.',
+            'Implemented proper dev environment with version control and CI/CD pipeline deploying to WP Engine staging and production.',
+            'Improved Core Web Vitals significantly — FCP from 8.6s to 2.1s and TBT from 400ms to 110ms — through hero image refactoring, asset dequeuing, and deferred third-party script loading.',
+            'Migrated hardcoded page data to ACF Options Page and CPT architecture, enabling dynamic content management across 9 office locations.',
+          ]
+        ],
+        [
+          'role' => 'Web Applications Developer',
+          'company' => 'Sterling Check',
+          'years' => 'Apr 2021 - Nov 2024',
+          'stack' => ['Sage9','Laravel','PHP', 'SCSS', 'JavaScript'],
+          'highlights' => [
+            'Built high-level pages for company ( Homepage, Compliance Hub, About)',
+            'Developed numerous custom Wordpress themes, modules, fields and templates to improve speed and quality of life of the web team.',
+            'Converted hundreds of custom XD designs to pixel perfect web pages',
+            'Created custom HubSpot templates & modules for marketing operations.',
+            'Collaborated with digital marketers, UX/UI designers and SEO specialists on web projects.',
+            'Manage 15+ websites for the company as a small team of 2.',
+          ]
+        ],
+        [
+          'role' => 'E-Commerce Web Developer',
+          'company' => 'Cambridge Kitchens Mfg.',
+          'years' => '2017 – 2018',
+          'stack' => ['WooCommerce', 'Jquery', 'PHP', 'CSS', 'Photoshop'],
+          'highlights' => [
+            'Built a complicated, measurement-based E-Commerce store.',
+            'Developed custom Scripts using JQuery to maximize allow for dynamic customizable options on the front-end.',
+            'Optimized site with custom Wordpress page templates/functions.',
+            'Photographed and Photoshopped every product for best online shop appearance.',
+            'Calculated product sales margins, arranged company shipping and prepared online store billing.'
+          ]
+        ]
+      ];
+  }
 
   $fn = fn($text) => trim(preg_replace('/[^a-z0-9]+/i','', $text), '_');
 @endphp
@@ -96,19 +123,15 @@
                 <summary>
                   <span class="kw">company</span>
                   <span class="fn">{{ $fn($job['company']) }}</span><span class="p">({{ $job['years'] }}):</span>
-                  <!-- <span class="summary-meta">  <span class="cm"># {{ $job['role'] }} @ {{ $job['company'] }} ({{ $job['years'] }})</span></span> -->
                 </summary>
                 <div class="fn-body">
-                  <!-- <div><span class="kw">company</span> <span class="op">=</span> <span class="str">'{{ $job['company'] }}'</span></div> -->
                   <div><span class="kw">role</span>    <span class="op">=</span> <span class="str">'{{ $job['role'] }}'</span></div>
-                  <!-- <div><span class="kw">years</span>   <span class="op">=</span> <span class="str">'{{ $job['years'] }}'</span></div> -->
                   <div><span class="kw">stack</span>   <span class="op">=</span> <span class="p">[</span>{!! collect($job['stack'])->map(fn($s)=>"<span class=\"str\">'{$s}'</span>")->implode('<span class=\"p\">, </span>') !!}<span class="p">]</span></div>
                   <div><span class="kw">highlights</span> <span class="op">=</span> <span class="p">[</span></div>
                   @foreach($job['highlights'] as $h)
                     <div class="ps-6 mt-1"><span class="str">{{ $h }}</span><span class="p">{{ $loop->last ? '' : ',' }}</span></div>
                   @endforeach
                   <div><span class="p">]</span></div>
-                  <!-- <div class="return"><span class="kw">return</span> <span class="str">f"{'{'}role{'}'} @ {'{'}company{'}'} ({'{'}years{'}'})"</span></div> -->
                 </div>
               </details>
               @endforeach
