@@ -2,6 +2,7 @@
 @use "./scss/pages";
 @use "./scss/components/portfolio-slider";
 @use "./scss/components/robot";
+@use "./scss/components/site-menu";
 @source "../views/";
 @source "../../app/";
 @import "@glidejs/glide/dist/css/glide.core.min.css";

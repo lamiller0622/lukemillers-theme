@@ -8,8 +8,12 @@ import { mountPortfolioSliders } from './modules/portfolio-slider';
 import { mountPixelRobot } from './modules/cursor-robot';
 import { initVantaHotspots } from './modules/vanta-globe';
 import { mountMiniGlobe } from './modules/mini-globe';
+import { mountSiteMenu } from './modules/site-menu';
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Hamburger site menu (every page)
+  mountSiteMenu();
+
   // Robot cursor
   window.__robotCtl = mountPixelRobot({
     hoverSelector: 'a, button, [role="button"], .glide__arrow, .vanta-hotspot .label a'

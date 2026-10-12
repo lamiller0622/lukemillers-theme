@@ -1,0 +1,173 @@
+@use "../globals" as *;
+
+// ---------------------------------------------------------------------------
+// Hamburger menu: a conventional way around the site for anyone who doesn't
+// want to hunt for hotspots. Sits top-right on every page, under the robot
+// cursor (z 9999) but above page content and the globe hotspots (z 30).
+// ---------------------------------------------------------------------------
+
+$menu-z: 9000;
+$menu-offset: 16px;
+$toggle-size: 44px;
+
+.site-menu-toggle {
+  position: fixed;
+  top: $menu-offset;
+  right: $menu-offset;
+  z-index: $menu-z + 1;
+  width: $toggle-size;
+  height: $toggle-size;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0;
+  background: #fff;
+  border: solid 1px $primary;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, .6);
+  cursor: pointer;
+  transition: background .3s ease, border-color .3s ease;
+
+  &__bar {
+    display: block;
+    width: 20px;
+    height: 3px;
+    background: $text-dark;
+    transition: transform .25s ease, opacity .2s ease, background .3s ease;
+    transform-origin: center;
+  }
+
+  &:hover,
+  &:focus-visible {
+    background: $light;
+    outline: none;
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 3px rgba($primary, .45);
+  }
+
+  // Morph into an X while open.
+  &[aria-expanded="true"] {
+    background: $text-dark;
+    border-color: $text-dark;
+
+    .site-menu-toggle__bar {
+      background: #fff;
+
+      &:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+      &:nth-child(2) { opacity: 0; transform: scaleX(0); }
+      &:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+    }
+  }
+}
+
+.site-menu {
+  position: fixed;
+  top: $menu-offset + $toggle-size + 10px;
+  right: $menu-offset;
+  z-index: $menu-z;
+  min-width: 240px;
+  max-width: calc(100vw - #{$menu-offset * 2});
+  background: #fff;
+  border: solid 1px $primary;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, .6), 0 12px 30px rgba(10, 47, 30, .18);
+  opacity: 0;
+  visibility: hidden; // keeps the closed menu out of the a11y tree
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s;
+
+  &.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+    transition-delay: 0s;
+  }
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 6px 0;
+  }
+
+  &__item {
+    margin: 0;
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 18px 10px 14px;
+    color: $text-dark;
+    font-family: "Rubik", sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background .2s ease, color .2s ease;
+
+    &:hover,
+    &:focus-visible {
+      background: $light;
+      color: $primary;
+      outline: none;
+    }
+
+    &:focus-visible {
+      box-shadow: inset 3px 0 0 $primary;
+    }
+  }
+
+  &__item + &__item &__link {
+    border-top: solid 1px rgba($primary, .15);
+  }
+
+  &__icon {
+    flex: 0 0 auto;
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    image-rendering: pixelated;
+    transition: transform .2s ease;
+
+    svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+  }
+
+  &__link:hover &__icon,
+  &__link:focus-visible &__icon {
+    transform: translateY(-2px);
+  }
+
+  &__label {
+    line-height: 1.2;
+  }
+}
+
+@media (max-width: 767px) {
+  .site-menu-toggle {
+    top: 12px;
+    right: 12px;
+  }
+
+  .site-menu {
+    top: 12px + $toggle-size + 10px;
+    right: 12px;
+    max-width: calc(100vw - 24px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-menu,
+  .site-menu-toggle__bar,
+  .site-menu__icon,
+  .site-menu__link {
+    transition: none;
+  }
+}
