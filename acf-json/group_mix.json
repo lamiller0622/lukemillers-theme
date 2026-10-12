@@ -1,0 +1,72 @@
+{
+    "key": "group_mix",
+    "title": "Mix",
+    "fields": [
+        {
+            "key": "field_mix_file",
+            "label": "File",
+            "name": "mix_file",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Pick the file from the mixes folder. Upload new files there via FTP first.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": [],
+            "default_value": "",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 1,
+            "allow_in_bindings": 0,
+            "ui": 1,
+            "ajax": 0,
+            "placeholder": "Select a file…",
+            "create_options": 0,
+            "save_options": 0
+        },
+        {
+            "key": "field_mix_labels",
+            "label": "Audacity Labels",
+            "name": "mix_labels",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Paste the contents of the Audacity label export (.txt). One line per track: start, end, title separated by tabs. Pasting over the existing text replaces the chapters.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": 14,
+            "placeholder": "0.000000\t146.401814\tWhat Hurts the Most - Cascada\n146.401814\t185.016599\tEusexua - FKA Twigs",
+            "new_lines": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "mix"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "File and chapters for a single DJ mix. Title, slug, album (excerpt) and artwork (featured image) come from the post itself.",
+    "show_in_rest": 0,
+    "modified": 1791756000
+}

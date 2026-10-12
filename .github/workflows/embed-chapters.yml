@@ -1,0 +1,86 @@
+name: Embed mix chapters
+
+# Triggered by WordPress (app/mixes.php → mix_remote_dispatch) when a mix is saved
+# on a host that has no ffmpeg. Downloads the file and its ffmetadata from the
+# site, embeds the chapters + tags with ffmpeg, uploads the result back over
+# SFTP, then reports back to the site.
+#
+# Required repository secret (in addition to the deploy ones):
+#   MIXES_WEBHOOK_SECRET   same value as MIXES_WEBHOOK_SECRET in wp-config.php
+# Reuses: FTP_HOST, FTP_PORT, FTP_USERNAME, FTP_PASSWORD, REMOTE_THEMES_PATH
+# (the mixes folder is assumed to be wp-content/mixes, i.e. next to the themes folder)
+
+on:
+  repository_dispatch:
+    types: [embed-chapters]
+
+concurrency:
+  group: embed-${{ github.event.client_payload.file }}
+  cancel-in-progress: false
+
+jobs:
+  embed:
+    runs-on: ubuntu-latest
+    env:
+      MIX_FILE: ${{ github.event.client_payload.file }}
+      MIX_FILE_URL: ${{ github.event.client_payload.file_url }}
+      MIX_FFMETA_URL: ${{ github.event.client_payload.ffmeta_url }}
+      MIX_CALLBACK_URL: ${{ github.event.client_payload.callback_url }}
+      MIX_HASH: ${{ github.event.client_payload.hash }}
+
+    steps:
+      - name: Install ffmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+
+      - name: Download file and chapter metadata
+        run: |
+          set -euo pipefail
+          mkdir -p in out
+          case "$MIX_FILE" in */*|.*) echo "Refusing suspicious file name"; exit 1;; esac
+          curl -fsSL --retry 3 -o "in/$MIX_FILE" "$MIX_FILE_URL"
+          curl -fsSL --retry 3 -o ffmetadata.txt "$MIX_FFMETA_URL"
+          head -c 12 ffmetadata.txt | grep -q ';FFMETADATA' || { echo "Bad ffmetadata"; cat ffmetadata.txt; exit 1; }
+          echo "CHAPTERS=$(grep -c '^\[CHAPTER\]' ffmetadata.txt)" >> "$GITHUB_ENV"
+          ls -la in ffmetadata.txt
+
+      - name: Embed chapters with ffmpeg
+        run: |
+          set -euo pipefail
+          ext=$(printf "%s" "${MIX_FILE##*.}" | tr "[:upper:]" "[:lower:]")
+          movflags=""
+          case "$ext" in m4a|mp4|m4v|mov) movflags="-movflags +faststart";; esac
+          # Global tags (title/artist/album) come from the ffmetadata file itself.
+          ffmpeg -hide_banner -loglevel error -y \
+            -i "in/$MIX_FILE" -i ffmetadata.txt \
+            -map 0 -map_metadata 1 -map_chapters 1 -codec copy $movflags \
+            "out/$MIX_FILE"
+          ffprobe -hide_banner -loglevel error -show_chapters "out/$MIX_FILE" | grep -c '^\[CHAPTER\]' | xargs echo "chapters in output:"
+          ls -la out
+
+      - name: Upload back to the mixes folder
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          port: ${{ secrets.FTP_PORT }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local_path: ./out/*
+          remote_path: ${{ secrets.REMOTE_THEMES_PATH }}/../mixes/
+          sftp_only: true
+          sftpArgs: "-o StrictHostKeyChecking=no"
+
+      - name: Report success to WordPress
+        if: success()
+        run: |
+          curl -fsS -X POST "$MIX_CALLBACK_URL" \
+            -H "Content-Type: application/json" \
+            -H "X-Mix-Secret: ${{ secrets.MIXES_WEBHOOK_SECRET }}" \
+            -d "$(printf '{"ok":true,"hash":"%s","message":"%s chapters embedded into %s via GitHub Actions."}' "$MIX_HASH" "${CHAPTERS:-?}" "$MIX_FILE")"
+
+      - name: Report failure to WordPress
+        if: failure()
+        run: |
+          curl -fsS -X POST "$MIX_CALLBACK_URL" \
+            -H "Content-Type: application/json" \
+            -H "X-Mix-Secret: ${{ secrets.MIXES_WEBHOOK_SECRET }}" \
+            -d "$(printf '{"ok":false,"message":"GitHub Actions run failed: %s"}' "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}")" || true

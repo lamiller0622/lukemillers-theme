@@ -1,0 +1,236 @@
+{
+    "key": "group_portfolio_slides",
+    "title": "Portfolio Slides",
+    "fields": [
+        {
+            "key": "field_portfolio_autoplay",
+            "label": "Autoplay Interval (ms)",
+            "name": "portfolio_autoplay",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "Set to 0 or leave empty to disable autoplay. Value in milliseconds (e.g. 5000 = 5 seconds).",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 0,
+            "min": 0,
+            "placeholder": 0,
+            "max": "",
+            "step": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_portfolio_slides",
+            "label": "Slides",
+            "name": "portfolio_slides",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "min": 0,
+            "max": 0,
+            "layout": "block",
+            "button_label": "Add Slide",
+            "rows_per_page": 20,
+            "collapsed": "",
+            "sub_fields": [
+                {
+                    "key": "field_slide_title",
+                    "label": "Title",
+                    "name": "title",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_portfolio_slides"
+                },
+                {
+                    "key": "field_slide_meta",
+                    "label": "Meta",
+                    "name": "meta",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "e.g. \"HR Tech • 2025\"",
+                    "required": 0,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_portfolio_slides"
+                },
+                {
+                    "key": "field_slide_url",
+                    "label": "URL",
+                    "name": "url",
+                    "aria-label": "",
+                    "type": "url",
+                    "instructions": "Link to the live site.",
+                    "required": 0,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "parent_repeater": "field_portfolio_slides"
+                },
+                {
+                    "key": "field_slide_lottie_filename",
+                    "label": "Lottie Filename",
+                    "name": "lottie_filename",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "Just the filename, e.g. \"fadv-lottie.json\". Will be resolved via @asset('/'). Leave empty for no Lottie animation.",
+                    "required": 0,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "placeholder": "example-lottie.json",
+                    "default_value": "",
+                    "maxlength": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_portfolio_slides"
+                },
+                {
+                    "key": "field_slide_image_type",
+                    "label": "Image Source",
+                    "name": "image_type",
+                    "aria-label": "",
+                    "type": "button_group",
+                    "instructions": "Choose whether to upload an image or provide an external URL.",
+                    "required": 0,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "upload": "Upload",
+                        "url": "External URL"
+                    },
+                    "default_value": "upload",
+                    "layout": "horizontal",
+                    "return_format": "value",
+                    "allow_null": 0,
+                    "parent_repeater": "field_portfolio_slides"
+                },
+                {
+                    "key": "field_slide_image_upload",
+                    "label": "Image Upload",
+                    "name": "image_upload",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_slide_image_type",
+                                "operator": "==",
+                                "value": "upload"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "url",
+                    "preview_size": "medium",
+                    "library": "all",
+                    "mime_types": "jpg, jpeg, png, gif, webp",
+                    "min_width": 0,
+                    "min_height": 0,
+                    "min_size": 0,
+                    "max_width": 0,
+                    "max_height": 0,
+                    "max_size": 0,
+                    "parent_repeater": "field_portfolio_slides"
+                },
+                {
+                    "key": "field_slide_image_url",
+                    "label": "Image URL",
+                    "name": "image_url",
+                    "aria-label": "",
+                    "type": "url",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_slide_image_type",
+                                "operator": "==",
+                                "value": "url"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "parent_repeater": "field_portfolio_slides"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "portfolio.blade.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "modified": 1791754799
+}

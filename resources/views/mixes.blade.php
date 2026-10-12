@@ -15,15 +15,8 @@
 @section('content')
 
 @php
-$mixes = collect(get_field('mixes') ?: [])->map(fn($m) => [
-  'slug'     => $m['slug'],
-  'title'    => $m['title'],
-  'artist'   => $m['artist'],
-  'album'    => $m['album'],
-  'audioUrl' => $m['audio_url'],
-  'artwork'  => $m['artwork'],
-  'chapters' => parse_audacity_labels($m['labels_raw']),
-])->all();
+  // Mix posts (Mixes → admin). Falls back to the legacy page repeater if none exist.
+  $mixes = \App\get_mixes('audio');
 @endphp
 
   <div id="vanta-bg-disc" aria-hidden="true"></div>

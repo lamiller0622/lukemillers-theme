@@ -1,0 +1,205 @@
+{
+    "key": "group_mixes_repeater",
+    "title": "Mixes",
+    "fields": [
+        {
+            "key": "field_mixes_repeater",
+            "label": "Mixes",
+            "name": "mixes",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Add and manage DJ mixes.",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "button_label": "Add Mix",
+            "min": 0,
+            "max": 0,
+            "rows_per_page": 20,
+            "collapsed": "",
+            "sub_fields": [
+                {
+                    "key": "field_mix_slug",
+                    "label": "Slug",
+                    "name": "slug",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "URL-friendly identifier (e.g. mix-2025). Used in query string.",
+                    "required": 0,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_mixes_repeater"
+                },
+                {
+                    "key": "field_mix_title",
+                    "label": "Title",
+                    "name": "title",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_mixes_repeater"
+                },
+                {
+                    "key": "field_mix_artist",
+                    "label": "Artist",
+                    "name": "artist",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "Luke Miller",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_mixes_repeater"
+                },
+                {
+                    "key": "field_mix_album",
+                    "label": "Album",
+                    "name": "album",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "Shown in Media Session metadata.",
+                    "required": 0,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_mixes_repeater"
+                },
+                {
+                    "key": "field_mix_audio_url",
+                    "label": "Audio URL",
+                    "name": "audio_url",
+                    "aria-label": "",
+                    "type": "url",
+                    "instructions": "Direct URL to the .m4a file.",
+                    "required": 0,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "parent_repeater": "field_mixes_repeater"
+                },
+                {
+                    "key": "field_mix_artwork",
+                    "label": "Artwork",
+                    "name": "artwork",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "Cover art for Media Session.",
+                    "required": 0,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "url",
+                    "preview_size": "thumbnail",
+                    "library": "all",
+                    "min_width": 0,
+                    "min_height": 0,
+                    "min_size": 0,
+                    "max_width": 0,
+                    "max_height": 0,
+                    "max_size": 0,
+                    "mime_types": "",
+                    "parent_repeater": "field_mixes_repeater"
+                },
+                {
+                    "key": "field_mix_labels_raw",
+                    "label": "Audacity Labels",
+                    "name": "labels_raw",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "Paste raw Audacity label file content. Each line: starttendttitle",
+                    "required": 0,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "rows": 10,
+                    "new_lines": "",
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "parent_repeater": "field_mixes_repeater"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "mixes.blade.php"
+            }
+        ],
+        [
+            {
+                "param": "page",
+                "operator": "==",
+                "value": "67"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "modified": 1791754799
+}
