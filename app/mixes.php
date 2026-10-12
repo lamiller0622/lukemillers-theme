@@ -1016,7 +1016,7 @@ function mix_render_tools_page(): void
                     echo $yes . ' — repo <code>' . esc_html(mix_setting('MIXES_GITHUB_REPO')) . '</code>';
                 } else {
                     $missing = array_filter(['MIXES_GITHUB_REPO', 'MIXES_GITHUB_TOKEN', 'MIXES_WEBHOOK_SECRET'], fn ($k) => mix_setting($k) === '');
-                    echo $no . ' — set <code>' . esc_html(implode('</code>, <code>', $missing)) . '</code> in wp-config.php or .env (see <code>.github/workflows/embed-chapters.yml</code>).';
+                    echo $no . ' — set ' . implode(', ', array_map(fn ($k) => '<code>' . esc_html($k) . '</code>', $missing)) . ' in wp-config.php or .env (see <code>.github/workflows/embed-chapters.yml</code>).';
                 }
             ?></td></tr>
             <tr><th>Which will be used on save</th><td><?php echo mix_can_embed() ? 'Server ffmpeg' : (mix_remote_configured() ? 'GitHub Actions' : 'Neither — manual ffmetadata download only'); ?></td></tr>

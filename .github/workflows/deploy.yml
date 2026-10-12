@@ -1,5 +1,12 @@
 name: Deploy Sage Theme to IONOS
 
+# Incremental by default: the server's version.txt holds the last deployed
+# commit, so only files changed since then are uploaded (plus vendor/ when
+# composer.lock changed and public/ when anything that feeds the Vite build
+# changed). Falls back to a full upload when version.txt is unreachable or
+# the recorded commit is not in history. Deleted files are never removed from
+# the server; run the workflow manually with "full" ticked to resync everything.
+
 on:
   push:
     branches: [ "main" ]
@@ -14,10 +21,18 @@ on:
       - "package-lock.json"
       - ".github/workflows/deploy.yml"
   workflow_dispatch:
+    inputs:
+      full:
+        description: "Full deploy (upload every file instead of only changes)"
+        type: boolean
+        default: false
 
 concurrency:
   group: deploy-${{ github.ref }}
   cancel-in-progress: true
+
+env:
+  VERSION_URL: https://lukemiller.io/wp-content/themes/lukemillers-theme/version.txt
 
 jobs:
   build-and-deploy:
@@ -77,24 +92,73 @@ jobs:
         run: npm run build
 
       - name: Prepare deploy folder
+        env:
+          FORCE_FULL: ${{ github.event_name == 'workflow_dispatch' && inputs.full == true }}
         run: |
+          set -euo pipefail
           rm -rf deploy
           mkdir -p deploy/lukemillers-theme
-          rsync -a --delete \
-            --exclude ".git*" \
-            --exclude ".github" \
-            --exclude "node_modules" \
-            --exclude ".env" \
-            --exclude "tests" \
-            --exclude "vendor/bin" \
-            --exclude "*.map" \
-            ./ deploy/lukemillers-theme/
+
+          EXCLUDES=(--exclude ".git*" --exclude ".github" --exclude "node_modules" --exclude ".env"
+                    --exclude "tests" --exclude "vendor/bin" --exclude "*.map")
+
+          # Work out what the server currently has.
+          MODE=full
+          BASE=""
+          if [ "$FORCE_FULL" = "true" ]; then
+            echo "Full deploy requested manually."
+          else
+            BASE=$(curl -fsS --max-time 20 "$VERSION_URL" | sed -n 's/^Deployed \([0-9a-f]\{40\}\).*/\1/p' || true)
+            if [ -z "$BASE" ]; then
+              echo "Could not read a deployed commit from $VERSION_URL — doing a full deploy."
+            elif ! git cat-file -e "$BASE^{commit}" 2>/dev/null; then
+              echo "Deployed commit $BASE is not in this history — doing a full deploy."
+            else
+              MODE=incremental
+            fi
+          fi
+
+          if [ "$MODE" = "full" ]; then
+            rsync -a "${EXCLUDES[@]}" ./ deploy/lukemillers-theme/
+          else
+            echo "Incremental deploy: $BASE → $GITHUB_SHA"
+            git diff --name-only --diff-filter=d "$BASE" "$GITHUB_SHA" > changed.txt
+            git diff --name-only --diff-filter=D "$BASE" "$GITHUB_SHA" > deleted.txt || true
+            echo "--- changed ---"; cat changed.txt
+            if [ -s deleted.txt ]; then
+              echo "--- deleted in git (NOT removed on server; run a full deploy to resync) ---"; cat deleted.txt
+            fi
+
+            : > upload.txt
+            # Changed tracked files, minus things that never ship.
+            grep -vE '^(\.github/|\.git|node_modules/|tests/|\.env$)' changed.txt >> upload.txt || true
+            # Built/installed folders only when their inputs changed.
+            if grep -qE '^composer\.(json|lock)$' changed.txt; then
+              echo "vendor/" >> upload.txt
+            fi
+            if grep -qE '^(resources/|vite\.config\.js$|package(-lock)?\.json$|theme\.json$|tailwind\.config|postcss\.config)' changed.txt; then
+              echo "public/" >> upload.txt
+            fi
+            # Drop anything that doesn't exist in the checkout (e.g. a renamed directory).
+            while IFS= read -r p; do
+              [ -n "$p" ] && [ -e "$p" ] && printf '%s\n' "$p"
+            done < upload.txt > upload.existing.txt || true
+
+            if [ -s upload.existing.txt ]; then
+              rsync -a --recursive "${EXCLUDES[@]}" --files-from=upload.existing.txt ./ deploy/lukemillers-theme/
+            else
+              echo "Nothing changed that ships to the server; only version.txt will be updated."
+            fi
+          fi
+
           echo "Deployed $GITHUB_SHA on $(date -u +%FT%TZ)" > deploy/lukemillers-theme/version.txt
           cat > deploy/lukemillers-theme/pathcheck.php <<'PHP'
           <?php
           echo 'ABSPATH: ' . ABSPATH . PHP_EOL;
           echo 'Theme dir: ' . get_stylesheet_directory() . PHP_EOL;
           PHP
+
+          echo "Mode: $MODE — $(find deploy -type f | wc -l) file(s), $(du -sh deploy | cut -f1) to upload."
 
       - name: Deploy via SFTP (password)
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
@@ -103,7 +167,7 @@ jobs:
           port: ${{ secrets.FTP_PORT }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local_path: ./deploy/lukemillers-theme/    
-          remote_path: ${{ secrets.REMOTE_THEMES_PATH }}/   
+          local_path: ./deploy/lukemillers-theme/
+          remote_path: ${{ secrets.REMOTE_THEMES_PATH }}/
           sftp_only: true
           sftpArgs: "-o StrictHostKeyChecking=no"
