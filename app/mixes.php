@@ -33,6 +33,7 @@ const MIX_ARTIST = 'Luke Miller';
 const MIX_EXTENSIONS = ['m4a', 'mp4', 'm4v', 'mov', 'mp3', 'aac', 'wav', 'ogg', 'webm'];
 const MIX_VIDEO_EXTENSIONS = ['mp4', 'm4v', 'mov', 'webm'];
 const MIX_MP4_FAMILY = ['m4a', 'mp4', 'm4v', 'mov'];
+const MIX_AAC_BITRATE = '256k'; // used when converting wav/mp3/etc to m4a
 
 /**
  * Read a setting from a wp-config constant or the Acorn .env file.
@@ -98,6 +99,24 @@ function mix_kind_for_file(string $file): string
     $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
 
     return in_array($ext, MIX_VIDEO_EXTENSIONS, true) ? 'video' : 'audio';
+}
+
+/**
+ * The file name the embed step produces. Chapters only survive inside the MP4
+ * family, so any other audio (wav, mp3, aac, ogg) is converted to .m4a.
+ * Returns '' for formats that can't be embedded at all (webm).
+ */
+function mix_output_filename(string $file): string
+{
+    $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+    if (in_array($ext, MIX_MP4_FAMILY, true)) {
+        return $file;
+    }
+    if (mix_kind_for_file($file) === 'video') {
+        return '';
+    }
+
+    return pathinfo($file, PATHINFO_FILENAME) . '.m4a';
 }
 
 /**
@@ -448,20 +467,27 @@ function mix_tags(int $post_id): array
  */
 function mix_ffmpeg_command(string $ffmpeg, string $in, string $meta, string $out, array $tags): string
 {
-    $ext = strtolower(pathinfo($in, PATHINFO_EXTENSION));
+    $in_ext = strtolower(pathinfo($in, PATHINFO_EXTENSION));
+    $out_ext = strtolower(pathinfo($out, PATHINFO_EXTENSION));
     $parts = [
         $ffmpeg === 'ffmpeg' ? 'ffmpeg' : escapeshellarg($ffmpeg),
         '-hide_banner -loglevel error -y',
         '-i ' . escapeshellarg($in),
         '-i ' . escapeshellarg($meta),
-        '-map 0 -map_metadata 0 -map_chapters 1 -codec copy',
     ];
+    if (in_array($in_ext, MIX_MP4_FAMILY, true)) {
+        // Already MP4-family: remux only, keep every stream as-is.
+        $parts[] = '-map 0 -map_metadata 0 -map_chapters 1 -codec copy';
+    } else {
+        // wav/mp3/etc → m4a: transcode the audio to AAC (drops any embedded cover art).
+        $parts[] = '-map 0:a -map_metadata 0 -map_chapters 1 -c:a aac -b:a ' . MIX_AAC_BITRATE;
+    }
     foreach ($tags as $k => $v) {
         if ((string) $v !== '') {
             $parts[] = '-metadata ' . escapeshellarg("$k=$v");
         }
     }
-    if (in_array($ext, MIX_MP4_FAMILY, true)) {
+    if (in_array($out_ext, MIX_MP4_FAMILY, true)) {
         $parts[] = '-movflags +faststart';
     }
     $parts[] = escapeshellarg($out);
@@ -535,8 +561,12 @@ function mix_embed_chapters(int $post_id): array
         return $fail('The mixes folder or file is not writable by PHP.');
     }
 
-    $ext = pathinfo($file, PATHINFO_EXTENSION);
-    $tmp_out = dirname($in) . '/.' . pathinfo($file, PATHINFO_FILENAME) . '.embedding.' . $ext;
+    $out_file = mix_output_filename($file);
+    if ($out_file === '') {
+        return $fail(strtoupper(pathinfo($file, PATHINFO_EXTENSION)) . ' files cannot hold chapters; upload an mp4 instead.');
+    }
+    $final = mix_file_path($out_file);
+    $tmp_out = dirname($in) . '/.' . pathinfo($out_file, PATHINFO_FILENAME) . '.embedding.' . pathinfo($out_file, PATHINFO_EXTENSION);
     $meta = tempnam(get_temp_dir(), 'ffmeta-' . $post_id . '-');
     if (! $meta || file_put_contents($meta, mix_ffmetadata($labels, mix_tags($post_id))) === false) {
         return $fail('Could not write temporary metadata file.');
@@ -558,14 +588,20 @@ function mix_embed_chapters(int $post_id): array
         return $fail('ffmpeg failed (exit ' . $code . '): ' . trim(implode("\n", $output)));
     }
 
-    if (! @rename($tmp_out, $in)) {
+    if (! @rename($tmp_out, $final)) {
         @unlink($tmp_out);
 
-        return $fail('ffmpeg succeeded but the original file could not be replaced.');
+        return $fail('ffmpeg succeeded but the output file could not be moved into place.');
     }
-    @chmod($in, 0644);
+    @chmod($final, 0644);
 
-    $msg = sprintf('%d chapters embedded into %s.', count($labels), $file);
+    if ($out_file !== $file) {
+        // Point the mix at the converted file. The original is left in the folder.
+        update_field('field_mix_file', $out_file, $post_id);
+        $msg = sprintf('%s converted to %s with %d chapters embedded.', $file, $out_file, count($labels));
+    } else {
+        $msg = sprintf('%d chapters embedded into %s.', count($labels), $file);
+    }
     mix_set_embed_status($post_id, true, $msg, mix_embed_hash($post_id), ['via' => 'server']);
 
     return ['ok' => true, 'message' => $msg];
@@ -685,7 +721,24 @@ add_action('rest_api_init', function () {
             $ok = (bool) $r->get_param('ok');
             $message = sanitize_text_field((string) $r->get_param('message'));
             $hash = sanitize_text_field((string) $r->get_param('hash'));
-            mix_set_embed_status($post_id, $ok, $message ?: ($ok ? 'Embedded via GitHub Actions.' : 'GitHub Actions run failed.'), $ok ? $hash : '', ['via' => 'github']);
+
+            // Nothing relevant changed on the mix while the run was in flight?
+            $unchanged = $hash !== '' && hash_equals($hash, mix_embed_hash($post_id));
+
+            // The workflow may have converted the file (e.g. wav → m4a); switch the mix to it.
+            $new_file = mix_sanitize_filename((string) $r->get_param('file'));
+            $current = (string) get_post_meta($post_id, 'mix_file', true);
+            if ($ok && $new_file !== '' && $new_file !== $current && is_file(mix_file_path($new_file))) {
+                update_field('field_mix_file', $new_file, $post_id);
+            }
+
+            mix_set_embed_status(
+                $post_id,
+                $ok,
+                $message ?: ($ok ? 'Embedded via GitHub Actions.' : 'GitHub Actions run failed.'),
+                $ok && $unchanged ? mix_embed_hash($post_id) : '',
+                ['via' => 'github']
+            );
 
             return ['ok' => true];
         },
@@ -810,8 +863,9 @@ function mix_render_status_box(\WP_Post $post): void
         echo '<p><span class="bad">ffmpeg is not available on this server</span> (' . (mix_exec_available() ? 'binary not found' : 'exec() disabled') . ') and GitHub Actions embedding is not configured. ';
         echo 'The web player still shows the chapters; only the downloadable file lacks them. To embed them locally:</p>';
         if ($file) {
-            $cmd = mix_ffmpeg_command('ffmpeg', $file, 'ffmetadata.txt', 'out-' . $file, mix_tags($post->ID));
-            echo '<textarea readonly rows="5" onclick="this.select()">' . esc_textarea($cmd . "\nmv " . escapeshellarg('out-' . $file) . ' ' . escapeshellarg($file)) . '</textarea>';
+            $out_file = mix_output_filename($file) ?: $file;
+            $cmd = mix_ffmpeg_command('ffmpeg', $file, 'ffmetadata.txt', 'out-' . $out_file, mix_tags($post->ID));
+            echo '<textarea readonly rows="5" onclick="this.select()">' . esc_textarea($cmd . "\nmv " . escapeshellarg('out-' . $out_file) . ' ' . escapeshellarg($out_file)) . '</textarea>';
             echo '<p class="description">Then upload the result back to the mixes folder.</p>';
         }
     }
