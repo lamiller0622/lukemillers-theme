@@ -1,66 +1,223 @@
 @use "../globals" as *;
-.about-page{
-  --bg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800'%3E%3Cdefs%3E%3CradialGradient id='v' cx='50%25' cy='30%25' r='80%25'%3E%3Cstop offset='0%25' stop-color='%23b45309'/%3E%3Cstop offset='60%25' stop-color='%23a16207'/%3E%3Cstop offset='100%25' stop-color='%2398410c'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='1200' height='800' fill='url(%23v)'/%3E%3Cpolygon points='600,0 0,800 220,800' fill='%2398410c' opacity='0.28'/%3E%3Cpolygon points='600,0 220,800 420,800' fill='%23a16207' opacity='0.22'/%3E%3Cpolygon points='600,0 420,800 600,800' fill='%23b45309' opacity='0.18'/%3E%3Cpolygon points='600,0 600,800 780,800' fill='%23b45309' opacity='0.18'/%3E%3Cpolygon points='600,0 780,800 980,800' fill='%23a16207' opacity='0.22'/%3E%3Cpolygon points='600,0 980,800 1200,800' fill='%2398410c' opacity='0.28'/%3E%3Crect x='0' y='420' width='1200' height='34' fill='%2398410c' opacity='0.25'/%3E%3Cg opacity='0.85'%3E%3Crect x='140' y='426' width='20' height='20' fill='%23ef4444'/%3E%3Crect x='165' y='426' width='20' height='20' fill='%2360a5fa'/%3E%3Crect x='190' y='426' width='20' height='20' fill='%23ef4444'/%3E%3Crect x='215' y='426' width='20' height='20' fill='%2360a5fa'/%3E%3Crect x='240' y='426' width='20' height='20' fill='%23ef4444'/%3E%3Crect x='265' y='426' width='20' height='20' fill='%2360a5fa'/%3E%3Crect x='290' y='426' width='20' height='20' fill='%23ef4444'/%3E%3Crect x='315' y='426' width='20' height='20' fill='%2360a5fa'/%3E%3Crect x='340' y='426' width='20' height='20' fill='%23ef4444'/%3E%3Crect x='365' y='426' width='20' height='20' fill='%2360a5fa'/%3E%3Crect x='390' y='426' width='20' height='20' fill='%23ef4444'/%3E%3Crect x='415' y='426' width='20' height='20' fill='%2360a5fa'/%3E%3C/g%3E%3Crect y='700' width='1200' height='100' fill='%23000' opacity='0.18'/%3E%3C/svg%3E");
+
+$about-ease: cubic-bezier(.22, .61, .36, 1);
+$about-floor: 72px;
+$about-collapse: 1023px; // below this the two columns stack
+
+.about-page {
+  // Warm wood backdrop (radial gradient + rays). The dark floor strip is a
+  // separate element so the columns can sit on it.
+  --bg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800'%3E%3Cdefs%3E%3CradialGradient id='v' cx='50%25' cy='30%25' r='80%25'%3E%3Cstop offset='0%25' stop-color='%23b45309'/%3E%3Cstop offset='60%25' stop-color='%23a16207'/%3E%3Cstop offset='100%25' stop-color='%2398410c'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='1200' height='800' fill='url(%23v)'/%3E%3Cpolygon points='600,0 0,800 220,800' fill='%2398410c' opacity='0.28'/%3E%3Cpolygon points='600,0 220,800 420,800' fill='%23a16207' opacity='0.22'/%3E%3Cpolygon points='600,0 420,800 600,800' fill='%23b45309' opacity='0.18'/%3E%3Cpolygon points='600,0 600,800 780,800' fill='%23b45309' opacity='0.18'/%3E%3Cpolygon points='600,0 780,800 980,800' fill='%23a16207' opacity='0.22'/%3E%3Cpolygon points='600,0 980,800 1200,800' fill='%2398410c' opacity='0.28'/%3E%3C/svg%3E");
+
+  position: relative;
+  min-height: 100vh;
+  box-sizing: border-box;
+  display: grid;
+  align-items: end;
+  justify-items: center;
+  padding: 48px 40px 0;
   background: var(--bg) center / cover no-repeat;
-  padding: 2rem 0;
-  justify-content: center;
-  p{
-    margin-bottom: 1rem;
+
+  @media (max-width: 767px) {
+    padding: 72px 16px 0;
   }
-  .robot-speaker-container{
+
+  p {
+    margin: 0 0 1rem;
+  }
+
+  &__floor {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: $about-floor;
+    background: rgba($text-dark, .32);
+    border-top: 2px solid rgba($text-dark, .45);
+  }
+
+  &__grid {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1180px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr));
+    gap: 56px;
+    align-items: end;
+    padding-bottom: $about-floor;
+
+    @media (max-width: $about-collapse) {
+      gap: 48px;
+    }
+  }
+
+  &__bio-col {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 24px;
+    align-items: flex-start;
+    justify-self: start;
+    width: 100%;
+    max-width: 640px;
   }
-  
+
+  &__side-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-self: end;
+    width: 100%;
+    max-width: 480px;
+    gap: 36px;
+
+    @media (max-width: $about-collapse) {
+      justify-self: start;
+    }
+  }
+
+  &__home {
+    margin-top: 0;
+  }
+
+  // ---------------------------------------------------------------- Bio card
+  .about-bio {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 40px 44px;
+    background: $light;
+    border: 1px solid $text-dark;
+    font-size: 17px;
+    line-height: 1.6;
+    text-wrap: pretty;
+
+    @media (max-width: 767px) {
+      padding: 28px 24px;
+    }
+
+    &__title {
+      margin: 0 0 24px;
+      font-size: 36px;
+      font-weight: 600;
+      line-height: 1.15;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  // ------------------------------------------------------------ Framed photos
+  .about-photos {
+    display: grid;
+    grid-template-columns: 34fr 30fr 34fr;
+    align-items: center;
+    gap: clamp(12px, 4%, 28px);
+    padding: 0 12px;
+    width: 100%;
+    box-sizing: border-box;
+
+    &__frame {
+      display: block;
+      width: 100%;
+      min-width: 0;
+      padding: 0;
+      box-sizing: border-box;
+      border: 5px solid $text-dark;
+      border-radius: 0;
+      background: $light-gray;
+      overflow: hidden;
+      cursor: zoom-in;
+      appearance: none;
+
+      &--wide       { aspect-ratio: 170 / 124; }
+      &--tall       { aspect-ratio: 150 / 190; }
+      &--wide-short { aspect-ratio: 170 / 118; }
+
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: saturate(.95) contrast(1.05);
+        transition: transform .4s $about-ease;
+      }
+
+      &:hover img,
+      &:focus-visible img {
+        transform: scale(1.05);
+      }
+
+      &:focus-visible {
+        outline: 2px solid $primary;
+        outline-offset: 2px;
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------- Robot
+  .about-robot {
+    margin-top: 30px;
+    width: 130px;
+    height: 130px;
+    line-height: 0;
+
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      image-rendering: pixelated;
+      overflow: visible;
+    }
+
+    &__antenna {
+      animation: about-antenna-pulse 1.2s ease-in-out infinite;
+    }
+  }
+
+  // ---------------------------------------------------------------- Chat
   .chat-container {
-  max-width: 600px;
-  padding: 1.5rem;
-  background: white;
-  border-radius: 16px;
-  border: 2px solid #ddd;
-  position: relative;
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -20px;
-    left: 50px; 
-    border-width: 20px 15px 0 15px;
-    border-style: solid;
-    border-color: white transparent transparent transparent;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 16px;
+    border: 2px solid #ddd;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 50px;
+      border-width: 20px 15px 0 15px;
+      border-style: solid;
+      border-color: white transparent transparent transparent;
+    }
+    &::before {
+      content: '';
+      position: absolute;
+      bottom: -24px;
+      left: 48px; // slightly offset from ::after
+      border-width: 22px 17px 0 17px;
+      border-style: solid;
+      border-color: #ddd transparent transparent transparent;
+    }
   }
-  &::before {
-    content: '';
-    position: absolute;
-    bottom: -24px;
-    left: 48px; // slightly offset from ::after
-    border-width: 22px 17px 0 17px;
-    border-style: solid;
-    border-color: #ddd transparent transparent transparent;
-  }
-}
 
   .chat-header {
-    text-align: center;
     margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    .btn-primary{
+
+    h2 {
       margin: 0;
-    }
-    h1 {
-      margin-bottom: 0.5rem;
-      color: $text-dark;
-    }
-    
-    p {
+      font-size: 24px;
+      font-weight: 400;
       color: $text-dark;
     }
   }
 
   .chat-messages {
-    height: 400px;
+    height: 200px;
     overflow-y: auto;
     border: 1px solid #ddd;
     padding: 1rem;
@@ -71,21 +228,21 @@
   .message {
     margin-bottom: 1rem;
     display: flex;
-    
+
     &.user {
       justify-content: flex-end;
-      
+
       .message-content {
         background: $primary;
         color: white;
       }
     }
-    
+
     &.bot .message-content {
       background: $light;
       color: $text-dark;
     }
-    
+
     &.typing .message-content {
       opacity: 0.6;
     }
@@ -100,23 +257,27 @@
   .chat-input-container {
     display: flex;
     gap: 0.5rem;
-    
+
     input {
       flex: 1;
+      min-width: 0;
       padding: 0.75rem 1rem;
       border: 1px solid #ddd;
+      border-radius: 0;
       font-size: 1rem;
-      
+      background: #fff;
+      color: $text-dark;
+
       &:focus {
         outline: none;
         border-color: $primary;
       }
-      
+
       &:disabled {
         background: #f5f5f5;
       }
     }
-    
+
     button {
       padding: 0.75rem 1.5rem;
       background: $primary;
@@ -124,11 +285,12 @@
       border: none;
       cursor: pointer;
       font-size: 1rem;
-      
+      transition: background .5s;
+
       &:hover {
         background: $dark-teal;
       }
-      
+
       &:disabled {
         background: #ccc;
         cursor: not-allowed;
@@ -136,4 +298,97 @@
     }
   }
 
+  // ---------------------------------------------------------------- Lightbox
+  .about-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: rgba($text-dark, .78);
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 16px;
+    padding: 32px;
+    box-sizing: border-box;
+
+    &[hidden] {
+      display: none;
+    }
+
+    @media (max-width: 767px) {
+      gap: 8px;
+      padding: 16px 8px;
+    }
+
+    &__nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(17, 17, 24, .75);
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+      transition: transform .3s $about-ease, background .3s $about-ease;
+
+      svg {
+        width: 18px;
+        height: 18px;
+        flex: 0 0 auto;
+      }
+
+      &:hover,
+      &:focus-visible {
+        transform: translateY(-2px);
+        background: rgba(17, 17, 24, .9);
+      }
+    }
+
+    &__stage {
+      justify-self: center;
+      margin: 0;
+      max-width: 100%;
+      max-height: calc(100vh - 64px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+
+      img {
+        display: block;
+        max-width: 100%;
+        max-height: calc(100vh - 120px);
+        border: 5px solid $text-dark;
+        background: $light-gray;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, .22);
+      }
+    }
+
+    &__count {
+      color: $light;
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+    }
+  }
+}
+
+body.about-lightbox-open {
+  overflow: hidden;
+}
+
+@keyframes about-antenna-pulse {
+  0%, 100% { opacity: .5; }
+  50%      { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-page {
+    .about-robot__antenna { animation: none; }
+    .about-photos__frame img,
+    .about-lightbox__nav { transition: none; }
+  }
 }
